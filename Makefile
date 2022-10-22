@@ -6,7 +6,7 @@
 #    By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/17 12:26:09 by blaurent          #+#    #+#              #
-#    Updated: 2022/10/22 13:59:23 by blaurent         ###   ########.fr        #
+#    Updated: 2022/10/22 15:04:52 by blaurent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ FLAGS		=
 FILES		= main.c \
 				get_input.c \
 				execute.c \
-				env.c \
+				init.c \
+				utils.c \
 				my_lib/ft_printf/ft_printf.c\
 				my_lib/ft_printf/ft_print_c.c \
 				my_lib/ft_printf/ft_print_p.c \
