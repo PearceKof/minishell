@@ -6,7 +6,7 @@
 #    By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/17 12:26:09 by blaurent          #+#    #+#              #
-#    Updated: 2022/10/21 18:05:51 by blaurent         ###   ########.fr        #
+#    Updated: 2022/10/22 13:59:23 by blaurent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ FLAGS		=
 
 FILES		= main.c \
 				get_input.c \
+				execute.c \
 				env.c \
 				my_lib/ft_printf/ft_printf.c\
 				my_lib/ft_printf/ft_print_c.c \
@@ -26,6 +27,7 @@ FILES		= main.c \
 				my_lib/ft_printf/ft_print_di.c \
 				my_lib/gnl/gnl.c \
 				my_lib/gnl/gnl_utils.c \
+				my_lib/libft/ft_freetab.c \
 				my_lib/libft/ft_atoi.c \
 				my_lib/libft/ft_bzero.c \
 				my_lib/libft/ft_calloc.c \
@@ -69,7 +71,7 @@ OBJ			= $(FILES:%.c=%.o)
 all: $(OBJ) $(NAME)
 
 %.o: %.c
-	gcc $(FLAGS) -o $@ -c $<
+	gcc $(FLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
 	gcc $(FLAGS) -o $(NAME) $(OBJ)

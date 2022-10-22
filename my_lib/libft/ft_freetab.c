@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_freetab.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/21 19:09:30 by blaurent         ###   ########.fr       */
+/*   Created: 2022/06/01 14:34:20 by blaurent          #+#    #+#             */
+/*   Updated: 2022/06/01 14:34:49 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/libft.h"
 
-int main(int ac, char **av, char **envp)
+void	ft_freetab(char **tab)
 {
-	// t_term	*term;
-	char	*input;
+	size_t	i;
 
-	// term = init_term(envp);
-	while (1)
+	i = 0;
+	if (tab)
 	{
-		write(1, ">", 1);
-		input = get_input();
-		execute(envp, input);
-		free(input);
+		while (tab[i])
+			free(tab[i++]);
+		free(tab);
 	}
-	return (0);
 }

@@ -6,9 +6,11 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:04:50 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/21 18:04:56 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:09:17 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "minishell.h"
 
 static char	*realloc_and_join(char *_input, char _buf, int _size)
 {
