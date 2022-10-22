@@ -6,19 +6,11 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/22 14:54:39 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/22 15:02:39 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_error(char *where, char **freed, int ret)
-{
-	perror(where);
-	if (freed)
-		ft_freetab(freed);
-	exit(ret);
-}
 
 static char	*checkpaths(char **env_paths, char *cmd)
 {
@@ -94,7 +86,8 @@ int	execute(char **env, char *cmd)
 	if (pid == 0)
 		execute_cmd(env, cmd);
 	if (pid == -1)
-		ft_error("fork", NULL, EXIT_FAILURE);
+		ft_error("fork", NULL, 1);
 	if (waitpid(pid, NULL, 0) == -1)
-		return (EXIT_FAILURE);
+		return (1);
+	return (0);
 }

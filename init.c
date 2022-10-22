@@ -1,26 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/17 14:22:27 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/21 16:20:41 by blaurent         ###   ########.fr       */
+/*   Created: 2022/10/22 15:01:29 by blaurent          #+#    #+#             */
+/*   Updated: 2022/10/22 15:01:38 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	env_size(char **env)
-{
-	int	i;
-
-	i = 0;
-	while (env[i])
-		i++;
-	return (i);
-}
 
 t_term *init_term(char **envp)
 {
@@ -30,8 +20,8 @@ t_term *init_term(char **envp)
 	ret = malloc(sizeof(t_term));
 	if (!ret)
 	{
-		printf("malloc failled\n");
-		exit(EXIT_FAILURE);
+		ft_putstr_fd("malloc failled\n", 2);
+		exit(1);
 	}
 	i = 0;
 	ret->env = malloc(sizeof(char *) * (env_size(envp) + 1));
@@ -43,8 +33,8 @@ t_term *init_term(char **envp)
 			while (i--)
 				free(ret->env[i]);
 			free(ret);
-			printf("malloc failled\n");
-			exit(EXIT_FAILURE);
+			ft_putstr_fd("malloc failled\n", 2);
+			exit(1);
 		}
 		i++;
 	}
