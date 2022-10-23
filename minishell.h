@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/23 16:54:17 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/23 17:39:26 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <sys/wait.h>
-
-int	g_status;
 
 typedef struct s_data
 {
