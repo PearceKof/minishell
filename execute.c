@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/22 15:02:39 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/26 15:40:58 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ int	execute(char **env, char *cmd)
 {
 	pid_t	pid;
 
+	if (exec_builtin(cmd))
+		return (0);
 	pid = fork();
 	if (pid == 0)
 		execute_cmd(env, cmd);

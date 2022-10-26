@@ -6,15 +6,16 @@
 #    By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/17 12:26:09 by blaurent          #+#    #+#              #
-#    Updated: 2022/10/22 15:04:52 by blaurent         ###   ########.fr        #
+#    Updated: 2022/10/26 16:34:02 by blaurent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= minishell
 
-FLAGS		=
+FLAGS		= -L/usr/include/readline -lreadline
 
 FILES		= main.c \
+				builtins.c \
 				get_input.c \
 				execute.c \
 				init.c \
@@ -75,7 +76,7 @@ all: $(OBJ) $(NAME)
 	gcc $(FLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
-	gcc $(FLAGS) -o $(NAME) $(OBJ)
+	gcc $(FLAGS) -o $(NAME) $(OBJ) -lreadline -L/usr/include/readline -I/usr/include/readline 
 
 clean:
 	rm -f $(OBJ)

@@ -6,20 +6,22 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/23 17:39:26 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/26 16:49:34 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <sys/wait.h>
 # include "../my_lib/includes/libft.h"
 # include "../my_lib/includes/gnl.h"
 # include "../my_lib/includes/ft_printf.h"
 # include "../my_lib/includes/ft_fprintf.h"
 # include <stdio.h>
 # include <fcntl.h>
-# include <sys/wait.h>
 
 typedef struct s_data
 {
@@ -39,6 +41,8 @@ typedef struct s_cmdlist
 	int					out;
 	struct s_cmdlist	*next;
 }				t_cmdlist;
+
+int		exec_builtin(char *cmd);
 
 void	execute_cmd(char **env, char *cmd);
 int		execute(char **env, char *cmd);
