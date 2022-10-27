@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/26 16:49:34 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/27 19:32:09 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,18 @@ typedef struct s_data
 	pid_t	pid;
 }	t_data;
 
-typedef struct s_cmdlist
+typedef struct s_cmd
 {
-	struct s_cmdlist	*prev;
-	char				**full_cmd;
-	char				*full_path;
-	pid_t				pid;
 	int					in;
 	int					out;
-	struct s_cmdlist	*next;
-}				t_cmdlist;
+	pid_t				pid;
+	char				**full_cmd;
+	char				*full_path;
+	struct s_cmd	*prev;
+	struct s_cmd	*next;
+}	t_cmd;
 
+char	**ft_tabdup(char **tab);
 int		exec_builtin(char *cmd);
 
 void	execute_cmd(char **env, char *cmd);
@@ -49,8 +50,8 @@ int		execute(char **env, char *cmd);
 
 char	*get_input(void);
 
-t_data *init_term(char **envp);
-
+t_data	*init_term(char **envp);
+t_cmd	*init_cmd(char *input);
 int		env_size(char **env);
 void	ft_error(char *where, char **freed, int ret);
 

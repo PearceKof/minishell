@@ -6,7 +6,7 @@
 #    By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/17 12:26:09 by blaurent          #+#    #+#              #
-#    Updated: 2022/10/26 16:34:02 by blaurent         ###   ########.fr        #
+#    Updated: 2022/10/27 19:21:53 by blaurent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,11 +15,14 @@ NAME		= minishell
 FLAGS		= -L/usr/include/readline -lreadline
 
 FILES		= main.c \
+				my_lib/libft/ft_tabdup.c \
 				builtins.c \
 				get_input.c \
 				execute.c \
 				init.c \
+				init_cmd.c \
 				utils.c \
+				init_cmd.c \
 				my_lib/ft_printf/ft_printf.c\
 				my_lib/ft_printf/ft_print_c.c \
 				my_lib/ft_printf/ft_print_p.c \

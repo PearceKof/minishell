@@ -6,11 +6,13 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/26 16:48:06 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/27 19:26:54 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_status;
 
 static	int	input_check(t_data *d)
 {
@@ -30,6 +32,7 @@ static	int	input_check(t_data *d)
 int main(int ac, char **av, char **envp)
 {
 	t_data	*d;
+	t_cmd	*c;
 
 	d = init_term(envp);
 	if (!d)
@@ -39,6 +42,7 @@ int main(int ac, char **av, char **envp)
 		d->input = readline(">");
 		if (input_check(d))
 		{
+			c = init_cmd(d->input);
 			execute(envp, d->input);
 		}
 		free(d->input);
