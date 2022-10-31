@@ -6,87 +6,63 @@
 #    By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/17 12:26:09 by blaurent          #+#    #+#              #
-#    Updated: 2022/10/27 19:21:53 by blaurent         ###   ########.fr        #
+#    Updated: 2022/10/31 14:22:44 by blaurent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= minishell
+NAME = minishell
 
-FLAGS		= -L/usr/include/readline -lreadline
+# Project builds and dirs
+SRCDIR = ./src/
+SRCNAMES = $(shell ls $(SRCDIR) | grep -E ".+\.c")
+SRC = $(addprefix $(SRCDIR), $(SRCNAMES))
+INC = ./include/
+BUILDDIR = ./build/
+BUILDOBJS = $(addprefix $(BUILDDIR), $(SRCNAMES:.c=.o))
 
-FILES		= main.c \
-				my_lib/libft/ft_tabdup.c \
-				builtins.c \
-				get_input.c \
-				execute.c \
-				init.c \
-				init_cmd.c \
-				utils.c \
-				init_cmd.c \
-				my_lib/ft_printf/ft_printf.c\
-				my_lib/ft_printf/ft_print_c.c \
-				my_lib/ft_printf/ft_print_p.c \
-				my_lib/ft_printf/ft_print_s.c \
-				my_lib/ft_printf/ft_print_u.c \
-				my_lib/ft_printf/ft_print_x.c \
-				my_lib/ft_printf/ft_print_di.c \
-				my_lib/gnl/gnl.c \
-				my_lib/gnl/gnl_utils.c \
-				my_lib/libft/ft_freetab.c \
-				my_lib/libft/ft_atoi.c \
-				my_lib/libft/ft_bzero.c \
-				my_lib/libft/ft_calloc.c \
-				my_lib/libft/ft_isalnum.c \
-				my_lib/libft/ft_isalpha.c \
-				my_lib/libft/ft_isascii.c \
-				my_lib/libft/ft_isdigit.c \
-				my_lib/libft/ft_isprint.c \
-				my_lib/libft/ft_itoa.c \
-				my_lib/libft/ft_memchr.c \
-				my_lib/libft/ft_memcmp.c \
-				my_lib/libft/ft_memcpy.c \
-				my_lib/libft/ft_memmove.c \
-				my_lib/libft/ft_memset.c \
-				my_lib/libft/ft_putaddr.c \
-				my_lib/libft/ft_putchar_fd.c \
-				my_lib/libft/ft_putendl_fd.c \
-				my_lib/libft/ft_putnbr_base.c \
-				my_lib/libft/ft_putnbr_fd.c \
-				my_lib/libft/ft_putstr_fd.c \
-				my_lib/libft/ft_putstr.c \
-				my_lib/libft/ft_split.c \
-				my_lib/libft/ft_strchr.c \
-				my_lib/libft/ft_strdup.c \
-				my_lib/libft/ft_striteri.c \
-				my_lib/libft/ft_strjoin.c \
-				my_lib/libft/ft_strlcat.c \
-				my_lib/libft/ft_strlcpy.c \
-				my_lib/libft/ft_strlen.c \
-				my_lib/libft/ft_strmapi.c \
-				my_lib/libft/ft_strncmp.c \
-				my_lib/libft/ft_strnstr.c \
-				my_lib/libft/ft_strrchr.c \
-				my_lib/libft/ft_strtrim.c \
-				my_lib/libft/ft_substr.c \
-				my_lib/libft/ft_tolower.c \
-				my_lib/libft/ft_toupper.c \
-				
-OBJ			= $(FILES:%.c=%.o)
+# Libft builds and dirs
+LIBDIR = ./libft/
+LIBFT = ./libft/libft.a
+LIBINC = ./libft/includes/
 
-all: $(OBJ) $(NAME)
+# Optimization and Compiler flags and commands
+CC = gcc
+CFLAGS = -lreadline 
 
-%.o: %.c
-	gcc $(FLAGS) -c $< -o $@
+# Debugging flags
+DEBUG = -g
 
-$(NAME): $(OBJ)
-	gcc $(FLAGS) -o $(NAME) $(OBJ) -lreadline -L/usr/include/readline -I/usr/include/readline 
+# Main rule
+all: $(BUILDDIR) $(LIBFT) $(NAME)
 
+# Object dir rule
+$(BUILDDIR):
+	mkdir -p $(BUILDDIR)
+
+# Objects rule
+$(BUILDDIR)%.o:$(SRCDIR)%.c
+	$(CC) $(CFLAGS) -I$(LIBINC) -I$(INC) -o $@ -c $<
+
+# Project file rule
+$(NAME): $(BUILDOBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(BUILDOBJS) $(LIBFT) -lreadline 
+
+# Libft rule
+$(LIBFT):
+	make -C $(LIBDIR)
+
+# Cleaning up the build files
 clean:
-	rm -f $(OBJ)
+	rm -rf $(BUILDDIR)
+	make -C $(LIBDIR) clean
 
+# Getting rid of the project file
 fclean: clean
-	rm -f $(NAME)
+	rm -rf $(NAME)
+	make -C $(LIBDIR) fclean
 
+# Do both of the above
 re: fclean all
 
-.PHONY: all clean fclean re
+# Just in case those files exist in the root dir
+.PHONY: all fclean clean re
