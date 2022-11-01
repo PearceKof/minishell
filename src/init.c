@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:01:29 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/31 14:41:55 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/11/01 17:35:56 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,4 @@ t_data *init_term(char **envp)
 	if (!d->env)
 		return (NULL);
 	return (d);
-}
-
-t_cmd	*init_cmd(char *input)
-{
-	char	**input_split;
-	char	**nospace_input;
-	t_cmd	*c;
-	size_t	i;
-	size_t	size;
-
-	c = NULL;
-	input_split = ft_split(input, '|');
-	i = 0;
-	while (input_split[i])
-	{
-		if (!c)
-			c = new_cmd();
-		else
-			c = add_cmd(c);
-		nospace_input = ft_split(input_split[i], ' ');
-		c = fill_cmd(nospace_input, c);
-		ft_freetab(nospace_input);
-		i++;
-	}
-	return (c);
 }
