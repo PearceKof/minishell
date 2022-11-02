@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:33:08 by blaurent          #+#    #+#             */
-/*   Updated: 2022/11/01 17:36:23 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/11/02 16:11:31 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,9 @@ t_cmd	*init_cmd(char *input)
 			c = new_cmd();
 		else
 			c = add_cmd(c);
-		nospace_input = ft_split(input_split[i], ' ');
+		nospace_input = split_cmd(input_split[i]);
+		if (!nospace_input)
+			return (NULL);
 		c = fill_cmd(nospace_input, c);
 		ft_freetab(nospace_input);
 		i++;

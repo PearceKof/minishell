@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/31 14:17:54 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/11/02 15:46:11 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int		exec_builtin(char *cmd);
 
 void	execute_cmd(char **env, char *cmd);
 int		execute(char **env, char *cmd);
-
+char	**split_cmd(char const *s);
 char	*get_input(void);
 t_cmd	*new_cmd();
 t_cmd	*add_cmd(t_cmd *first);
