@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2022/11/02 15:46:11 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/11/02 16:44:56 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,12 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }	t_cmd;
 
-int		exec_builtin(char *cmd);
+int	exec_builtin(t_cmd *cmd);
 
-void	execute_cmd(char **env, char *cmd);
-int		execute(char **env, char *cmd);
+void	execute_cmd(char **env, char **cmd);
+int		execute(char **env, t_cmd *c);
 char	**split_cmd(char const *s);
+void	*free_cmd(t_cmd *c);
 char	*get_input(void);
 t_cmd	*new_cmd();
 t_cmd	*add_cmd(t_cmd *first);

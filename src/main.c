@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2022/11/02 15:22:48 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/11/02 17:00:06 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	printcmd(t_cmd *c)
 	{
 		printf("prev: %p\n", c->prev);
 		printf("----->%p\n", c);
-		printf("next: %p\n", c->next);
+		printf("next: %p\n|", c->next);
 		i = 0;
 		while (c->full_cmd[i])
 		{
@@ -48,7 +48,7 @@ void	printcmd(t_cmd *c)
 				printf("%c", c->full_cmd[i][j]);
 				j++;
 			}
-			printf("\n-------\n");
+			printf("|\n-------\n|");
 			i++;
 		}
 		c = c->next;
@@ -70,8 +70,9 @@ int main(int ac, char **av, char **envp)
 		{
 			c = init_cmd(d->input);
 			printcmd(c);
-			// execute(envp, d->input);
+			execute(envp, c);
 		}
+		free_cmd(c);
 		free(d->input);
 	}
 }

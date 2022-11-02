@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:55:06 by blaurent          #+#    #+#             */
-/*   Updated: 2022/11/02 16:10:31 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/11/02 17:03:35 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,10 @@ static int	ft_count_space(char const *s)
 				if (s[i] == '\0')
 					return (-1);
 			count++;
-			printf("ICI\n");
 		}
 		if (s[i] != '\0')
 			count++;
-		while (s[i] != ' ' && s[i] != '\0' && s[i] != '\"' && s[i] != '\'')
+		while (s[i] != ' ' && s[i] != '\0')
 			i++;
 	}
 	return (count);
@@ -49,16 +48,11 @@ static void	*ft_mallerror(char **tab, size_t i)
 	return (NULL);
 }
 
-// static char	dup_btw_bracket(char **tab, const char *s, char bracket)
-// {
-// 	size_t	i;
-// 	size_t	j;
-// }
-
 static const char	*ft_fill_tab(char **tab, const char *s)
 {
 	size_t	i;
 	size_t	j;
+	size_t	k;
 	char	del;
 
 	del = ' ';
@@ -73,10 +67,17 @@ static const char	*ft_fill_tab(char **tab, const char *s)
 	if (!tab)
 		return (NULL);
 	j = 0;
+	k = 0;
 	while (j < i)
 	{
-		(*tab)[j] = s[j];
-		j++;
+		if (s[j] == '\"' || s[j] == '\'')
+			j++;
+		else
+		{
+			(*tab)[k] = s[j];
+			j++;
+			k++;
+		}
 	}
 	(*tab)[j] = '\0';
 	return (&s[j]);
@@ -91,7 +92,6 @@ char	**split_cmd(char const *s)
 	if (!s)
 		return (NULL);
 	nbrofc = ft_count_space(s);
-	printf("ICI\n");
 	if (nbrofc == -1)
 		return (NULL);
 	tab = (char **)malloc(sizeof(char *) * (nbrofc + 1));

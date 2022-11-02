@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/26 15:40:58 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/11/02 16:44:07 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,39 +54,35 @@ static char	*ft_getpaths(char **env, char *cmd)
 	return (checkpaths(env_paths, cmd));
 }
 
-void	execute_cmd(char **env, char *cmd)
+void	execute_cmd(char **env, char **cmd)
 {
-	char	**option;
 	char	*cmdpath;
 
-	option = ft_split(cmd, ' ');
-	if (!option)
-		ft_error("ft_split", NULL, EXIT_FAILURE);
-	cmdpath = ft_getpaths(env, option[0]);
+	cmdpath = ft_getpaths(env, cmd[0]);
 	if (!cmdpath)
 	{
-		ft_putstr_fd(option[0], 2);
+		ft_putstr_fd(cmd[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
-		ft_freetab(option);
+		ft_freetab(cmd);
 		exit(127);
 	}
-	if (execve(cmdpath, option, env) == -1)
+	if (execve(cmdpath, cmd, env) == -1)
 	{
 		if (cmdpath)
 			free(cmdpath);
-		ft_error("execve failed", option, 126);
+		ft_error("execve failed", cmd, 126);
 	}
 }
 
-int	execute(char **env, char *cmd)
+int	execute(char **env, t_cmd *c)
 {
 	pid_t	pid;
 
-	if (exec_builtin(cmd))
+	if (exec_builtin(c))
 		return (0);
 	pid = fork();
 	if (pid == 0)
-		execute_cmd(env, cmd);
+		execute_cmd(env, c->full_cmd);
 	if (pid == -1)
 		ft_error("fork", NULL, 1);
 	if (waitpid(pid, NULL, 0) == -1)

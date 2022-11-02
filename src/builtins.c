@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 14:56:06 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/27 18:36:44 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/11/02 16:53:20 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,56 +37,57 @@ char	*search_env_var(char *var)
 	return (env_var);
 }	
 
-void	ft_echo(char *cmd)
+void	ft_echo(char **full_cmd)
 {
 	char	*var;
-	char	*tmp;
-	int		bracket;
 	size_t	i;
+	size_t	j;
 
 	i = 0;
-	tmp = cmd + 4;
-	while (tmp[i])
+	while (full_cmd[++i])
 	{
-		if (tmp[i] == '$')
+		j = 0;
+		while (full_cmd[i][j])
 		{
-			if (tmp[i + 1] == '?')
-			{
-				ft_putnbr_fd(g_status, 1);
-				i += 2;
-			}
-			else
-			{
-				var = search_env_var(&tmp[i + 1]);
-				if (var)
-					write(1, var, ft_strlen(var));
-				while (tmp[i] != ' ' && tmp[i] != '\0')
-					i++;
-			}
+			write(1, &full_cmd[i][j++], 1);
 		}
-		write(1, &tmp[i++], 1);
+		// if (full_cmd[i] == '$')
+		// {
+		// 	if (full_cmd[i + 1] == '?')
+		// 	{
+		// 		ft_putnbr_fd(g_status, 1);
+		// 		i += 2;
+		// 	}
+		// 	else
+		// 	{
+		// 		var = search_env_var(&tmp[i + 1]);
+		// 		if (var)
+		// 			write(1, var, ft_strlen(var));
+		// 		while (tmp[i] != ' ' && tmp[i] != '\0')
+		// 			i++;
+		// 	}
 	}
 	write(1, "\n", 1);
 }
 
-int	exec_builtin(char *cmd)
+int	exec_builtin(t_cmd *cmd)
 {
-	if (ft_strnstr(cmd, "echo", 5))
+	if (ft_strnstr("echo", cmd->full_cmd[0], ft_strlen(cmd->full_cmd[0])))
 	{
-		ft_echo(cmd);
+		ft_echo(cmd->full_cmd);
 		return (1);
 	}
-	else if (ft_strnstr(cmd, "cd", ft_strlen(cmd)))
+	else if (ft_strnstr(cmd->full_cmd[0], "cd", ft_strlen(cmd->full_cmd[0])))
 		return (1);
-	else if (ft_strnstr(cmd, "pwd", ft_strlen(cmd)))
+	else if (ft_strnstr(cmd->full_cmd[0], "pwd", ft_strlen(cmd->full_cmd[0])))
 		return (1);
-	else if (ft_strnstr(cmd, "export", ft_strlen(cmd)))
+	else if (ft_strnstr(cmd->full_cmd[0], "export", ft_strlen(cmd->full_cmd[0])))
 		return (1);
-	else if (ft_strnstr(cmd, "unset", ft_strlen(cmd)))
+	else if (ft_strnstr(cmd->full_cmd[0], "unset", ft_strlen(cmd->full_cmd[0])))
 		return (1);
-	else if (ft_strnstr(cmd, "env", ft_strlen(cmd)))
+	else if (ft_strnstr(cmd->full_cmd[0], "env", ft_strlen(cmd->full_cmd[0])))
 		return (1);
-	else if (ft_strnstr(cmd, "exit", ft_strlen(cmd)))
+	else if (ft_strnstr(cmd->full_cmd[0], "exit", ft_strlen(cmd->full_cmd[0])))
 		return (1);
 	return (0);
 }
