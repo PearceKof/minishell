@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2022/11/02 17:00:06 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/11/07 17:03:59 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,14 @@ int main(int ac, char **av, char **envp)
 		if (input_check(d))
 		{
 			c = init_cmd(d->input);
+			if (c)
+			{
+				
 			printcmd(c);
 			execute(envp, c);
+			free_cmd(c);
+			}
 		}
-		free_cmd(c);
 		free(d->input);
 	}
 }
