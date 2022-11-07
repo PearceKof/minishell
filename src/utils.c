@@ -6,11 +6,19 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:01:07 by blaurent          #+#    #+#             */
-/*   Updated: 2022/11/02 16:20:47 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/11/07 18:38:32 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	*ft_mallerror(char **tab, size_t i)
+{
+	while (i-- > 0)
+		free(tab[i]);
+	free(tab);
+	return (NULL);
+}
 
 int	env_size(char **env)
 {

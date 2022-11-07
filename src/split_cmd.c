@@ -6,11 +6,26 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:55:06 by blaurent          #+#    #+#             */
-/*   Updated: 2022/11/07 17:39:01 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/11/07 18:38:26 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static char	check_bracket(char const *s, char del, size_t *i)
+{
+	if (del == s[*i] && (s[*i] == '\"' || s[*i] == '\''))
+		del = ' ';
+	else if (del == ' ' && (s[*i] == '\"' || s[*i] == '\''))
+		del = s[*i];
+	*i += 1;
+	if (del != ' ' && s[*i] == del)
+	{
+		del = ' ';
+		*i += 1;
+	}
+	return (del);
+}
 
 static int	ft_count_space(char const *s)
 {
@@ -29,32 +44,14 @@ static int	ft_count_space(char const *s)
 		del = ' ';
 		while (s[i] && s[i] != del)
 		{
-			if (del == s[i] && (s[i] == '\"' || s[i] == '\''))
-				del = ' ';
-			else if (del == ' ' && (s[i] == '\"' || s[i] == '\''))
-				del = s[i];
-			else if (s[i] == '$' && del != '\'')
+			if (s[i] == '$' && del != '\'')
 				count++;
-			i++;
-			if (del != ' ' && s[i] == del)
-			{
-				del = ' ';
-				i++;
-			}
+			del = check_bracket(s, del, &i);
 		}
 	}
-	printf("count : %d del : |%c|\n", count, del);
 	if (del != ' ')
 		return (-1);
 	return (count);
-}
-
-static void	*ft_mallerror(char **tab, size_t i)
-{
-	while (i-- > 0)
-		free(tab[i]);
-	free(tab);
-	return (NULL);
 }
 
 static const char	*dupstr_without_del(char **tab, const char *s, size_t i)
@@ -63,6 +60,9 @@ static const char	*dupstr_without_del(char **tab, const char *s, size_t i)
 	size_t	j;
 	size_t	k;
 
+	*tab = (char *)malloc(sizeof(char) * (i + 1));
+	if (!tab)
+		return (NULL);
 	j = 0;
 	k = 0;
 	while (j < i)
@@ -104,9 +104,6 @@ static const char	*ft_fill_tab(char **tab, const char *s)
 			i++;
 		}
 	}
-	*tab = (char *)malloc(sizeof(char) * (i + 1));
-	if (!tab)
-		return (NULL);
 	return (dupstr_without_del(tab, s, i));
 }
 
