@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 14:56:06 by blaurent          #+#    #+#             */
-/*   Updated: 2022/11/02 16:53:20 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/11/08 18:15:24 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,8 @@ char	*search_env_var(char *var)
 	return (env_var);
 }	
 
-void	ft_echo(char **full_cmd)
+void	ft_echo(char **full_cmd, int output)
 {
-	char	*var;
 	size_t	i;
 	size_t	j;
 
@@ -49,8 +48,10 @@ void	ft_echo(char **full_cmd)
 		j = 0;
 		while (full_cmd[i][j])
 		{
-			write(1, &full_cmd[i][j++], 1);
+			write(output, &full_cmd[i][j++], 1);
 		}
+		if (full_cmd[i + 1])
+			write(output, " ", 1);
 		// if (full_cmd[i] == '$')
 		// {
 		// 	if (full_cmd[i + 1] == '?')
@@ -67,14 +68,14 @@ void	ft_echo(char **full_cmd)
 		// 			i++;
 		// 	}
 	}
-	write(1, "\n", 1);
+	write(output, "\n", 1);
 }
 
 int	exec_builtin(t_cmd *cmd)
 {
 	if (ft_strnstr("echo", cmd->full_cmd[0], ft_strlen(cmd->full_cmd[0])))
 	{
-		ft_echo(cmd->full_cmd);
+		ft_echo(cmd->full_cmd, cmd->out);
 		return (1);
 	}
 	else if (ft_strnstr(cmd->full_cmd[0], "cd", ft_strlen(cmd->full_cmd[0])))

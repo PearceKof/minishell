@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:55:06 by blaurent          #+#    #+#             */
-/*   Updated: 2022/11/07 18:38:26 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/11/08 17:54:04 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ char	**split_cmd(char const *s)
 {
 	char	**tab;
 	int		nbrofc;
-	size_t	i;
+	int		i;
 
 	if (!s)
 		return (NULL);

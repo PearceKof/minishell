@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2022/11/07 18:38:19 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/11/10 18:58:47 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include "../libft/includes/ft_fprintf.h"
 # include <stdio.h>
 # include <fcntl.h>
-
+# include <sys/wait.h>
 typedef struct s_data
 {
 	char	**env;
@@ -41,7 +41,7 @@ typedef struct s_cmd
 	struct s_cmd	*prev;
 	struct s_cmd	*next;
 }	t_cmd;
-
+int	redirection(char **input, t_cmd *c, size_t i, size_t j);
 int	exec_builtin(t_cmd *cmd);
 void	*ft_mallerror(char **tab, size_t i);
 void	execute_cmd(char **env, char **cmd);

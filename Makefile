@@ -6,7 +6,7 @@
 #    By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/17 12:26:09 by blaurent          #+#    #+#              #
-#    Updated: 2022/11/01 16:01:43 by blaurent         ###   ########.fr        #
+#    Updated: 2022/11/08 17:51:38 by blaurent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ LIBINC = ./libft/includes/
 
 # Optimization and Compiler flags and commands
 CC = gcc
-CFLAGS = 
+CFLAGS = -Wall -Wextra -Werror
 
 # Debugging flags
 DEBUG = -g

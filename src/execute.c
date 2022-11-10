@@ -6,12 +6,12 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2022/11/02 16:44:07 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/11/10 19:02:49 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+extern int g_status;
 static char	*checkpaths(char **env_paths, char *cmd)
 {
 	char	*cmdpath;
@@ -39,8 +39,8 @@ static char	*ft_getpaths(char **env, char *cmd)
 {
 	char	**env_paths;
 	char	*ptr;
-	size_t	i;
 
+	(void)env;
 	if (ft_strnstr(cmd, "/", ft_strlen(cmd)))
 	{
 		if (access(cmd, X_OK))
@@ -48,7 +48,6 @@ static char	*ft_getpaths(char **env, char *cmd)
 		ptr = ft_strdup(cmd);
 		return (ptr);
 	}
-	i = 0;
 	ptr = getenv("PATH");
 	env_paths = ft_split(ptr, ':');
 	return (checkpaths(env_paths, cmd));
@@ -74,18 +73,79 @@ void	execute_cmd(char **env, char **cmd)
 	}
 }
 
+static void	close_fd(t_cmd *c, int *pipe)
+{
+	if (c->next)
+	{
+		close(pipe[1]);
+		if (c->next->in == STDIN_FILENO)
+			c->next->in = pipe[0];
+	}
+	if (c->in > 2)
+		close(c->in);
+	if (c->out > 2)
+		close(c->out);
+}
+
+static void	child(t_cmd *c, char **env, int *pipe)
+{
+	if (c->in != STDIN_FILENO)
+	{
+		if (dup2(c->in, STDIN_FILENO) == -1)
+			exit(1);
+		close(c->in);
+	}
+	if (c->out != STDOUT_FILENO)
+	{
+		if (dup2(c->out, STDOUT_FILENO) == -1)
+			exit(1);
+		close(c->out);
+	}
+	else if (c->next)
+	{
+		close(pipe[0]);
+		if (dup2(pipe[1], STDOUT_FILENO) == -1)
+			exit(1);
+	}
+	if (exec_builtin(c))
+		exit(0);
+	execute_cmd(env, c->full_cmd);
+}
+
+static int	execute_fork(t_cmd *c, char **env, int *pipe)
+{
+	c->pid = fork();
+	if (c->pid == -1)
+	{
+		return (1);
+	}
+	if (c->pid == 0)
+		child(c, env, pipe);
+	else
+		close_fd(c, pipe);
+	return (0);
+}
+
 int	execute(char **env, t_cmd *c)
 {
-	pid_t	pid;
+	int		piper[2];
+	t_cmd	*ptr;
 
-	if (exec_builtin(c))
-		return (0);
-	pid = fork();
-	if (pid == 0)
-		execute_cmd(env, c->full_cmd);
-	if (pid == -1)
-		ft_error("fork", NULL, 1);
-	if (waitpid(pid, NULL, 0) == -1)
-		return (1);
+	ptr = c;
+	while (c)
+	{
+		if (c->next)
+			if (pipe(piper))
+				return (1);
+		if (execute_fork(c, env, piper))
+			return (1);
+		c = c->next;
+	}
+	while (ptr)
+	{
+		waitpid(ptr->pid, &g_status, 0);
+		ptr = ptr->next;
+	}
+	
 	return (0);
 }
