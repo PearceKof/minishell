@@ -6,12 +6,14 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2022/11/10 19:02:49 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/11/19 14:08:16 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 extern int g_status;
+
 static char	*checkpaths(char **env_paths, char *cmd)
 {
 	char	*cmdpath;

@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:01:07 by blaurent          #+#    #+#             */
-/*   Updated: 2022/11/10 18:43:34 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/11/19 14:03:23 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,4 @@ void	ft_error(char *where, char **freed, int ret)
 	if (freed)
 		ft_freetab(freed);
 	exit(ret);
-}
-
-void	*free_cmd(t_cmd *c)
-{
-	while (c)
-	{
-		ft_freetab(c->full_cmd);
-		c->prev = NULL;
-		c = c->next;
-	}
-	return (NULL);
 }

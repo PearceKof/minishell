@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2022/11/10 18:58:47 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/11/28 17:34:24 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,39 @@ typedef struct s_cmd
 	struct s_cmd	*prev;
 	struct s_cmd	*next;
 }	t_cmd;
-int	redirection(char **input, t_cmd *c, size_t i, size_t j);
-int	exec_builtin(t_cmd *cmd);
-void	*ft_mallerror(char **tab, size_t i);
+/*
+	builtins.c
+*/
+int		exec_builtin(t_cmd *cmd);
+/*
+	dup_cmd.c
+*/
+char	*dup_cmd(const char *src);
+char	**dup_fullcmd(char **tab);
+/*
+	execute.c
+*/
 void	execute_cmd(char **env, char **cmd);
 int		execute(char **env, t_cmd *c);
-char	**split_cmd(char const *s);
+/*
+	free.c
+*/
 void	*free_cmd(t_cmd *c);
+/*
+	init_cmd.c
+*/
+t_cmd	*init_cmd(char *input);
+/*
+	init.c
+*/
+t_data	*init_term(char **envp);
+int		redirection(char **input, t_cmd *c, size_t i, size_t j);
+void	*ft_mallerror(char **tab, size_t i);
+char	**split_cmd(char const *s);
 char	*get_input(void);
 t_cmd	*new_cmd();
 t_cmd	*add_cmd(t_cmd *first);
 t_cmd	*fill_cmd(char **input, t_cmd *first);
-t_data	*init_term(char **envp);
-t_cmd	*init_cmd(char *input);
 int		env_size(char **env);
 void	ft_error(char *where, char **freed, int ret);
 

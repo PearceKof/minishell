@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 14:56:06 by blaurent          #+#    #+#             */
-/*   Updated: 2022/11/08 18:15:24 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/11/19 14:05:23 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*search_env_var(char *var)
 	return (env_var);
 }	
 
-void	ft_echo(char **full_cmd, int output)
+static void	ft_echo(char **full_cmd, int output)
 {
 	size_t	i;
 	size_t	j;

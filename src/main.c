@@ -6,14 +6,17 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2022/11/08 17:50:24 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/11/28 17:16:34 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_status;
-
+/*
+vérifie que l'input à bien été lu et l'enregistre
+dans l'historique si c'est le cas
+*/
 static	int	input_check(t_data *d)
 {
 	if (!d->input)
@@ -28,7 +31,10 @@ static	int	input_check(t_data *d)
 	add_history(d->input);
 	return (1);
 }
-
+/*
+affiche les infos de la commande c en argumant
+Juste pour debugger
+*/
 void	printcmd(t_cmd *c)
 {
 	int i;
