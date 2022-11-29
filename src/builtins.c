@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 14:56:06 by blaurent          #+#    #+#             */
-/*   Updated: 2022/11/19 14:05:23 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/11/29 18:58:26 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*search_env_var(char *var)
 	return (env_var);
 }	
 
-static void	ft_echo(char **full_cmd, int output)
+static void	ft_echo(char **full_cmd)
 {
 	size_t	i;
 	size_t	j;
@@ -46,36 +46,25 @@ static void	ft_echo(char **full_cmd, int output)
 	while (full_cmd[++i])
 	{
 		j = 0;
-		while (full_cmd[i][j])
+		if (full_cmd[i][j] == '$' && full_cmd[i][j + 1] == '?')
 		{
-			write(output, &full_cmd[i][j++], 1);
+			ft_putnbr_fd(g_status, 1);
+			i += 2;
 		}
+		else
+			while (full_cmd[i][j])
+				write(1, &full_cmd[i][j++], 1);
 		if (full_cmd[i + 1])
-			write(output, " ", 1);
-		// if (full_cmd[i] == '$')
-		// {
-		// 	if (full_cmd[i + 1] == '?')
-		// 	{
-		// 		ft_putnbr_fd(g_status, 1);
-		// 		i += 2;
-		// 	}
-		// 	else
-		// 	{
-		// 		var = search_env_var(&tmp[i + 1]);
-		// 		if (var)
-		// 			write(1, var, ft_strlen(var));
-		// 		while (tmp[i] != ' ' && tmp[i] != '\0')
-		// 			i++;
-		// 	}
+			write(1, " ", 1);
 	}
-	write(output, "\n", 1);
+	write(1, "\n", 1);
 }
 
 int	exec_builtin(t_cmd *cmd)
 {
 	if (ft_strnstr("echo", cmd->full_cmd[0], ft_strlen(cmd->full_cmd[0])))
 	{
-		ft_echo(cmd->full_cmd, cmd->out);
+		ft_echo(cmd->full_cmd);
 		return (1);
 	}
 	else if (ft_strnstr(cmd->full_cmd[0], "cd", ft_strlen(cmd->full_cmd[0])))

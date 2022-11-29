@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2022/11/19 14:08:16 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/11/29 18:18:27 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ static int	execute_fork(t_cmd *c, char **env, int *pipe)
 	c->pid = fork();
 	if (c->pid == -1)
 	{
+		ft_fprintf(2, "Fork failed\n");
 		return (1);
 	}
 	if (c->pid == 0)
@@ -148,6 +149,5 @@ int	execute(char **env, t_cmd *c)
 		waitpid(ptr->pid, &g_status, 0);
 		ptr = ptr->next;
 	}
-	
 	return (0);
 }

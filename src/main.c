@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2022/11/28 17:16:34 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/11/29 18:28:27 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,20 @@ void	printcmd(t_cmd *c)
 
 	while (c)
 	{
-		printf("prev: %p\n", c->prev);
-		printf("----->%p\n", c);
-		printf("next: %p\n", c->next);
-		printf("in : %d out : %d\n", c->in, c->out);
+		ft_fprintf(2, "prev: %p\n", c->prev);
+		ft_fprintf(2, "----->%p\n", c);
+		ft_fprintf(2, "next: %p\n", c->next);
+		ft_fprintf(2, "in : %d out : %d\n", c->in, c->out);
 		i = 0;
 		while (c->full_cmd[i])
 		{
 			j = 0;
 			while (c->full_cmd[i][j])
 			{
-				printf("%c", c->full_cmd[i][j]);
+				ft_fprintf(2, "%c", c->full_cmd[i][j]);
 				j++;
 			}
-			printf("|\n-------\n|");
+			ft_fprintf(2, "|\n-------\n|");
 			i++;
 		}
 		c = c->next;
