@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2022/11/29 18:28:27 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/05 18:13:13 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,15 @@ void	printcmd(t_cmd *c)
 			j = 0;
 			while (c->full_cmd[i][j])
 			{
+				if (j == 0)
+					ft_fprintf(2, "|");
 				ft_fprintf(2, "%c", c->full_cmd[i][j]);
 				j++;
 			}
-			ft_fprintf(2, "|\n-------\n|");
+			ft_fprintf(2, "|\n-------\n");
 			i++;
 		}
+		ft_fprintf(2, "\n");
 		c = c->next;
 	}
 }
@@ -69,16 +72,17 @@ int main(int ac, char **av, char **envp)
 
 	d = init_term(envp);
 	if (!d)
-		return (1);
+		exit(EXIT_FAILURE);
 	while (ac && av)
 	{
+		g_status = 0;
 		d->input = readline(">");
 		if (input_check(d))
 		{
 			c = init_cmd(d->input);
 			if (c)
 			{
-				printcmd(c);
+				// printcmd(c);
 				execute(envp, c);
 				free_cmd(c);
 			}
