@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 14:56:06 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/05 18:10:53 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/06 15:27:13 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,10 @@ static void	ft_echo(char **full_cmd)
 	while (full_cmd[++i])
 	{
 		j = 0;
-		ft_fprintf(2, "TEST\n");
 		if (full_cmd[i][j] == '$' && full_cmd[i][j + 1] == '?')
 		{
 			ft_putnbr_fd(g_status, 1);
-			i += 2;
+			j += 2;
 		}
 		else
 			while (full_cmd[i][j])

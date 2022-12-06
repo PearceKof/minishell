@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:33:08 by blaurent          #+#    #+#             */
-/*   Updated: 2022/11/28 17:27:08 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/06 15:48:15 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ t_cmd	*fill_cmd(char **input, t_cmd *first)
 		while (input[i][j])
 		{
 			if (input[i][j] == '<' || input[i][j] == '>')
-				redirection(input, ptr, i, j);
+				if (redirection(input, ptr, i, j))
+					return (NULL);
 			j++;
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2022/11/29 18:18:27 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:16:40 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,11 @@ static void	close_fd(t_cmd *c, int *pipe)
 
 static void	child(t_cmd *c, char **env, int *pipe)
 {
+	if (c->in == -1)
+	{
+		
+		exit(1);
+	}
 	if (c->in != STDIN_FILENO)
 	{
 		if (dup2(c->in, STDIN_FILENO) == -1)
@@ -147,6 +152,8 @@ int	execute(char **env, t_cmd *c)
 	while (ptr)
 	{
 		waitpid(ptr->pid, &g_status, 0);
+		g_status = WEXITSTATUS(g_status);
+		// ft_fprintf(2, "[%d]\n", g_status);
 		ptr = ptr->next;
 	}
 	return (0);

@@ -6,12 +6,12 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:58:47 by blaurent          #+#    #+#             */
-/*   Updated: 2022/11/29 18:20:22 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:13:45 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+extern int g_status;
 static int	redirect_input(char **input, t_cmd *c, size_t i, size_t j)
 {
 	size_t	k;
@@ -26,6 +26,8 @@ static int	redirect_input(char **input, t_cmd *c, size_t i, size_t j)
 			if (input[i][j] != '\0' && input[i][j] != '<')
 			{
 				c->in = open(&input[i][j], O_RDONLY);
+				if (c->in == -1)
+					return (0);
 				while (i >= k)
 				{
 					while (input[k][l])

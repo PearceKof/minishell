@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:55:06 by blaurent          #+#    #+#             */
-/*   Updated: 2022/11/08 17:54:04 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/06 15:15:42 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,7 @@ static int	ft_count_space(char const *s)
 			count++;
 		del = ' ';
 		while (s[i] && s[i] != del)
-		{
-			if (s[i] == '$' && del != '\'')
-				count++;
 			del = check_bracket(s, del, &i);
-		}
 	}
 	if (del != ' ')
 		return (-1);
