@@ -45,7 +45,7 @@ void	ft_putchar(int *caract);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int nb, int fd);
 int		ft_putnbr_base(long long nb, unsigned int base, char *printnb, int fd);
-int	ft_putstr_fd(char *s, int fd);
+int		ft_putstr_fd(char *s, int fd);
 int		ft_putstr(char *str);
 char	**ft_split(char const *s, char c);
 char	*ft_strchr(const char *str, int ch);
@@ -62,6 +62,7 @@ char	*ft_strrchr(const char *str, int c);
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	**ft_tabdup(char **tab);
+int		ft_tablen(char **tab);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 

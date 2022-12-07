@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/06 16:16:40 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/07 18:00:25 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ static void	child(t_cmd *c, char **env, int *pipe)
 		if (dup2(pipe[1], STDOUT_FILENO) == -1)
 			exit(1);
 	}
-	if (exec_builtin(c))
+	if (exec_builtin(c, env))
 		exit(0);
 	execute_cmd(env, c->full_cmd);
 }

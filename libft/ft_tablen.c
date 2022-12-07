@@ -1,35 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   ft_tablen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/22 15:01:29 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/07 17:45:59 by blaurent         ###   ########.fr       */
+/*   Created: 2022/12/07 17:11:50 by blaurent          #+#    #+#             */
+/*   Updated: 2022/12/07 17:12:54 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-t_data *init_term(char **envp)
+int	ft_tablen(char **tab)
 {
-	t_data	*d;
+	int	i;
 
-	d = (t_data *)malloc(sizeof(t_data));
-	if (!d)
-	{
-		ft_putstr_fd("malloc failled\n", 2);
-		exit(1);
-	}
-	d->input = NULL;
-	d->end = 0;
-	d->env = ft_tabdup(envp);
-	d->env = init_env(d);
-	if (!d->env)
-	{
-		free(d);
-		return (NULL);
-	}
-	return (d);
+	i = 0;
+	while (tab[i])
+		i++;
+	return (i);
 }

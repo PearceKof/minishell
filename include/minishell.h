@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2022/11/28 17:34:24 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/07 18:00:11 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+
 typedef struct s_data
 {
 	char	**env;
@@ -44,12 +45,22 @@ typedef struct s_cmd
 /*
 	builtins.c
 */
-int		exec_builtin(t_cmd *cmd);
+int		exec_builtin(t_cmd *cmd, char **env);
 /*
 	dup_cmd.c
 */
 char	*dup_cmd(const char *src);
 char	**dup_fullcmd(char **tab);
+/*
+	env.c
+*/
+int		varname_size(char *varname);
+char	*ft_getenv(char *varname, char **env, int len);
+char	*new_envvar(char *varname, char *value);
+void	addvar_to_env(t_data *d, char *addvar);
+char	*edit_envvar(char *to_edit, char *value, int size);
+char	**set_env_var(char *varname, char *value, t_data *d, int size);
+char	**init_env(t_data *d);
 /*
 	execute.c
 */
