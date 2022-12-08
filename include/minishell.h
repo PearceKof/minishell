@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/07 18:00:11 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/08 17:50:02 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_cmd
 /*
 	builtins.c
 */
-int		exec_builtin(t_cmd *cmd, char **env);
+int		exec_builtin(t_cmd *cmd, t_data *d);
 /*
 	dup_cmd.c
 */
@@ -60,12 +60,12 @@ char	*new_envvar(char *varname, char *value);
 void	addvar_to_env(t_data *d, char *addvar);
 char	*edit_envvar(char *to_edit, char *value, int size);
 char	**set_env_var(char *varname, char *value, t_data *d, int size);
-char	**init_env(t_data *d);
+char	**init_env(char **av, t_data *d);
 /*
 	execute.c
 */
 void	execute_cmd(char **env, char **cmd);
-int		execute(char **env, t_cmd *c);
+int	execute(t_cmd *c, t_data *d);
 /*
 	free.c
 */
@@ -77,7 +77,7 @@ t_cmd	*init_cmd(char *input);
 /*
 	init.c
 */
-t_data	*init_term(char **envp);
+t_data *init_term(char **av, char **envp);
 int		redirection(char **input, t_cmd *c, size_t i, size_t j);
 void	*ft_mallerror(char **tab, size_t i);
 char	**split_cmd(char const *s);

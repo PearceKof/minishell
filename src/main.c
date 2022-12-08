@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/07 17:59:12 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/08 17:47:17 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int main(int ac, char **av, char **envp)
 	t_data	*d;
 	t_cmd	*c;
 
-	d = init_term(envp);
+	d = init_term(av, envp);
 	if (!d)
 		exit(EXIT_FAILURE);
 	g_status = 0;
@@ -83,8 +83,10 @@ int main(int ac, char **av, char **envp)
 			if (c)
 			{
 				// printcmd(c);
-				execute(d->env, c);
+				execute(c, d);
 				free_cmd(c);
+				if (d->end)
+					exit(g_status);
 			}
 		}
 		free(d->input);

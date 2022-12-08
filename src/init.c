@@ -6,13 +6,13 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:01:29 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/07 17:45:59 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/08 17:34:10 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_data *init_term(char **envp)
+t_data *init_term(char **av, char **envp)
 {
 	t_data	*d;
 
@@ -25,7 +25,7 @@ t_data *init_term(char **envp)
 	d->input = NULL;
 	d->end = 0;
 	d->env = ft_tabdup(envp);
-	d->env = init_env(d);
+	d->env = init_env(av, d);
 	if (!d->env)
 	{
 		free(d);

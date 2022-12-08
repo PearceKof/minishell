@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 14:56:06 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/07 17:59:44 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/08 18:14:55 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,31 @@ static void	ft_echo(char **full_cmd)
 	if (!flag)
 		write(1, "\n", 1);
 }
-static void	ft_env(char **env)
+
+static int	ft_env(char **env)
 {
 	int	i;
 
 	i = 0;
 	while (env[i])
 		printf("%s\n", env[i++]);
+	return (1);
+}
+
+static int	ft_exit(t_cmd *c, t_data *d)
+{
+	if (!cmd->full_cmd[1])
+	{
+		d->end = 1;
+		return (1);
+	}
 }
 /*
 check le premier mot de la commande, si il correspond à un builin, il va l'éxecuter
 et return 1
 sinon, return 0
 */
-int	exec_builtin(t_cmd *cmd, char **env)
+int	exec_builtin(t_cmd *cmd, t_data *d)
 {
 	if (ft_strnstr("echo", cmd->full_cmd[0], ft_strlen(cmd->full_cmd[0])))
 	{
@@ -95,11 +106,8 @@ int	exec_builtin(t_cmd *cmd, char **env)
 	else if (ft_strnstr(cmd->full_cmd[0], "unset", ft_strlen(cmd->full_cmd[0])))
 		return (1);
 	else if (ft_strnstr(cmd->full_cmd[0], "env", ft_strlen(cmd->full_cmd[0])))
-	{
-		ft_env(env);
-		return (1);
-	}
+		return (ft_env(d->env));
 	else if (ft_strnstr(cmd->full_cmd[0], "exit", ft_strlen(cmd->full_cmd[0])))
-		return (1);
+		return (ft_exit(c, d));
 	return (0);
 }

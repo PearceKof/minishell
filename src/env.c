@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:48:00 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/07 18:09:31 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/08 17:35:51 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,15 +108,19 @@ char	**set_env_var(char *varname, char *value, t_data *d, int size)
 	return (d->env);
 }
 
-char	**init_env(t_data *d)
+char	**init_env(char **av, t_data *d)
 {
 	char	*tmp;
 
 	tmp = getcwd(NULL, 0);
 	d->env = set_env_var("PWD", tmp, d, 3);
 	free(tmp);
-	tmp = ft_getenv("SHLVL", d->env, 5);
-	if (!tmp)
-		d->env = ft_setenv
+	if (!ft_getenv("SHLVL", d->env, 5))
+		d->env = set_env_var("SHLVL", "1", d, 5);
+	if (!ft_getenv("PATH", d->env, 5))
+		d->env = set_env_var("PATH", 
+			"/usr/local/sbin:/usr/local/bin:/usr/bin:/bin", d, 4);
+	if (!ft_getenv("_", d->env, 1))
+		d->env = set_env_var("_", av[0], d, 1);
 	return (d->env);
 }

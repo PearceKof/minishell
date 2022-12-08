@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/07 18:00:25 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/08 18:11:57 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static void	close_fd(t_cmd *c, int *pipe)
 		close(c->out);
 }
 
-static void	child(t_cmd *c, char **env, int *pipe)
+static void	child(t_cmd *c, t_data *d, int *pipe)
 {
 	if (c->in == -1)
 	{
@@ -114,12 +114,12 @@ static void	child(t_cmd *c, char **env, int *pipe)
 		if (dup2(pipe[1], STDOUT_FILENO) == -1)
 			exit(1);
 	}
-	if (exec_builtin(c, env))
+	if (exec_builtin(c, d))
 		exit(0);
-	execute_cmd(env, c->full_cmd);
+	execute_cmd(d->env, c->full_cmd);
 }
 
-static int	execute_fork(t_cmd *c, char **env, int *pipe)
+static int	execute_fork(t_cmd *c, t_data *d, int *pipe)
 {
 	c->pid = fork();
 	if (c->pid == -1)
@@ -128,13 +128,13 @@ static int	execute_fork(t_cmd *c, char **env, int *pipe)
 		return (1);
 	}
 	if (c->pid == 0)
-		child(c, env, pipe);
+		child(c, d, pipe);
 	else
 		close_fd(c, pipe);
 	return (0);
 }
 
-int	execute(char **env, t_cmd *c)
+int	execute(t_cmd *c, t_data *d)
 {
 	int		piper[2];
 	t_cmd	*ptr;
@@ -145,13 +145,14 @@ int	execute(char **env, t_cmd *c)
 		if (c->next)
 			if (pipe(piper))
 				return (1);
-		if (execute_fork(c, env, piper))
+		if (execute_fork(c, d, piper))
 			return (1);
 		c = c->next;
 	}
 	while (ptr)
 	{
 		waitpid(ptr->pid, &g_status, 0);
+		if (d->end)
 		g_status = WEXITSTATUS(g_status);
 		// ft_fprintf(2, "[%d]\n", g_status);
 		ptr = ptr->next;
