@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 14:56:06 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/08 18:14:55 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/12 17:41:45 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,57 @@ static int	ft_env(char **env)
 
 static int	ft_exit(t_cmd *c, t_data *d)
 {
-	if (!cmd->full_cmd[1])
+	if (!c->full_cmd[1])
 	{
 		d->end = 1;
 		return (1);
 	}
+	return (0);
+}
+
+void	new_pwd(t_data *d)
+{
+	char	*old_pwd;
+	char	*new_pwd;
+
+	old_pwd = ft_getenv("PWD", d->env, 3);
+	new_pwd = getcwd(NULL, 0);
+	set_env_var("OLDPWD", old_pwd, d, 6);
+	set_env_var("PWD", new_pwd, d, 3);
+	free(new_pwd);
+}
+
+void	cd_root(t_cmd *c, t_data *d)
+{
+	char	*home;
+
+	home = ft_getenv("HOME", d->env, 4);
+	if (!home)
+	{
+		error(HNOSET, 1, "cd", NULL);
+		return ;
+	}
+	if (chdir(home))
+	{
+		error(PERROR, 1, "cd: ", c->full_cmd[1]);
+		return ;
+	}
+	new_pwd(d);
+}
+
+static int ft_cd(t_cmd *c, t_data *d)
+{
+	if (!c->full_cmd[1] || c->full_cmd[1][0] == '~')
+	{
+		cd_root(c, d);
+		return (0);
+	}
+	else if (c->full_cmd[2])
+		return(error(TOOARGS, 1, "cd", NULL));
+	if (chdir(c->full_cmd[1]))
+		return (error(PERROR, 1, "cd: ", c->full_cmd[1]));
+	new_pwd(d);
+	return (0);
 }
 /*
 check le premier mot de la commande, si il correspond à un builin, il va l'éxecuter
@@ -92,22 +138,28 @@ sinon, return 0
 */
 int	exec_builtin(t_cmd *cmd, t_data *d)
 {
-	if (ft_strnstr("echo", cmd->full_cmd[0], ft_strlen(cmd->full_cmd[0])))
+	int	size;
+
+	size = ft_strlen(cmd->full_cmd[0]);
+	if (ft_strnstr("echo", cmd->full_cmd[0], size) && size == 4)
 	{
 		ft_echo(cmd->full_cmd);
 		return (1);
 	}
-	else if (ft_strnstr(cmd->full_cmd[0], "cd", ft_strlen(cmd->full_cmd[0])))
+	else if (ft_strnstr(cmd->full_cmd[0], "cd", size), size == 2)
+	{
+		ft_cd(cmd, d);
 		return (1);
-	else if (ft_strnstr(cmd->full_cmd[0], "pwd", ft_strlen(cmd->full_cmd[0])))
+	}
+	else if (ft_strnstr(cmd->full_cmd[0], "pwd", size) && size == 3)
 		return (1);
-	else if (ft_strnstr(cmd->full_cmd[0], "export", ft_strlen(cmd->full_cmd[0])))
+	else if (ft_strnstr(cmd->full_cmd[0], "export", size) && size == 6)
 		return (1);
-	else if (ft_strnstr(cmd->full_cmd[0], "unset", ft_strlen(cmd->full_cmd[0])))
+	else if (ft_strnstr(cmd->full_cmd[0], "unset", size) && size == 5)
 		return (1);
-	else if (ft_strnstr(cmd->full_cmd[0], "env", ft_strlen(cmd->full_cmd[0])))
+	else if (ft_strnstr(cmd->full_cmd[0], "env", size) && size == 3)
 		return (ft_env(d->env));
-	else if (ft_strnstr(cmd->full_cmd[0], "exit", ft_strlen(cmd->full_cmd[0])))
-		return (ft_exit(c, d));
+	else if (ft_strnstr(cmd->full_cmd[0], "exit", size) && size == 4)
+		return (ft_exit(cmd, d));
 	return (0);
 }

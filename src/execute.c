@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/08 18:11:57 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/12 17:35:21 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ void	execute_cmd(char **env, char **cmd)
 	cmdpath = ft_getpaths(env, cmd[0]);
 	if (!cmdpath)
 	{
-		ft_putstr_fd(cmd[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
+		error(NCMD, 127, cmd[0], NULL);
 		ft_freetab(cmd);
 		exit(127);
 	}
