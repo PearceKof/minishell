@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:33:08 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/06 15:48:15 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/13 16:25:48 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,28 +68,42 @@ t_cmd	*fill_cmd(char **input, t_cmd *first)
 	return (first);
 }
 
+static t_cmd	*create_cmdlist(char *input_split, t_cmd *c)
+{
+	char	**nospace_input;
+
+	if (!c)
+		c = new_cmd();
+	else
+		c = add_cmd(c);
+	if (!c)
+		exit(EXIT_FAILURE);
+	nospace_input = split_cmd(input_split);
+	if (!nospace_input)
+		exit(EXIT_FAILURE);
+	c = fill_cmd(nospace_input, c);
+	ft_freetab(nospace_input);
+	if (!c)
+		exit(EXIT_FAILURE);
+	return (c);
+}
+
 t_cmd	*init_cmd(char *input)
 {
 	char	**input_split;
-	char	**nospace_input;
 	t_cmd	*c;
 	size_t	i;
 
 	c = NULL;
-	input_split = ft_split(input, '|');
 	i = 0;
+	input_split = ft_split(input, '|');
+	if (!input_split)
+		exit(EXIT_FAILURE);
 	while (input_split[i])
 	{
-		if (!c)
-			c = new_cmd();
-		else
-			c = add_cmd(c);
-		nospace_input = split_cmd(input_split[i]);
-		if (!nospace_input)
-			return (free_cmd(c));
-		c = fill_cmd(nospace_input, c);
-		ft_freetab(nospace_input);
+		c = create_cmdlist(input_split[i], c);
 		i++;
 	}
+	ft_freetab(input_split);
 	return (c);
 }

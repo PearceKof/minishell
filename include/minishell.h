@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/08 17:50:02 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/13 16:18:09 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,31 @@
 # include "../libft/includes/ft_fprintf.h"
 # include <stdio.h>
 # include <fcntl.h>
+# include <signal.h>
 # include <sys/wait.h>
+
+enum
+{
+	PERROR,
+	QUOTE,
+	PIPEN,
+	SUPERR,
+	INFERR,
+	DSUPERR,
+	DINFERR,
+	NL,
+	NDIR,
+	NPERM,
+	PIPERR,
+	FORKERR,
+	NCMD,
+	DUPERR,
+	OPT,
+	INVID,
+	HNOSET,
+	TOOARGS,
+	NUMARGS
+};
 
 typedef struct s_data
 {
@@ -86,6 +110,6 @@ t_cmd	*new_cmd();
 t_cmd	*add_cmd(t_cmd *first);
 t_cmd	*fill_cmd(char **input, t_cmd *first);
 int		env_size(char **env);
-void	ft_error(char *where, char **freed, int ret);
+int	error(int errorid, int error_status, char *infoa, char *infob);
 
 #endif

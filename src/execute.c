@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/12 17:35:21 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/13 16:24:46 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,14 @@ static char	*ft_getpaths(char **env, char *cmd)
 	char	**env_paths;
 	char	*ptr;
 
-	(void)env;
 	if (ft_strnstr(cmd, "/", ft_strlen(cmd)))
 	{
 		if (access(cmd, X_OK))
-			ft_error(cmd, NULL, 127);
+			return (NULL);
 		ptr = ft_strdup(cmd);
 		return (ptr);
 	}
-	ptr = getenv("PATH");
+	ptr = ft_getenv("PATH", env, 4);
 	env_paths = ft_split(ptr, ':');
 	return (checkpaths(env_paths, cmd));
 }
@@ -63,14 +62,12 @@ void	execute_cmd(char **env, char **cmd)
 	if (!cmdpath)
 	{
 		error(NCMD, 127, cmd[0], NULL);
-		ft_freetab(cmd);
 		exit(127);
 	}
 	if (execve(cmdpath, cmd, env) == -1)
 	{
-		if (cmdpath)
-			free(cmdpath);
-		ft_error("execve failed", cmd, 126);
+		error(PERROR, 126, cmd[0], NULL);
+		exit(126);
 	}
 }
 

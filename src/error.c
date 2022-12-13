@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:59:32 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/12 17:41:07 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/13 16:21:06 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,5 @@ int	error(int errorid, int error_status, char *infoa, char *infob)
 	else
 		perror(infob);
 	ft_putstr_fd(error_type(errorid), 2);
-	return (1);
+	return (error_status);
 }

@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:48:00 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/08 17:35:51 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/13 14:47:07 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ char	**init_env(char **av, t_data *d)
 {
 	char	*tmp;
 
+	if (!d)
+		return (NULL);
 	tmp = getcwd(NULL, 0);
 	d->env = set_env_var("PWD", tmp, d, 3);
 	free(tmp);
