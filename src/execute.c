@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/13 16:24:46 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:41:15 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,9 @@ static void	execute_exit(t_cmd *c)
 
 	size = ft_strlen(c->full_cmd[0]);
 	if (ft_strnstr(c->full_cmd[0], "exit", size) && size == 4)
+	{
 		ft_exit(c->full_cmd);
+	}
 }
 
 int	execute(t_cmd *c, t_data *d)
@@ -156,7 +158,6 @@ int	execute(t_cmd *c, t_data *d)
 	while (ptr)
 	{
 		waitpid(ptr->pid, &g_status, 0);
-		if (d->end)
 		g_status = WEXITSTATUS(g_status);
 		// ft_fprintf(2, "[%d]\n", g_status);
 		ptr = ptr->next;

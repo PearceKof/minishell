@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/13 16:18:09 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:16:39 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <sys/wait.h>
 # include <stdlib.h>
 
-enum
+enum	e_error
 {
 	PERROR,
 	QUOTE,

@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   exit_built.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:36:15 by root              #+#    #+#             */
-/*   Updated: 2022/12/14 11:36:20 by root             ###   ########.fr       */
+/*   Updated: 2022/12/14 17:18:09 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 extern int g_status;
@@ -36,6 +37,7 @@ static int	exit_check_num(char **full_cmd)
 	}
 	return (1);
 }
+
 int	ft_exit(char **full_cmd)
 {
 	/*long long	nbr;
@@ -46,7 +48,7 @@ int	ft_exit(char **full_cmd)
     if (!exit_check_num(full_cmd))
     {
         error(NUMARGS, 1, "exit", NULL);
-		exit(g_status);
+		exit(2);
     }
 	if (full_cmd[2])
 		return(error(TOOARGS, 1, "exit", NULL));
