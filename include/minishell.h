@@ -24,6 +24,7 @@
 # include <fcntl.h>
 # include <signal.h>
 # include <sys/wait.h>
+# include <stdlib.h>
 
 enum
 {
@@ -70,6 +71,8 @@ typedef struct s_cmd
 	builtins.c
 */
 int		exec_builtin(t_cmd *cmd, t_data *d);
+int		ft_exit(char **full_cmd);
+void	exit_test(void);
 /*
 	dup_cmd.c
 */

@@ -88,10 +88,7 @@ static void	close_fd(t_cmd *c, int *pipe)
 static void	child(t_cmd *c, t_data *d, int *pipe)
 {
 	if (c->in == -1)
-	{
-		
 		exit(1);
-	}
 	if (c->in != STDIN_FILENO)
 	{
 		if (dup2(c->in, STDIN_FILENO) == -1)
@@ -130,12 +127,23 @@ static int	execute_fork(t_cmd *c, t_data *d, int *pipe)
 	return (0);
 }
 
+/*On check l'exit avant de fork sinon la fonction exit ne fonctionne pas*/
+static void	execute_exit(t_cmd *c)
+{
+	int		size;
+
+	size = ft_strlen(c->full_cmd[0]);
+	if (ft_strnstr(c->full_cmd[0], "exit", size) && size == 4)
+		ft_exit(c->full_cmd);
+}
+
 int	execute(t_cmd *c, t_data *d)
 {
 	int		piper[2];
 	t_cmd	*ptr;
-
+	
 	ptr = c;
+	execute_exit(c);
 	while (c)
 	{
 		if (c->next)

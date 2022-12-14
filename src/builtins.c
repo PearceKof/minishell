@@ -77,16 +77,6 @@ static int	ft_env(char **env)
 	return (1);
 }
 
-static int	ft_exit(t_cmd *c, t_data *d)
-{
-	if (!c->full_cmd[1])
-	{
-		d->end = 1;
-		return (1);
-	}
-	return (0);
-}
-
 void	new_pwd(t_data *d)
 {
 	char	*old_pwd;
@@ -159,7 +149,5 @@ int	exec_builtin(t_cmd *cmd, t_data *d)
 		return (1);
 	else if (ft_strnstr(cmd->full_cmd[0], "env", size) && size == 3)
 		return (ft_env(d->env));
-	else if (ft_strnstr(cmd->full_cmd[0], "exit", size) && size == 4)
-		return (ft_exit(cmd, d));
 	return (0);
 }

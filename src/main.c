@@ -17,6 +17,11 @@ int	g_status;
 vérifie que l'input à bien été lu et l'enregistre
 dans l'historique si c'est le cas
 */
+void	exit_test(void)
+{
+	exit(g_status);
+}
+
 static	int	input_check(t_data *d)
 {
 	if (!d->input)
