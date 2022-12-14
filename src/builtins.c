@@ -57,7 +57,10 @@ static void	ft_echo(char **full_cmd)
 		j = 0;
 		while (full_cmd[i][j])
 		{
-			write(1, &full_cmd[i][j], 1);
+			if (full_cmd[1][0] == '$' && full_cmd[1][1] == '?')
+				printf("%d\n", g_status);
+			else
+				write(1, &full_cmd[i][j], 1);
 			j++;
 		}
 		if (full_cmd[i + 1])

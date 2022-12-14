@@ -33,7 +33,7 @@ static	int	input_check(t_data *d)
 	}
 	if (d->input[0] == '\0')
 		return (0);
-	add_history(d->input);
+	//add_history(d->input);
 	return (1);
 }
 /*
