@@ -11,32 +11,13 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-char *prompt (void)
-{
-   char *invite = NULL;
 
-    invite = malloc(sizeof(char *) * 2);
-    strcpy(invite, ">");
-    return (invite);
-}
-
-static int utils (void)
-{
-   int end = 0;
-
-   while (!end)
-   {
-      char *s = prompt();
-      printf ("%s", s);
-      end++;
-   }
-   return 0;
-}
+extern int g_status;
 
 static void sigint_handler()
 {
-    printf("\n");
-    utils();
+    printf("\n>");
+    g_status = 130;
 }
 
 void    signaux()
