@@ -13,15 +13,15 @@
 #include "minishell.h"
 
 int	g_status;
-/*
-vérifie que l'input à bien été lu et l'enregistre
-dans l'historique si c'est le cas
-*/
+
 void	exit_test(void)
 {
 	exit(g_status);
 }
-
+/*
+vérifie que l'input à bien été lu et l'enregistre
+dans l'historique si c'est le cas
+*/
 static	int	input_check(t_data *d)
 {
 	if (!d->input)
@@ -44,6 +44,7 @@ void	printcmd(t_cmd *c)
 {
 	int i;
 	int j;
+	
 
 	while (c)
 	{
@@ -81,6 +82,7 @@ int main(int ac, char **av, char **envp)
 	g_status = 0;
 	while (ac && av)
 	{
+		signaux();
 		d->input = readline(">");
 		if (input_check(d))
 		{

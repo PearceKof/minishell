@@ -114,5 +114,8 @@ t_cmd	*add_cmd(t_cmd *first);
 t_cmd	*fill_cmd(char **input, t_cmd *first);
 int		env_size(char **env);
 int	error(int errorid, int error_status, char *infoa, char *infob);
-
+/*
+	signaux.c
+*/
+void    signaux();
 #endif
