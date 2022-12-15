@@ -120,4 +120,8 @@ int	error(int errorid, int error_status, char *infoa, char *infob);
 	signaux.c
 */
 void    signaux();
+/*
+	export_build.c
+*/
+int		ft_export(t_cmd *c, t_data *d);
 #endif
