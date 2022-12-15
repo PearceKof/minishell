@@ -52,21 +52,27 @@ static void	ft_echo(char **full_cmd)
 		flag = 1;
 		i = 2;
 	}
-	while (full_cmd[i])
+	if (full_cmd[1][0] == '$' && full_cmd[1][1] == '?')
 	{
-		j = 0;
-		while (full_cmd[i][j])
-		{
-			if (full_cmd[1][0] == '$' && full_cmd[1][1] == '?')
-				printf("%d\n", g_status);
-			else
-				write(1, &full_cmd[i][j], 1);
-			j++;
-		}
-		if (full_cmd[i + 1])
-			write(1, " ", 1);
-		i++;
+		printf("%d\n", g_status);
+		flag = 1;
 	}
+	else
+	{
+		while (full_cmd[i])
+		{
+			j = 0;
+			while (full_cmd[i][j])
+			{
+				write(1, &full_cmd[i][j], 1);
+				j++;
+			}
+			if (full_cmd[i + 1])
+				write(1, " ", 1);
+			i++;
+		}
+	}
+	
 	if (!flag)
 		write(1, "\n", 1);
 }
@@ -93,6 +99,21 @@ void	new_pwd(t_data *d)
 	free(new_pwd);
 }
 
+int ft_cd(t_cmd *c, t_data *d)
+{
+	if (!c->full_cmd[1] || c->full_cmd[1][0] == '~')
+	{
+		cd_root(c, d);
+		return (0);
+	}
+	else if (c->full_cmd[2])
+		return(error(TOOARGS, 1, "cd", NULL));
+	if (!chdir(c->full_cmd[1]))
+		return (error(PERROR, 1, "cd: ", c->full_cmd[1]));
+	new_pwd(d);
+	return (0);
+}
+
 void	cd_root(t_cmd *c, t_data *d)
 {
 	char	*home;
@@ -111,18 +132,12 @@ void	cd_root(t_cmd *c, t_data *d)
 	new_pwd(d);
 }
 
-static int ft_cd(t_cmd *c, t_data *d)
+static int	ft_pwd(void)
 {
-	if (!c->full_cmd[1] || c->full_cmd[1][0] == '~')
-	{
-		cd_root(c, d);
-		return (0);
-	}
-	else if (c->full_cmd[2])
-		return(error(TOOARGS, 1, "cd", NULL));
-	if (chdir(c->full_cmd[1]))
-		return (error(PERROR, 1, "cd: ", c->full_cmd[1]));
-	new_pwd(d);
+	char	str[PATH_MAX];
+
+	if ((getcwd(str, sizeof(str)) != NULL))
+		printf("%s\n", str);
 	return (0);
 }
 /*
@@ -140,13 +155,11 @@ int	exec_builtin(t_cmd *cmd, t_data *d)
 		ft_echo(cmd->full_cmd);
 		return (1);
 	}
-	else if (ft_strnstr(cmd->full_cmd[0], "cd", size), size == 2)
+	else if (ft_strnstr(cmd->full_cmd[0], "pwd", size) && size == 3)
 	{
-		ft_cd(cmd, d);
+		ft_pwd();
 		return (1);
 	}
-	else if (ft_strnstr(cmd->full_cmd[0], "pwd", size) && size == 3)
-		return (1);
 	else if (ft_strnstr(cmd->full_cmd[0], "export", size) && size == 6)
 		return (1);
 	else if (ft_strnstr(cmd->full_cmd[0], "unset", size) && size == 5)

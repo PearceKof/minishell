@@ -43,13 +43,22 @@ extern int g_status;
 */
 static void sigint_handler(int sig)
 {
+    pid_t   pid;
+    int     states;
+
+    pid = waitpid(-1, &states, WNOHANG);
 	if (sig == SIGINT)
 	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		g_status = 130;
+        if (pid == -1)
+		{
+			write(1, "\n", 1);
+		    rl_on_new_line();
+		    rl_replace_line("", 0);
+		    rl_redisplay();
+		    g_status = 130;
+		}
+		else
+			write(1, "\n", 1);
 	}
 }
 

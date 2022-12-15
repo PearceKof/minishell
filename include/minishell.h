@@ -70,6 +70,8 @@ typedef struct s_cmd
 /*
 	builtins.c
 */
+int		ft_cd(t_cmd *c, t_data *d);
+void	cd_root(t_cmd *c, t_data *d);
 int		exec_builtin(t_cmd *cmd, t_data *d);
 int		ft_exit(char **full_cmd);
 void	exit_test(void);

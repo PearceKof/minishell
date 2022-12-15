@@ -128,15 +128,15 @@ static int	execute_fork(t_cmd *c, t_data *d, int *pipe)
 }
 
 /*On check l'exit avant de fork sinon la fonction exit ne fonctionne pas*/
-static void	execute_exit(t_cmd *c)
+static void	execute_exit(t_cmd *c, t_data *d)
 {
 	int		size;
 
 	size = ft_strlen(c->full_cmd[0]);
 	if (ft_strnstr(c->full_cmd[0], "exit", size) && size == 4)
-	{
 		ft_exit(c->full_cmd);
-	}
+	else if (ft_strnstr(c->full_cmd[0], "cd", size), size == 2)
+		ft_cd(c, d);
 }
 
 int	execute(t_cmd *c, t_data *d)
@@ -145,7 +145,7 @@ int	execute(t_cmd *c, t_data *d)
 	t_cmd	*ptr;
 	
 	ptr = c;
-	execute_exit(c);
+	execute_exit(c, d);
 	while (c)
 	{
 		if (c->next)
