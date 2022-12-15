@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 14:23:57 by root              #+#    #+#             */
-/*   Updated: 2022/12/15 16:15:19 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/15 16:19:55 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ extern int g_status;
 //    return (0);
 // }
 /*
-
+	check si le signal est le bon et passe à la ligne
+	affiche le prompt à la ligne suivante
+	nettoie la ligne
+	puis réaffiche le prompt
 */
 static void sigint_handler(int sig)
 {
@@ -53,5 +56,4 @@ static void sigint_handler(int sig)
 void    signaux()
 {
     signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
 }
