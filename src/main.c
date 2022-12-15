@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/14 16:51:36 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/15 16:00:00 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static	int	input_check(t_data *d)
 	}
 	if (d->input[0] == '\0')
 		return (0);
-	//add_history(d->input);
+	add_history(d->input);
 	return (1);
 }
 /*
@@ -83,13 +83,13 @@ int main(int ac, char **av, char **envp)
 	while (ac && av)
 	{
 		signaux();
-		d->input = readline(">");
+		d->input = readline("=>");
 		if (input_check(d))
 		{
 			c = init_cmd(d->input);
 			if (c)
 			{
-				// printcmd(c);
+				printcmd(c);
 				execute(c, d);
 				free_cmd(c);
 				if (d->end)

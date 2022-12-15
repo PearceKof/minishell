@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:55:06 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/06 15:15:42 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/15 15:26:48 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,12 @@ static char	check_bracket(char const *s, char del, size_t *i)
 	}
 	return (del);
 }
-
+/*
+	compte le nombre de string dont on aura besoin en fonction
+	des délimiteurs (espaces ou brackets). Si à la fin del = espace. ça veut
+	dire qu'un bracket n'est pas fermé et la ft return -1
+	si tout s'est bien passé, return le nbr de string à allouer
+*/
 static int	ft_count_space(char const *s)
 {
 	char	del;
@@ -93,6 +98,7 @@ static const char	*ft_fill_tab(char **tab, const char *s)
 			del = ' ';
 		else if (del == ' ' && (s[i] == '\"' || s[i] == '\''))
 			del = s[i];
+		// else if (s[i] == '$' && del != '\"')
 		i++;
 		if (del != ' ' && s[i] == del)
 		{
@@ -102,7 +108,10 @@ static const char	*ft_fill_tab(char **tab, const char *s)
 	}
 	return (dupstr_without_del(tab, s, i));
 }
-
+/*
+	Reproduit la ft split mais le délimiteur est espace. Si il y a un ' ou ",
+	le délimiteur devient l'apostrophe en question. 
+*/
 char	**split_cmd(char const *s)
 {
 	char	**tab;
