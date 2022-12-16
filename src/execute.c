@@ -128,27 +128,40 @@ static int	execute_fork(t_cmd *c, t_data *d, int *pipe)
 }
 
 /*On check l'exit avant de fork sinon la fonction exit ne fonctionne pas*/
-static void	execute_exit(t_cmd *c, t_data *d)
+static int	execute_exit(t_cmd *c, t_data *d)
 {
 	int		size;
 
 	size = ft_strlen(c->full_cmd[0]);
 	if (ft_strnstr(c->full_cmd[0], "exit", size) && size == 4)
+	{
 		ft_exit(c->full_cmd);
+		return (1);
+	}
+		
 	else if (ft_strnstr(c->full_cmd[0], "cd", size), size == 2)
+	{
 		ft_cd(c, d);
+		return (1);
+	}
+		
 	else if (ft_strnstr(c->full_cmd[0], "export", size) && size == 6 && c->full_cmd[1])
+	{
 		ft_export(c, d);
+		return (1);
+	}
+	return (0);
 }
 
 int	execute(t_cmd *c, t_data *d)
 {
 	int		piper[2];
+	int		ret;
 	t_cmd	*ptr;
 	
 	ptr = c;
-	execute_exit(c, d);
-	while (c)
+	ret = execute_exit(c, d);
+	while (c && !ret)
 	{
 		if (c->next)
 			if (pipe(piper))
@@ -157,7 +170,7 @@ int	execute(t_cmd *c, t_data *d)
 			return (1);
 		c = c->next;
 	}
-	while (ptr)
+	while (ptr && !ret)
 	{
 		waitpid(ptr->pid, &g_status, 0);
 		g_status = WEXITSTATUS(g_status);
