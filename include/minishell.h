@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/14 17:16:39 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/16 17:05:09 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,20 +102,20 @@ void	*free_cmd(t_cmd *c);
 /*
 	init_cmd.c
 */
-t_cmd	*init_cmd(char *input);
+t_cmd	*init_cmd(char *input, char **env);
 /*
 	init.c
 */
 t_data *init_term(char **av, char **envp);
 int		redirection(char **input, t_cmd *c, size_t i, size_t j);
 void	*ft_mallerror(char **tab, size_t i);
-char	**split_cmd(char const *s);
+char	**split_cmd(char const *s, char **env);
 char	*get_input(void);
 t_cmd	*new_cmd();
 t_cmd	*add_cmd(t_cmd *first);
 t_cmd	*fill_cmd(char **input, t_cmd *first);
 int		env_size(char **env);
-int	error(int errorid, int error_status, char *infoa, char *infob);
+int		error(int errorid, int error_status, char *infoa, char *infob);
 /*
 	signaux.c
 */
@@ -124,4 +124,6 @@ void    signaux();
 	export_build.c
 */
 int		ft_export(t_cmd *c, t_data *d);
+
+int	is_only_space(char *s);
 #endif

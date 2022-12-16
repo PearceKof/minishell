@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:33:08 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/13 16:25:48 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/16 16:58:21 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,30 +45,30 @@ t_cmd	*add_cmd(t_cmd *first)
 t_cmd	*fill_cmd(char **input, t_cmd *first)
 {
 	t_cmd	*ptr;
-	size_t	i;
-	size_t	j;
+	// size_t	i;
+	// size_t	j;
 
 	ptr = first;
 	while (ptr->next)
 		ptr = ptr->next;
-	i = 0;
-	while (input[i])
-	{
-		j = 0;
-		while (input[i][j])
-		{
-			if (input[i][j] == '<' || input[i][j] == '>')
-				if (redirection(input, ptr, i, j))
-					return (NULL);
-			j++;
-		}
-		i++;
-	}
+	// i = 0;
+	// while (input[i])
+	// {
+	// 	j = 0;
+	// 	while (input[i][j])
+	// 	{
+			// if (input[i][j] == '<' || input[i][j] == '>')
+			// 	if (redirection(input, ptr, i, j))
+			// 		return (NULL);
+	// 		j++;
+	// 	}
+	// 	i++;
+	// }
 	ptr->full_cmd = dup_fullcmd(input);
 	return (first);
 }
 
-static t_cmd	*create_cmdlist(char *input_split, t_cmd *c)
+static t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env)
 {
 	char	**nospace_input;
 
@@ -78,7 +78,7 @@ static t_cmd	*create_cmdlist(char *input_split, t_cmd *c)
 		c = add_cmd(c);
 	if (!c)
 		exit(EXIT_FAILURE);
-	nospace_input = split_cmd(input_split);
+	nospace_input = split_cmd(input_split, env);
 	if (!nospace_input)
 		exit(EXIT_FAILURE);
 	c = fill_cmd(nospace_input, c);
@@ -88,7 +88,7 @@ static t_cmd	*create_cmdlist(char *input_split, t_cmd *c)
 	return (c);
 }
 
-t_cmd	*init_cmd(char *input)
+t_cmd	*init_cmd(char *input, char **env)
 {
 	char	**input_split;
 	t_cmd	*c;
@@ -101,7 +101,7 @@ t_cmd	*init_cmd(char *input)
 		exit(EXIT_FAILURE);
 	while (input_split[i])
 	{
-		c = create_cmdlist(input_split[i], c);
+		c = create_cmdlist(input_split[i], c, env);
 		i++;
 	}
 	ft_freetab(input_split);

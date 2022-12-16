@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/15 16:00:00 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/16 17:03:59 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,24 @@ void	exit_test(void)
 vérifie que l'input à bien été lu et l'enregistre
 dans l'historique si c'est le cas
 */
+
+int	is_only_space(char *s)
+{
+	int	i;
+	i = 0;
+	while (s[i])
+	{
+		if (!ft_strchr(" \t\n\v\f\r", s[i]))
+			return (0);
+		i++;
+	}
+	return(0);
+}
+
 static	int	input_check(t_data *d)
 {
+	if (is_only_space(d->input))
+		return(0);
 	if (!d->input)
 	{
 		ft_putstr_fd("exit\n", 2);
@@ -86,7 +102,7 @@ int main(int ac, char **av, char **envp)
 		d->input = readline("=>");
 		if (input_check(d))
 		{
-			c = init_cmd(d->input);
+			c = init_cmd(d->input, d->env);
 			if (c)
 			{
 				printcmd(c);
