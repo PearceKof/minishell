@@ -75,6 +75,7 @@ void	cd_root(t_cmd *c, t_data *d);
 int		exec_builtin(t_cmd *cmd, t_data *d);
 int		ft_exit(char **full_cmd);
 void	exit_test(void);
+int		ft_env(char **env);
 /*
 	dup_cmd.c
 */

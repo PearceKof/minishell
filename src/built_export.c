@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_built.c                                     :+:      :+:    :+:   */
+/*   built_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: root <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 23:37:34 by root              #+#    #+#             */
-/*   Updated: 2022/12/15 23:37:37 by root             ###   ########.fr       */
+/*   Updated: 2022/12/16 15:10:04 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ int		ft_export(t_cmd *c, t_data *d)
 
 	i = 0;
 	str = c->full_cmd[1];
+	if (str[0] == '=')
+		 return(error(INVID, 1, str, NULL));
 	dup = malloc(sizeof(char) * ft_strlen(str));
-	/*if (!dup)
-		return malloc error*/
+	if (!dup)
+		return (0);
 	while (str[i] != '=')
 	{
 		dup[i] = str[i];

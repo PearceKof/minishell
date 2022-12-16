@@ -137,6 +137,8 @@ static void	execute_exit(t_cmd *c, t_data *d)
 		ft_exit(c->full_cmd);
 	else if (ft_strnstr(c->full_cmd[0], "cd", size), size == 2)
 		ft_cd(c, d);
+	else if (ft_strnstr(c->full_cmd[0], "export", size) && size == 6 && c->full_cmd[1])
+		ft_export(c, d);
 }
 
 int	execute(t_cmd *c, t_data *d)
