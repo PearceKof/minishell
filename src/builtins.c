@@ -77,7 +77,7 @@ static void	ft_echo(char **full_cmd)
 		write(1, "\n", 1);
 }
 
-static int	ft_env(char **env)
+int	ft_env(char **env)
 {
 	int	i;
 
@@ -155,14 +155,11 @@ int	exec_builtin(t_cmd *cmd, t_data *d)
 		ft_echo(cmd->full_cmd);
 		return (1);
 	}
+	else if (ft_strnstr(cmd->full_cmd[0], "export", size) && size == 6 && !cmd->full_cmd[1])
+		return (ft_env(d->env));
 	else if (ft_strnstr(cmd->full_cmd[0], "pwd", size) && size == 3)
 	{
 		ft_pwd();
-		return (1);
-	}
-	else if (ft_strnstr(cmd->full_cmd[0], "export", size) && size == 6)
-	{
-		ft_export(cmd, d);
 		return (1);
 	}
 	else if (ft_strnstr(cmd->full_cmd[0], "unset", size) && size == 5)
