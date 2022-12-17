@@ -162,8 +162,6 @@ int	exec_builtin(t_cmd *cmd, t_data *d)
 		ft_pwd();
 		return (1);
 	}
-	else if (ft_strnstr(cmd->full_cmd[0], "unset", size) && size == 5)
-		return (1);
 	else if (ft_strnstr(cmd->full_cmd[0], "env", size) && size == 3)
 		return (ft_env(d->env));
 	return (0);

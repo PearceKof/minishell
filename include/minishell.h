@@ -125,4 +125,8 @@ void    signaux();
 	export_build.c
 */
 int		ft_export(t_cmd *c, t_data *d);
+/*
+	built_unset.c
+*/
+int		ft_unset(t_cmd *c);
 #endif
