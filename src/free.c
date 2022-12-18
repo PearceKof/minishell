@@ -16,6 +16,7 @@ void	*free_cmd(t_cmd *c)
 {
 	t_cmd	*next;
 
+	next = NULL;
 	if (c)
 	{
 		next = c->next;

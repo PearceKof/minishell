@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/16 17:03:59 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/17 20:42:12 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	printcmd(t_cmd *c)
 			ft_fprintf(2, "|\n-------\n");
 			i++;
 		}
+		ft_fprintf(2, "TEST\n");
 		ft_fprintf(2, "\n");
 		c = c->next;
 	}
@@ -92,6 +93,8 @@ int main(int ac, char **av, char **envp)
 	t_data	*d;
 	t_cmd	*c;
 
+	d = NULL;
+	c = NULL;
 	d = init_term(av, envp);
 	if (!d)
 		exit(EXIT_FAILURE);
