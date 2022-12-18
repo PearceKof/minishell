@@ -17,12 +17,14 @@ int		ft_export(t_cmd *c, t_data *d)
 	char	*str;
 	char	*dup;
 	int		i;
+	int		len;
 
 	i = 0;
 	str = c->full_cmd[1];
+	len = ft_strlen(str) + 1;
 	if (str[0] == '=')
 		 return(error(INVID, 1, str, NULL));
-	dup = malloc(sizeof(char) * ft_strlen(str));
+	dup = malloc(sizeof(char) * len);
 	if (!dup)
 		return (0);
 	while (str[i] != '=')

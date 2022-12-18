@@ -150,6 +150,12 @@ static int	execute_exit(t_cmd *c, t_data *d)
 		ft_export(c, d);
 		return (1);
 	}
+	else if (ft_strnstr(c->full_cmd[0], "unset", size) && size == 5)
+	{
+		ft_unset(c);
+		return (1);
+	}
+		
 	return (0);
 }
 

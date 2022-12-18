@@ -125,6 +125,13 @@ void    signaux();
 	export_build.c
 */
 int		ft_export(t_cmd *c, t_data *d);
+<<<<<<< HEAD
 
 int	is_only_space(char *s);
+=======
+/*
+	built_unset.c
+*/
+int		ft_unset(t_cmd *c);
+>>>>>>> 1faa6707b9c0f498f0a3548cdfdf54691558717c
 #endif
