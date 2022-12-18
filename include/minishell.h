@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/16 17:05:09 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/18 15:32:28 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,13 +125,10 @@ void    signaux();
 	export_build.c
 */
 int		ft_export(t_cmd *c, t_data *d);
-<<<<<<< HEAD
 
 int	is_only_space(char *s);
-=======
 /*
 	built_unset.c
 */
 int		ft_unset(t_cmd *c);
->>>>>>> 1faa6707b9c0f498f0a3548cdfdf54691558717c
 #endif

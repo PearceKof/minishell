@@ -6,25 +6,13 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:36:15 by root              #+#    #+#             */
-/*   Updated: 2022/12/16 15:09:39 by root             ###   ########.fr       */
+/*   Updated: 2022/12/18 16:16:56 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern int g_status;
-
-static void	range(long long nbr)
-{
-	while (nbr <= -256 || nbr >= 256)
-	{
-		if (nbr <= -256)
-			nbr += 256;
-		else if (nbr >= 256)
-			nbr -= 256;
-	}
-	g_status = (nbr % 256 + 256) % 256;
-}
 
 static int  check_sign(char *sign)
 {
@@ -52,9 +40,8 @@ static int	exit_check_num(char **full_cmd)
 
 int	ft_exit(char **full_cmd)
 {
-	long long	nbr;
+	unsigned char	nbr;
 
-	nbr = ft_atoi(full_cmd[1]);
 	if (!full_cmd[1])
 		exit(g_status);
     if (!exit_check_num(full_cmd))
@@ -66,7 +53,8 @@ int	ft_exit(char **full_cmd)
 		return(error(TOOARGS, 1, "exit", NULL));
 	if (exit_check_num(full_cmd))
 	{
-		range(nbr);
+		nbr = (unsigned char)ft_atoi(full_cmd[1]);
+		g_status = nbr;
 		exit(g_status);
 	}
 	return (0);

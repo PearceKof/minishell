@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:55:06 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/18 15:27:31 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/18 15:34:08 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,7 +281,6 @@ static int	get_str_size(const char *s, char **env)
 			del = ' ';
 			i++;
 		}
-		ft_fprintf(2, "%s\n", &s[i]);
 	}
 	// ft_fprintf(2, "get_str_size %d\n", size);
 	return (size);
