@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/20 15:51:08 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/20 16:08:53 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	exit_test(void)
 	exit(g_status);
 }
 /*
-vérifie que l'input à bien été lu et l'enregistre
-dans l'historique si c'est le cas
+	check si l'argument s contient autre chose que des caractéres "vides"
+	" \t\n\v\f\r\'\""
+	return 
 */
-
 int	is_only_space(char *s)
 {
 	int	i;
@@ -30,20 +30,23 @@ int	is_only_space(char *s)
 	i = 0;
 	while (s[i])
 	{
-		if (!ft_strchr(" \t\n\v\f\r\'\"", s[i]))
+		if (!ft_strchr(" \t\n\v\f\r", s[i]))
 			return (0);
 		i++;
 	}
 	return(1);
 }
-
-static	int	input_check(t_data *d)
+/*
+vérifie que l'input à bien été lu et qu'il contient bien une commande
+enregistre dans l'historique si la commande est correct
+return 1 si l'input est correct
+return 0 si incorrect
+*/
+static	int	is_correct_input(t_data *d)
 {
 	if (!d->input)
 	{
 		ft_putstr_fd("exit\n", 2);
-		ft_freetab(d->env);
-		free(d);
 		exit(0);
 	}
 	if (is_only_space(d->input) || d->input[0] == '\0')
@@ -98,7 +101,7 @@ int main(int ac, char **av, char **envp)
 	{
 		signaux();
 		d->input = readline("=>");
-		if (input_check(d))
+		if (is_correct_input(d))
 		{
 			c = init_cmd(d->input, d->env);
 			if (c)
@@ -106,8 +109,8 @@ int main(int ac, char **av, char **envp)
 				printcmd(c);
 				execute(c, d);
 				free_cmd(c);
-				if (d->end)
-					exit(g_status);
+				// if (d->end)
+				// 	exit(g_status);
 			}
 		}
 		free(d->input);

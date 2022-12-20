@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:48:00 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/17 16:15:01 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/20 16:04:37 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,13 @@ int	varname_size(char *varname)
 {
 	int	i;
 
-	i = -1;
-	while (varname[++i])
+	i = 0;
+	while (varname[i])
+	{
 		if (varname[i] == '=')
 			return (i);
+		i++;
+	}
 	return (0);
 }
 
@@ -28,12 +31,13 @@ char	*ft_getenv(char *varname, char **env, int len)
 	int	lencmp;
 	int	i;
 
-	i = -1;
-	while (env[++i])
+	i = 0;
+	while (env[i])
 	{
 		lencmp = varname_size(env[i]);
 		if (ft_strnstr(env[i], varname, ft_strlen(varname)) && lencmp == len)
 			return (ft_strchr(env[i], '=') + 1);
+		i++;
 	}
 	return (NULL);
 }
@@ -57,20 +61,18 @@ void	addvar_to_env(t_data *d, char *addvar)
 	new_env = (char **)malloc((ft_tablen(d->env) + 2) * sizeof(char *));
 	if (!new_env)
 		return ;
-	i = -1;
-	while (d->env[++i])
+	i = 0;
+	while (d->env[i])
 	{
 		new_env[i] = ft_strdup(d->env[i]);
 		if (!new_env[i])
-		{
-			while (i--)
-				free(new_env[i]);
-			free(new_env);
-			return ;
-		}
+			exit(EXIT_FAILURE);
+		i++;
 	}
-	new_env[i++] = ft_strdup(addvar);
-	new_env[i] = NULL;
+	new_env[i] = ft_strdup(addvar);
+	if (!new_env[i])
+		exit(EXIT_FAILURE);
+	new_env[i + 1] = NULL;
 	ft_freetab(d->env);
 	d->env = new_env;
 }
