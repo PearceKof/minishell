@@ -61,14 +61,18 @@ char	**dup_fullcmd(char **tab)
 	if (!tabdup)
 		return (NULL);
 	tabdup[size] = NULL;
-	i = -1;
+	i = 0;
 	size = 0;
-	while (tab[++i])
+	while (tab[i])
 	{
 		if (!is_only_space(tab[i]))
-			tabdup[size++] = dup_cmd(tab[i]);
+		{
+			tabdup[size] = dup_cmd(tab[i]);
+			size++;
+		}
 		if (!tabdup[size - 1] && tab[i])
 			return (error_dup(tabdup, size));
+		i++;
 	}
 	return (tabdup);
 }

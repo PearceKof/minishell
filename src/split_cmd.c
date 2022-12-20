@@ -6,13 +6,13 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:55:06 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/20 16:50:42 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/20 18:21:27 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	check_bracket(char const *s, char del, size_t *i)
+static char	nxt_del(char const *s, char del, size_t *i)
 {
 	if (del == s[*i] && (s[*i] == '\"' || s[*i] == '\''))
 		del = ' ';
@@ -48,31 +48,11 @@ static int	ft_count_space(char const *s)
 			count++;
 		del = ' ';
 		while (s[i] && s[i] != del)
-			del = check_bracket(s, del, &i);
+			del = nxt_del(s, del, &i);
 	}
 	if (del != ' ')
 		return (-1);
 	return (count);
-}
-
-int	var_value_size(char *varname, char **env)
-{
-	char	*ptr;
-	char	*value;
-	int		i;
-
-	ptr = NULL;
-	value = NULL;
-	ptr = ft_getenv(varname, env, ft_strlen(varname));
-	if (!ptr)
-		return (ft_strlen(varname) + 1);
-	value = ft_strdup(ptr);
-	i = 0;
-	while (value[i])
-		i++;
-	free(value);
-	// ft_fprintf(2, "var_value_size :|%d|\n", i);
-	return (i);
 }
 /*
 	isole le nom de la variable de la string s à partir de start
@@ -108,44 +88,55 @@ static char	*isolate_varname(const char *s, int start)
 	return (varname);
 }
 
-static int	get_str_size(const char *s, char **env)
+int	var_value_size(char **env, const char *s, int *i)
 {
 	char	*varname;
-	char	del;
-	int		i;
+	char	*ptr;
+	char	*value;
 	int		size;
 
-	while (*s && *s == ' ')
-		s++;
+	varname = isolate_varname(s, *i);
+	ptr = ft_getenv(varname, env, ft_strlen(varname));
+	size = ft_strlen(varname) + 1;
+	free(varname);
+	if (!ptr)
+		return (size);
+	value = ft_strdup(ptr);
+	if (!value)
+		exit(EXIT_FAILURE);
+	size = ft_strlen(value);
+	free(value);
+	while (s[*i] && s[*i] != ' ' && s[*i] != '\'' && s[*i] != '\"')
+		*i += 1;
+	// ft_fprintf(2, "var_value_size :|%d|\n", i);
+	return (size);
+}
+
+static int	get_str_size(const char *s, char **env, char del)
+{
+	int	i;
+	int	size;
+
 	i = 0;
 	size = 0;
-	del = ' ';
-	// ft_fprintf(2, "strsize beging with |%s|\n", &s[i]);
 	while (s[i] && s[i] != del)
 	{
 		if (del == s[i] && (s[i] == '\"' || s[i] == '\''))
 			del = ' ';
 		else if (del == ' ' && (s[i] == '\"' || s[i] == '\''))
 			del = s[i];
-		if (s[i] == '$' && del != '\'')
-		{
-			varname = isolate_varname(s, i);
-			size += (var_value_size(varname, env));
-			while (s[i] && s[i] != ' ' && s[i] != '\'' && s[i] != '\"')
-				i++;
-			free(varname);
-			// ft_fprintf(2, "get_str_size afterdoll %d\n", size);
-		}
-		else
-		{
+		else if (s[i] != '$')
 			size++;
+		if (s[i] == '$' && del != '\'')
+			size += var_value_size(env, s, &i);
+		else
 			i++;
-		}
 		if (del != ' ' && s[i] == del)
 		{
 			del = ' ';
 			i++;
 		}
+		ft_fprintf(2, "size: %d\ns: |%c|\ndel: |%c|\n", size, s[i], del);
 	}
 	ft_fprintf(2, "get_str_size %d\n", size);
 	return (size);
@@ -190,8 +181,8 @@ static char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env
 }
 static char	*fill_tab(char *tab, const char **s, char **env, int size)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	char	del;
 
 	i = 0;
@@ -238,27 +229,6 @@ static char	*malloc_and_fill_tab(const char **s, char **env, int size)
 	tab = (char *)ft_calloc(sizeof(char), (size + 1));
 	if (!tab)
 		exit(EXIT_FAILURE);
-	// while (k < size && (*s)[j])
-	// {
-	// 	if ((*s)[j] == '\"' || (*s)[j] == '\'')
-	// 	{
-	// 		del = (*s)[j++];
-	// 		while ((*s)[j] && del != (*s)[j] && k < size)
-	// 		{
-	// 			if (del == '\"' && (*s)[j] == '$')
-	// 				tab = join_varvalue(s, &j, tab, &k, env);
-	// 			else
-	// 				tab[k++] = (*s)[j++];
-	// 		}
-	// 		j++;
-	// 	}
-	// 	else if ((*s)[j] == '$')
-	// 		tab = join_varvalue(s, &j, tab, &k, env);
-	// 	else
-	// 		tab[k++] = (*s)[j++];
-	// }
-	// tab[k] = '\0';
-	// (*s) += j;
 	return (fill_tab(tab, s, env, size));
 }
 /*
@@ -285,7 +255,8 @@ char	**split_cmd(char const *s, char **env)
 	{
 		while (*s && *s == ' ')
 			s++;
-		tab[i] = malloc_and_fill_tab(&s, env, get_str_size(s, env));
+		tab[i] = malloc_and_fill_tab(&s, env, get_str_size(s, env, ' '));
+		ft_fprintf(2, "tab: |%s|\n", tab[i]);
 		if (!tab[i])
 			exit(EXIT_FAILURE);
 		i++;
