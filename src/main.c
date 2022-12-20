@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/18 15:33:13 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/20 15:51:08 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,19 @@ dans l'historique si c'est le cas
 int	is_only_space(char *s)
 {
 	int	i;
+
 	i = 0;
 	while (s[i])
 	{
-		if (!ft_strchr(" \t\n\v\f\r", s[i]))
+		if (!ft_strchr(" \t\n\v\f\r\'\"", s[i]))
 			return (0);
 		i++;
 	}
-	return(0);
+	return(1);
 }
 
 static	int	input_check(t_data *d)
 {
-	if (is_only_space(d->input))
-		return(0);
 	if (!d->input)
 	{
 		ft_putstr_fd("exit\n", 2);
@@ -47,8 +46,8 @@ static	int	input_check(t_data *d)
 		free(d);
 		exit(0);
 	}
-	if (d->input[0] == '\0')
-		return (0);
+	if (is_only_space(d->input) || d->input[0] == '\0')
+		return(0);
 	add_history(d->input);
 	return (1);
 }
@@ -91,8 +90,6 @@ int main(int ac, char **av, char **envp)
 	t_data	*d;
 	t_cmd	*c;
 
-	d = NULL;
-	c = NULL;
 	d = init_term(av, envp);
 	if (!d)
 		exit(EXIT_FAILURE);

@@ -6,12 +6,14 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:59:32 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/13 16:21:06 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/20 15:52:37 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 extern int g_status;
+
+
 
 static char	*error_type(int errorid)
 {

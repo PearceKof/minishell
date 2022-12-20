@@ -6,29 +6,29 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:36:15 by root              #+#    #+#             */
-/*   Updated: 2022/12/18 16:16:56 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/20 15:53:08 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern int g_status;
+extern int	g_status;
 
-static int  check_sign(char *sign)
+static int	check_sign(char *sign)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    if (sign[i] == '-' || sign[i] == '+')
-        i++;
-    return (i);
+	i = 0;
+	if (sign[i] == '-' || sign[i] == '+')
+		i++;
+	return (i);
 }
 
 static int	exit_check_num(char **full_cmd)
 {
 	int	i;
 
-    i = check_sign(full_cmd[1]);
+	i = check_sign(full_cmd[1]);
 	while (full_cmd[1][i])
 	{
 		if (full_cmd[1][i] < '0' || full_cmd[1][i] > '9')
@@ -44,16 +44,16 @@ int	ft_exit(char **full_cmd)
 
 	if (!full_cmd[1])
 		exit(g_status);
-    if (!exit_check_num(full_cmd))
-    {
-        error(NUMARGS, 1, "exit", NULL);
+	if (!exit_check_num(full_cmd))
+	{
+		error(NUMARGS, 1, "exit", NULL);
 		exit(2);
-    }
+	}
 	if (full_cmd[2])
 		return(error(TOOARGS, 1, "exit", NULL));
+	nbr = (unsigned char)ft_atoi(full_cmd[1]);
 	if (exit_check_num(full_cmd))
 	{
-		nbr = (unsigned char)ft_atoi(full_cmd[1]);
 		g_status = nbr;
 		exit(g_status);
 	}
