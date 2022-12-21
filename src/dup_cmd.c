@@ -38,40 +38,24 @@ char	*dup_cmd(const char *src)
 	return (mem);
 }
 
-static char	**error_dup(char **freed, size_t size)
-{
-	while (--size)
-		free(freed[size]);
-	free(freed);
-	return (NULL);
-}
-
 char	**dup_fullcmd(char **tab)
 {
 	char	**tabdup;
 	int		i;
-	size_t	size;
 
-	i = -1;
-	size = 0;
-	while (tab[++i])
-		if (!ft_strchr(tab[i], ' '))
-			size++;
-	tabdup = (char **)malloc(sizeof(char *) * (size + 1));
+	i = 0;
+	while (tab[i])
+		i++;
+	tabdup = (char **)malloc(sizeof(char *) * (i + 1));
 	if (!tabdup)
 		return (NULL);
-	tabdup[size] = NULL;
+	tabdup[i] = NULL;
 	i = 0;
-	size = 0;
 	while (tab[i])
 	{
-		if (!is_only_space(tab[i]))
-		{
-			tabdup[size] = dup_cmd(tab[i]);
-			size++;
-		}
-		if (!tabdup[size - 1] && tab[i])
-			return (error_dup(tabdup, size));
+		tabdup[i] = ft_strdup(tab[i]);
+		if (!tabdup[i] && tab[i])
+			exit(EXIT_FAILURE);
 		i++;
 	}
 	return (tabdup);
