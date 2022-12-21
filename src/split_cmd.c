@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:55:06 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/21 16:36:09 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/21 16:58:13 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static char	*isolate_varname(const char *s, int start)
 	varname = NULL;
 	start++;
 	end = start;
-	while (s[end] && s[end] != ' ' && s[end] != '\"' && s[end] != '\'')
+	while (s[end] && s[end] != ' ' && s[end] != '\"' && s[end] != '\'' && s[end] != '$')
 		end++;
 	varname = (char *)ft_calloc(sizeof(char), (end - start) + 1);
 	if (!varname)
@@ -96,6 +96,9 @@ int	var_value_size(char **env, const char *s, int *i)
 	int		size;
 
 	varname = isolate_varname(s, *i);
+	*i += 1;
+	while (s[*i] && s[*i] != ' ' && s[*i] != '\'' && s[*i] != '\"' && s[*i] != '$')
+		*i += 1;
 	ptr = ft_getenv(varname, env, ft_strlen(varname));
 	size = ft_strlen(varname) + 1;
 	free(varname);
@@ -106,8 +109,6 @@ int	var_value_size(char **env, const char *s, int *i)
 		exit(EXIT_FAILURE);
 	size = ft_strlen(value);
 	free(value);
-	while (s[*i] && s[*i] != ' ' && s[*i] != '\'' && s[*i] != '\"')
-		*i += 1;
 	// ft_fprintf(2, "var_value_size :|%d|\n", i);
 	return (size);
 }
@@ -170,7 +171,8 @@ static char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env
 		*k += 1;
 		i++;
 	}
-	while ((*s)[*j] && (*s)[*j] != ' ' && (*s)[*j] != '\'' && (*s)[*j] != '\"')
+	*j += 1;
+	while ((*s)[*j] && (*s)[*j] != ' ' && (*s)[*j] != '\'' && (*s)[*j] != '\"' && (*s)[*j] != '$')
 	{
 		*j += 1;
 	}
