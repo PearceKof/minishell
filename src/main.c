@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/20 16:08:53 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/21 18:30:29 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,9 @@ void	printcmd(t_cmd *c)
 		while (c->full_cmd[i])
 		{
 			j = 0;
+			ft_fprintf(2, "|");
 			while (c->full_cmd[i][j])
 			{
-				if (j == 0)
-					ft_fprintf(2, "|");
 				ft_fprintf(2, "%c", c->full_cmd[i][j]);
 				j++;
 			}

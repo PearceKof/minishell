@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 14:56:06 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/16 14:59:06 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/21 18:35:56 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,6 @@ static void	ft_echo(char **full_cmd)
 	{
 		flag = 1;
 		i = 2;
-	}
-	if (full_cmd[1][0] == '$' && full_cmd[1][1] == '?')
-	{
-		printf("%d\n", g_status);
-		flag = 1;
 	}
 	else
 	{
