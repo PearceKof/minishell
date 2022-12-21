@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:55:06 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/20 18:21:27 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/21 16:36:09 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ static int	get_str_size(const char *s, char **env, char del)
 	size = 0;
 	while (s[i] && s[i] != del)
 	{
+		ft_fprintf(2, "size: %d s: |%s|\ndel: |%c|\n", size, &s[i], del);
 		if (del == s[i] && (s[i] == '\"' || s[i] == '\''))
 			del = ' ';
 		else if (del == ' ' && (s[i] == '\"' || s[i] == '\''))
@@ -136,7 +137,6 @@ static int	get_str_size(const char *s, char **env, char del)
 			del = ' ';
 			i++;
 		}
-		ft_fprintf(2, "size: %d\ns: |%c|\ndel: |%c|\n", size, s[i], del);
 	}
 	ft_fprintf(2, "get_str_size %d\n", size);
 	return (size);
@@ -217,6 +217,8 @@ static char	*fill_tab(char *tab, const char **s, char **env, int size)
 	}
 	tab[i] = '\0';
 	(*s) += j;
+	if (((*s)[0] == '\'' || (*s)[0] == '\"') && (*s)[1] == (*s)[0])
+		(*s) += 2; 
 	return (tab);
 }
 
@@ -256,7 +258,7 @@ char	**split_cmd(char const *s, char **env)
 		while (*s && *s == ' ')
 			s++;
 		tab[i] = malloc_and_fill_tab(&s, env, get_str_size(s, env, ' '));
-		ft_fprintf(2, "tab: |%s|\n", tab[i]);
+		ft_fprintf(2, "loop tab: |%s| s: |%s|\n", tab[i], s);
 		if (!tab[i])
 			exit(EXIT_FAILURE);
 		i++;
