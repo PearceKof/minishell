@@ -6,11 +6,13 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:55:06 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/21 18:31:29 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/21 19:27:14 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int g_status;
 
 static char	nxt_del(char const *s, char del, size_t *i)
 {
@@ -94,6 +96,16 @@ int	var_value_size(char **env, const char *s, int *i, char del)
 	char	*value;
 	int		size;
 
+	if (s[(*i) + 1] == '?')
+	{
+		*i += 2;
+		value = ft_itoa(g_status);
+		if (!value)
+			exit(EXIT_FAILURE);
+		size = ft_strlen(value);
+		free(value);
+		return (size);
+	}
 	varname = isolate_varname(s, *i);
 	*i += 1;
 	while (s[*i] && s[*i] != ' ' && s[*i] != '\'' && s[*i] != '\"' && s[*i] != '$')
@@ -110,7 +122,6 @@ int	var_value_size(char **env, const char *s, int *i, char del)
 		exit(EXIT_FAILURE);
 	size = ft_strlen(value);
 	free(value);
-	// ft_fprintf(2, "var_value_size :|%d|\n", i);
 	return (size);
 }
 
@@ -139,7 +150,7 @@ static int	get_str_size(const char *s, char **env, char del)
 			i++;
 		}
 	}
-	ft_fprintf(2, "get_str_size %d\n", size);
+	// ft_fprintf(2, "get_str_size %d\n", size);
 	return (size);
 }
 
@@ -150,30 +161,42 @@ static char	*join_varvalue_quote(const char **s, int *j, char *tab, int *k, char
 	char	*varvalue;
 	int		i;
 
-	varvalue = NULL;
-	varname = isolate_varname(*s, *j);
-	ptr = ft_getenv(varname, env, ft_strlen(varname));
-	if (!ptr)
-	{
-		while ((*s)[*j] && (*s)[*j] != '\"' && (*s)[*j] != ' ')
-			*j += 1;
-		free(varname);
-		return (tab);
-	}
-	varvalue = ft_strdup(ptr);
 	i = 0;
+	if ((*s)[(*j) + 1] == '?')
+	{
+		varvalue = ft_itoa(g_status);
+		if (!varvalue)
+			exit(EXIT_FAILURE);
+		*j += 2;
+	}
+	else
+	{
+		varvalue = NULL;
+		varname = isolate_varname(*s, *j);
+		ptr = ft_getenv(varname, env, ft_strlen(varname));
+		if (!ptr)
+		{
+			while ((*s)[*j] && (*s)[*j] != '\"' && (*s)[*j] != ' ')
+				*j += 1;
+			free(varname);
+			return (tab);
+		}
+		varvalue = ft_strdup(ptr);
+		if (!varvalue)
+			exit(EXIT_FAILURE);
+		*j += 1;
+		while ((*s)[*j] && (*s)[*j] != ' ' && (*s)[*j] != '\'' && (*s)[*j] != '\"' && (*s)[*j] != '$')
+			*j += 1;	
+		free(varname);
+	}
 	while (varvalue[i])
 	{
 		tab[*k] = varvalue[i];
 		*k += 1;
 		i++;
 	}
-	*j += 1;
-	while ((*s)[*j] && (*s)[*j] != ' ' && (*s)[*j] != '\'' && (*s)[*j] != '\"' && (*s)[*j] != '$')
-		*j += 1;
 	free(varvalue);
-	free(varname);
-	// ft_fprintf(2, "newtab = |%s|\n", tab);
+	ft_fprintf(2, "newtab = |%s|\n", tab);
 	return (tab);
 }
 
@@ -184,33 +207,43 @@ static char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env
 	char	*varvalue;
 	int		i;
 
-	varvalue = NULL;
-	varname = isolate_varname(*s, *j);
-	ptr = ft_getenv(varname, env, ft_strlen(varname));
-	if (!ptr)
-	{
-		tab[*k] = '$';
-		*k += 1;
-		*j += 1;
-		free(varname);
-		return (tab);
-	}
-	varvalue = ft_strdup(ptr);
 	i = 0;
+	if ((*s)[(*j) + 1] == '?')
+	{
+		varvalue = ft_itoa(g_status);
+		if (!varvalue)
+			exit(EXIT_FAILURE);
+		*j += 2;
+	}
+	else
+	{
+		varvalue = NULL;
+		varname = isolate_varname(*s, *j);
+		ptr = ft_getenv(varname, env, ft_strlen(varname));
+		if (!ptr)
+		{
+			tab[*k] = '$';
+			*k += 1;
+			*j += 1;
+			free(varname);
+			return (tab);
+		}
+		varvalue = ft_strdup(ptr);
+		*j += 1;
+		while ((*s)[*j] && (*s)[*j] != ' ' && (*s)[*j] != '\'' && (*s)[*j] != '\"' && (*s)[*j] != '$')
+			*j += 1;
+		free(varname);
+	}
 	while (varvalue[i])
 	{
 		tab[*k] = varvalue[i];
 		*k += 1;
 		i++;
 	}
-	*j += 1;
-	while ((*s)[*j] && (*s)[*j] != ' ' && (*s)[*j] != '\'' && (*s)[*j] != '\"' && (*s)[*j] != '$')
-		*j += 1;
 	free(varvalue);
-	free(varname);
-	// ft_fprintf(2, "newtab = |%s|\n", tab);
 	return (tab);
 }
+
 static char	*fill_tab(char *tab, const char **s, char **env, int size)
 {
 	int		i;
@@ -284,7 +317,6 @@ char	**split_cmd(char const *s, char **env)
 	if (!s)
 		return (NULL);
 	nbrofc = ft_count_space(s);
-	ft_fprintf(2, "nbrofc: %d\n", nbrofc);
 	if (nbrofc == -1)
 		return (NULL);
 	tab = (char **)malloc(sizeof(char *) * (nbrofc + 1));
