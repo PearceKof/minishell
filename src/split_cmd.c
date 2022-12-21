@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:55:06 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/21 16:58:13 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/21 17:40:32 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static char	*isolate_varname(const char *s, int start)
 	return (varname);
 }
 
-int	var_value_size(char **env, const char *s, int *i)
+int	var_value_size(char **env, const char *s, int *i, char del)
 {
 	char	*varname;
 	char	*ptr;
@@ -102,8 +102,10 @@ int	var_value_size(char **env, const char *s, int *i)
 	ptr = ft_getenv(varname, env, ft_strlen(varname));
 	size = ft_strlen(varname) + 1;
 	free(varname);
-	if (!ptr)
+	if (!ptr && del == ' ')
 		return (size);
+	else if (!ptr && del != ' ')
+		return (0);
 	value = ft_strdup(ptr);
 	if (!value)
 		exit(EXIT_FAILURE);
@@ -127,10 +129,10 @@ static int	get_str_size(const char *s, char **env, char del)
 			del = ' ';
 		else if (del == ' ' && (s[i] == '\"' || s[i] == '\''))
 			del = s[i];
-		else if (s[i] != '$')
+		else if (s[i] != '$' || del == '\'')
 			size++;
 		if (s[i] == '$' && del != '\'')
-			size += var_value_size(env, s, &i);
+			size += var_value_size(env, s, &i, del);
 		else
 			i++;
 		if (del != ' ' && s[i] == del)
@@ -143,26 +145,23 @@ static int	get_str_size(const char *s, char **env, char del)
 	return (size);
 }
 
-static char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env)
+static char	*join_varvalue_quote(const char **s, int *j, char *tab, int *k, char **env)
 {
 	char	*ptr;
 	char	*varname;
 	char	*varvalue;
 	int		i;
 
-	ptr = NULL;
-	varname = NULL;
 	varvalue = NULL;
 	varname = isolate_varname(*s, *j);
-	if (!ft_getenv(varname, env, ft_strlen(varname)))
+	ptr = ft_getenv(varname, env, ft_strlen(varname));
+	if (!ptr)
 	{
-		tab[*k] = '$';
-		*k += 1;
-		*j += 1;
+		while ((*s)[*j] && (*s)[*j] != '\"' && (*s)[*j] != ' ')
+			*j += 1;
 		free(varname);
 		return (tab);
 	}
-	ptr = ft_getenv(varname, env, ft_strlen(varname));
 	varvalue = ft_strdup(ptr);
 	i = 0;
 	while (varvalue[i])
@@ -173,9 +172,42 @@ static char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env
 	}
 	*j += 1;
 	while ((*s)[*j] && (*s)[*j] != ' ' && (*s)[*j] != '\'' && (*s)[*j] != '\"' && (*s)[*j] != '$')
-	{
 		*j += 1;
+	free(varvalue);
+	free(varname);
+	// ft_fprintf(2, "newtab = |%s|\n", tab);
+	return (tab);
+}
+
+static char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env)
+{
+	char	*ptr;
+	char	*varname;
+	char	*varvalue;
+	int		i;
+
+	varvalue = NULL;
+	varname = isolate_varname(*s, *j);
+	ptr = ft_getenv(varname, env, ft_strlen(varname));
+	if (!ptr)
+	{
+		tab[*k] = '$';
+		*k += 1;
+		*j += 1;
+		free(varname);
+		return (tab);
 	}
+	varvalue = ft_strdup(ptr);
+	i = 0;
+	while (varvalue[i])
+	{
+		tab[*k] = varvalue[i];
+		*k += 1;
+		i++;
+	}
+	*j += 1;
+	while ((*s)[*j] && (*s)[*j] != ' ' && (*s)[*j] != '\'' && (*s)[*j] != '\"' && (*s)[*j] != '$')
+		*j += 1;
 	free(varvalue);
 	free(varname);
 	// ft_fprintf(2, "newtab = |%s|\n", tab);
@@ -198,7 +230,7 @@ static char	*fill_tab(char *tab, const char **s, char **env, int size)
 			while ((*s)[j] && del != (*s)[j] && i < size)
 			{
 				if (del == '\"' && (*s)[j] == '$')
-					tab = join_varvalue(s, &j, tab, &i, env);
+					tab = join_varvalue_quote(s, &j, tab, &i, env);
 				else
 				{
 					tab[i] = (*s)[j];
