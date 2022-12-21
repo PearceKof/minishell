@@ -152,7 +152,7 @@ static int	execute_exit(t_cmd *c, t_data *d)
 	}
 	else if (ft_strnstr(c->full_cmd[0], "unset", size) && size == 5)
 	{
-		ft_unset(c);
+		ft_unset(c, d);
 		return (1);
 	}
 		
