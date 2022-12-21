@@ -130,5 +130,5 @@ int	is_only_space(char *s);
 /*
 	built_unset.c
 */
-int		ft_unset(t_cmd *c);
+int		ft_unset(t_cmd *c, t_data *d);
 #endif
