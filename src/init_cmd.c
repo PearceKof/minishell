@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:33:08 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/21 15:45:14 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/22 17:25:18 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,25 +45,25 @@ t_cmd	*add_cmd(t_cmd *first)
 t_cmd	*fill_cmd(char **input, t_cmd *first)
 {
 	t_cmd	*ptr;
-	// size_t	i;
-	// size_t	j;
+	size_t	i;
+	size_t	j;
 
 	ptr = first;
 	while (ptr->next)
 		ptr = ptr->next;
-	// i = 0;
-	// while (input[i])
-	// {
-	// 	j = 0;
-	// 	while (input[i][j])
-	// 	{
-			// if (input[i][j] == '<' || input[i][j] == '>')
-			// 	if (redirection(input, ptr, i, j))
-			// 		return (NULL);
-	// 		j++;
-	// 	}
-	// 	i++;
-	// }
+	i = 0;
+	while (input[i])
+	{
+		j = 0;
+		while (input[i][j])
+		{
+			if (input[i][j] == '<' || input[i][j] == '>')
+				if (redirection(input, ptr, i, j))
+					return (NULL);
+			j++;
+		}
+		i++;
+	}
 	ptr->full_cmd = dup_fullcmd(input);
 	return (first);
 }
