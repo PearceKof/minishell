@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:58:47 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/17 18:47:53 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/22 17:40:03 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	redirect_input(char **input, t_cmd *c, size_t i, size_t j)
 				while (i >= k)
 				{
 					while (input[k][l])
-						input[k][l++] = ' ';
+						input[k][l++] = 0;
 					l = 0;
 					k++;
 				}
@@ -67,7 +67,7 @@ static int	redirect_output(char **input, t_cmd *c, size_t i, size_t j)
 				while (i >= k)
 				{
 					while (input[k][l])
-						input[k][l++] = ' ';
+						input[k][l++] = 0;
 					l = 0;
 					k++;
 				}

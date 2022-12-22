@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/17 20:09:00 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/22 16:34:01 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ static int	execute_exit(t_cmd *c, t_data *d)
 		return (1);
 	}
 		
-	else if (ft_strnstr(c->full_cmd[0], "cd", size), size == 2)
+	else if (ft_strnstr(c->full_cmd[0], "cd", size) && size == 2)
 	{
 		ft_cd(c, d);
 		return (1);

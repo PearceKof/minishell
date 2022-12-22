@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:55:06 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/21 19:27:14 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/22 18:38:22 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static char	*isolate_varname(const char *s, int start)
 	return (varname);
 }
 
-int	var_value_size(char **env, const char *s, int *i, char del)
+int	var_value_size(char **env, const char *s, int *i)
 {
 	char	*varname;
 	char	*ptr;
@@ -113,9 +113,7 @@ int	var_value_size(char **env, const char *s, int *i, char del)
 	ptr = ft_getenv(varname, env, ft_strlen(varname));
 	size = ft_strlen(varname) + 1;
 	free(varname);
-	if (!ptr && del == ' ')
-		return (size);
-	else if (!ptr && del != ' ')
+	if (!ptr)
 		return (0);
 	value = ft_strdup(ptr);
 	if (!value)
@@ -132,6 +130,7 @@ static int	get_str_size(const char *s, char **env, char del)
 
 	i = 0;
 	size = 0;
+	ft_fprintf(2, "s :%s\n", s);
 	while (s[i] && s[i] != del)
 	{
 		if (del == s[i] && (s[i] == '\"' || s[i] == '\''))
@@ -141,7 +140,7 @@ static int	get_str_size(const char *s, char **env, char del)
 		else if (s[i] != '$' || del == '\'')
 			size++;
 		if (s[i] == '$' && del != '\'')
-			size += var_value_size(env, s, &i, del);
+			size += var_value_size(env, s, &i);
 		else
 			i++;
 		if (del != ' ' && s[i] == del)
@@ -150,7 +149,7 @@ static int	get_str_size(const char *s, char **env, char del)
 			i++;
 		}
 	}
-	// ft_fprintf(2, "get_str_size %d\n", size);
+	ft_fprintf(2, "get_str_size %d\n", size);
 	return (size);
 }
 
@@ -176,8 +175,10 @@ static char	*join_varvalue_quote(const char **s, int *j, char *tab, int *k, char
 		ptr = ft_getenv(varname, env, ft_strlen(varname));
 		if (!ptr)
 		{
+			*j += 1;
 			while ((*s)[*j] && (*s)[*j] != '\"' && (*s)[*j] != ' ')
 				*j += 1;
+			ft_fprintf(2, "HERE j= %\n", *j);
 			free(varname);
 			return (tab);
 		}
@@ -200,49 +201,46 @@ static char	*join_varvalue_quote(const char **s, int *j, char *tab, int *k, char
 	return (tab);
 }
 
-static char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env)
-{
-	char	*ptr;
-	char	*varname;
-	char	*varvalue;
-	int		i;
+// static char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env)
+// {
+// 	char	*ptr;
+// 	char	*varname;
+// 	char	*varvalue;
+// 	int		i;
 
-	i = 0;
-	if ((*s)[(*j) + 1] == '?')
-	{
-		varvalue = ft_itoa(g_status);
-		if (!varvalue)
-			exit(EXIT_FAILURE);
-		*j += 2;
-	}
-	else
-	{
-		varvalue = NULL;
-		varname = isolate_varname(*s, *j);
-		ptr = ft_getenv(varname, env, ft_strlen(varname));
-		if (!ptr)
-		{
-			tab[*k] = '$';
-			*k += 1;
-			*j += 1;
-			free(varname);
-			return (tab);
-		}
-		varvalue = ft_strdup(ptr);
-		*j += 1;
-		while ((*s)[*j] && (*s)[*j] != ' ' && (*s)[*j] != '\'' && (*s)[*j] != '\"' && (*s)[*j] != '$')
-			*j += 1;
-		free(varname);
-	}
-	while (varvalue[i])
-	{
-		tab[*k] = varvalue[i];
-		*k += 1;
-		i++;
-	}
-	free(varvalue);
-	return (tab);
-}
+// 	i = 0;
+// 	if ((*s)[(*j) + 1] == '?')
+// 	{
+// 		varvalue = ft_itoa(g_status);
+// 		if (!varvalue)
+// 			exit(EXIT_FAILURE);
+// 		*j += 2;
+// 	}
+// 	else
+// 	{
+// 		varvalue = NULL;
+// 		varname = isolate_varname(*s, *j);
+// 		ptr = ft_getenv(varname, env, ft_strlen(varname));
+// 		*j += 1;
+// 		while ((*s)[*j] && (*s)[*j] != ' ' && (*s)[*j] != '\'' && (*s)[*j] != '\"' && (*s)[*j] != '$')
+// 			*j += 1;
+// 		if (!ptr)
+// 		{
+// 			free(varname);
+// 			return (tab);
+// 		}
+// 		varvalue = ft_strdup(ptr);
+// 		free(varname);
+// 	}
+// 	while (varvalue[i])
+// 	{
+// 		tab[*k] = varvalue[i];
+// 		*k += 1;
+// 		i++;
+// 	}
+// 	free(varvalue);
+// 	return (tab);
+// }
 
 static char	*fill_tab(char *tab, const char **s, char **env, int size)
 {
@@ -260,7 +258,7 @@ static char	*fill_tab(char *tab, const char **s, char **env, int size)
 			j++;
 			while ((*s)[j] && del != (*s)[j] && i < size)
 			{
-				if (del == '\"' && (*s)[j] == '$')
+				if (del != '\'' && (*s)[j] == '$')
 					tab = join_varvalue_quote(s, &j, tab, &i, env);
 				else
 				{
@@ -272,7 +270,7 @@ static char	*fill_tab(char *tab, const char **s, char **env, int size)
 			j++;
 		}
 		else if ((*s)[j] == '$')
-			tab = join_varvalue(s, &j, tab, &i, env);
+			tab = join_varvalue_quote(s, &j, tab, &i, env);
 		else
 		{
 			tab[i] = (*s)[j];
@@ -290,6 +288,13 @@ static char	*fill_tab(char *tab, const char **s, char **env, int size)
 			*s += 1;
 		*s += 1;
 	}
+	else if (size == 0 && (*s)[0] == '$')
+	{
+		*s += 1;
+		while ((*s)[0] && (*s)[0] != ' ' && (*s)[0] != '\'' && (*s)[0] != '\"' && (*s)[0] != '$')
+			*s += 1;
+	}
+	ft_fprintf(2, "s= |%s| j= %d\n", *s, j);
 	return (tab);
 }
 
