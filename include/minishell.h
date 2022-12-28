@@ -131,4 +131,8 @@ int	is_only_space(char *s);
 	built_unset.c
 */
 int		ft_unset(t_cmd *c, t_data *d);
+
+void	new_pwd(t_data *d);
+void	ft_echo(char **full_cmd);
+
 #endif

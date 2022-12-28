@@ -82,7 +82,7 @@ char	*edit_envvar(char *to_edit, char *value, int size)
 	char	*newvar;
 	char	*tmp;
 
-	tmp = ft_substr(to_edit, 0, size + 1);
+	tmp = ft_substr(to_edit, 0, size);
 	newvar = ft_strjoin(tmp, value);
 	free(tmp);
 	tmp = to_edit;

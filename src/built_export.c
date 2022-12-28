@@ -57,6 +57,7 @@ int		ft_export(t_cmd *c, t_data *d)
 {
 	char	*str;
 	char	*dup;
+	char	*hel;
 	int		i;
 	int		len;
 	int		ret;
@@ -83,8 +84,11 @@ int		ft_export(t_cmd *c, t_data *d)
 	{
 		ret = check_var_env(d, dup, i);
 		//printf("%d", ret);
-		edit_envvar(d->env[ret], c->full_cmd[1], len - 1);
+		hel = edit_envvar(d->env[ret], c->full_cmd[1], 0);
+		addvar_to_env(d, hel);
+		return (0);
 	}
-	addvar_to_env(d, str);
+	else
+		addvar_to_env(d, str);
 	return (0);
 }
