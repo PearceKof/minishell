@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/29 13:46:43 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/29 14:30:24 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ void	ft_echo(char **full_cmd);
 int		ft_exit(char **full_cmd);
 int		ft_export(t_cmd *c, t_data *d);
 int		ft_unset(t_cmd *c, t_data *d);
+void	new_pwd(t_data *d);
+int		ft_unset(t_cmd *c, t_data *d);
 int		exec_builtin(t_cmd *cmd, t_data *d);
 void	exit_test(void);
 int		ft_env(char **env);
@@ -96,10 +98,15 @@ char	*edit_envvar(char *to_edit, char *value, int size);
 char	**set_env_var(char *varname, char *value, t_data *d, int size);
 char	**init_env(char **av, t_data *d);
 /*
+	error.c
+*/
+int		error(int errorid, int error_status, char *infoa, char *infob);
+void	malloc_error();
+/*
 	execute.c
 */
 void	execute_cmd(char **env, char **cmd);
-int	execute(t_cmd *c, t_data *d);
+int		execute(t_cmd *c, t_data *d);
 /*
 	free.c
 */
@@ -111,7 +118,7 @@ t_cmd	*init_cmd(char *input, char **env);
 /*
 	init.c
 */
-t_data *init_term(char **av, char **envp);
+t_data	*init_term(char **av, char **envp);
 int		redirection(char **input, t_cmd *c, size_t i, size_t j);
 void	*ft_mallerror(char **tab, size_t i);
 char	**split_cmd(char const *s, char **env);
@@ -120,19 +127,30 @@ t_cmd	*new_cmd();
 t_cmd	*add_cmd(t_cmd *first);
 t_cmd	*fill_cmd(char **input, t_cmd *first);
 int		env_size(char **env);
-int		error(int errorid, int error_status, char *infoa, char *infob);
+/*
+	parse_cmd.c
+*/
+char	**parse_cmd(char const *s, char **env);
+/*
+	parse_fill.c
+*/
+char	*fill_tab(char *tab, const char **s, char **env, int size);
+/*
+	parse_utils.c
+*/
+int		status_size(int *i);
+int		var_value_size(char **env, const char *s, int *i);
+int		get_str_size(const char *s, char **env, char del);
+/*
+	parse_var.c
+*/
+char	*isolate_varname(const char *s, int start);
+char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env);
 /*
 	signaux.c
 */
-void    signaux();
+void	signaux();
 
-int	is_only_space(char *s);
-/*
-	built_unset.c
-*/
-int		ft_unset(t_cmd *c, t_data *d);
-
-void	new_pwd(t_data *d);
-void	ft_echo(char **full_cmd);
+int		is_only_space(char *s);
 
 #endif

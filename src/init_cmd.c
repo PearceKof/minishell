@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:33:08 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/22 17:25:18 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/29 14:35:08 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_cmd	*new_cmd()
 
 	new_cmd = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!new_cmd)
-		return (NULL);
+		malloc_error();
 	ft_memset(new_cmd, 0, sizeof(t_cmd));
 	new_cmd->in = STDIN_FILENO;
 	new_cmd->out = STDOUT_FILENO;
@@ -36,7 +36,7 @@ t_cmd	*add_cmd(t_cmd *first)
 		new = new->next;
 	new->next = new_cmd();
 	if (!new->next)
-		return (NULL);
+		malloc_error();
 	new->next->prev = new;
 	new->next->next = NULL;
 	return (first);
@@ -70,21 +70,21 @@ t_cmd	*fill_cmd(char **input, t_cmd *first)
 
 static t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env)
 {
-	char	**nospace_input;
+	char	**parsed_input;
 
 	if (!c)
 		c = new_cmd();
 	else
 		c = add_cmd(c);
 	if (!c)
-		exit(EXIT_FAILURE);
-	nospace_input = split_cmd(input_split, env);
-	if (!nospace_input)
-		exit(EXIT_FAILURE);
-	c = fill_cmd(nospace_input, c);
-	ft_freetab(nospace_input);
+		malloc_error();
+	parsed_input = parse_cmd(input_split, env);
+	if (!parsed_input)
+		malloc_error();
+	c = fill_cmd(parsed_input, c);
 	if (!c)
-		exit(EXIT_FAILURE);
+		malloc_error();
+	ft_freetab(parsed_input);
 	return (c);
 }
 
@@ -98,7 +98,7 @@ t_cmd	*init_cmd(char *input, char **env)
 	i = 0;
 	input_split = ft_split(input, '|');
 	if (!input_split)
-		exit(EXIT_FAILURE);
+		malloc_error();
 	while (input_split[i])
 	{
 		c = create_cmdlist(input_split[i], c, env);
