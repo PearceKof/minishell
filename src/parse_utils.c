@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 13:57:51 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/29 14:30:56 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/29 14:54:01 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@ int	var_value_size(char **env, const char *s, int *i)
 	char	*value;
 	int		size;
 
+	if (s[(*i) + 1] == '\0')
+	{
+		*i += 1;
+		return (1);
+	}
 	if (s[(*i) + 1] == '?')
 		return (status_size(i));
 	varname = isolate_varname(s, *i);
@@ -79,5 +84,6 @@ int	get_str_size(const char *s, char **env, char del)
 			i++;
 		}
 	}
+	ft_fprintf(2, "getstsrsize %d\n", size);
 	return (size);
 }

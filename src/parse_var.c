@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:01:14 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/29 14:31:03 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/29 16:33:03 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*isolate_varname(const char *s, int start)
 
 	varname = NULL;
 	start++;
-	end = start;
+	end = start + 1;
 	while (s[end] && s[end] != ' ' && s[end] != '\"' && s[end] != '\'' && s[end] != '$')
 		end++;
 	varname = (char *)ft_calloc(sizeof(char), (end - start) + 1);
@@ -41,6 +41,7 @@ char	*isolate_varname(const char *s, int start)
 		i++;
 	}
 	varname[i] = '\0';
+	ft_fprintf(2, "VARNAME=|%s|\n", varname);
 	return (varname);
 }
 
@@ -52,24 +53,29 @@ char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env)
 	int		i;
 
 	i = 0;
-	if ((*s)[(*j) + 1] == '?')
+	if ((*s)[(*j) + 1] && (*s)[(*j) + 1] == '?')
 	{
 		varvalue = ft_itoa(g_status);
 		if (!varvalue)
 			malloc_error();
 		*j += 2;
 	}
+	else if ((*s)[(*j) + 1] == '\0')
+	{
+		varvalue = ft_strdup("$");
+		*j += 1;
+	}
 	else
 	{
 		varvalue = NULL;
 		varname = isolate_varname(*s, *j);
 		ptr = ft_getenv(varname, env, ft_strlen(varname));
+		free(varname);
 		if (!ptr)
 		{
 			*j += 1;
 			while ((*s)[*j] && (*s)[*j] != '\"' && (*s)[*j] != ' ')
 				*j += 1;
-			free(varname);
 			return (tab);
 		}
 		varvalue = ft_strdup(ptr);
@@ -78,7 +84,6 @@ char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env)
 		*j += 1;
 		while ((*s)[*j] && (*s)[*j] != ' ' && (*s)[*j] != '\'' && (*s)[*j] != '\"' && (*s)[*j] != '$')
 			*j += 1;	
-		free(varname);
 	}
 	while (varvalue[i])
 	{
