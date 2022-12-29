@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 23:37:34 by root              #+#    #+#             */
-/*   Updated: 2022/12/22 17:23:41 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/29 13:45:15 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,32 +31,32 @@ static int	check_var_env(t_data *d, char *str, int len)
 	}
 	return (check);
 }
-/*
-static void		dup_var(char *str)
-{
-	char	*dup;
-	int		len;
-	int		i;
 
-	i = 0;
-	len = ft_strlen(str);
-	while (str[len] != '=' && i < len)
-	{
-		i++;
-		len--;
-	}
-	dup = malloc(sizeof(char *) * i);
-	while (i > 0)
-	{
-		dup2[i] = str[i];
-		i--;
-	}
-}
-*/
+// static void		dup_var(char *str)
+// {
+// 	char	*dup;
+// 	int		len;
+// 	int		i;
+// 	i = 0;
+// 	len = ft_strlen(str);
+// 	while (str[len] != '=' && i < len)
+// 	{
+// 		i++;
+// 		len--;
+// 	}
+// 	dup = malloc(sizeof(char *) * i);
+// 	while (i > 0)
+// 	{
+// 		dup2[i] = str[i];
+// 		i--;
+// 	}
+// }
+
 int		ft_export(t_cmd *c, t_data *d)
 {
 	char	*str;
 	char	*dup;
+	char	*hel;
 	int		i;
 	int		len;
 	int		ret;
@@ -83,8 +83,11 @@ int		ft_export(t_cmd *c, t_data *d)
 	{
 		ret = check_var_env(d, dup, i);
 		//printf("%d", ret);
-		edit_envvar(d->env[ret], c->full_cmd[1], len - 1);
+		hel = edit_envvar(d->env[ret], c->full_cmd[1], 0);
+		addvar_to_env(d, hel);
+		return (0);
 	}
-	addvar_to_env(d, str);
+	else
+		addvar_to_env(d, str);
 	return (0);
 }
