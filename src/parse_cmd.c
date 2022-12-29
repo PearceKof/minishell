@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:36:53 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/29 16:39:24 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/29 18:06:07 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ char	**parse_cmd(char const *s, char **env)
 	if (!s)
 		return (NULL);
 	nbrofc = ft_count_space(s);
+	ft_fprintf(2, "nbrofc: %d\n", nbrofc);
 	if (nbrofc == -1)
 		return (NULL);
 	tab = (char **)malloc(sizeof(char *) * (nbrofc + 1));

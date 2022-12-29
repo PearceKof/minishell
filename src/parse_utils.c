@@ -6,13 +6,28 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 13:57:51 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/29 14:54:01 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/29 18:03:08 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern int g_status;
+
+void	pass_until_char(const char *s, int *i, char *ending_char)
+{
+	*i += 1;
+	while (s[*i] && !ft_strchr(ending_char, s[*i]))
+		*i += 1;
+}
+
+char *cpy_char(char *dest, int *i, const char *src, int *j)
+{
+	dest[*i] = src[*j];
+	*i += 1;
+	*j += 1;
+	return (dest);
+}
 
 int	status_size(int *i)
 {
@@ -43,9 +58,7 @@ int	var_value_size(char **env, const char *s, int *i)
 	if (s[(*i) + 1] == '?')
 		return (status_size(i));
 	varname = isolate_varname(s, *i);
-	*i += 1;
-	while (s[*i] && s[*i] != ' ' && s[*i] != '\'' && s[*i] != '\"' && s[*i] != '$')
-		*i += 1;
+	pass_until_char(s, i, " $\'\"");
 	ptr = ft_getenv(varname, env, ft_strlen(varname));
 	size = ft_strlen(varname) + 1;
 	free(varname);
@@ -66,6 +79,7 @@ int	get_str_size(const char *s, char **env, char del)
 
 	i = 0;
 	size = 0;
+	ft_fprintf(2, "strsize bgin wth |%s|", s);
 	while (s[i] && s[i] != del)
 	{
 		if (del == s[i] && (s[i] == '\"' || s[i] == '\''))

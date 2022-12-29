@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:01:14 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/29 16:33:03 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/29 18:16:33 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ char	*isolate_varname(const char *s, int start)
 		i++;
 	}
 	varname[i] = '\0';
-	ft_fprintf(2, "VARNAME=|%s|\n", varname);
 	return (varname);
 }
 
@@ -52,7 +51,6 @@ char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env)
 	char	*varvalue;
 	int		i;
 
-	i = 0;
 	if ((*s)[(*j) + 1] && (*s)[(*j) + 1] == '?')
 	{
 		varvalue = ft_itoa(g_status);
@@ -73,9 +71,11 @@ char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env)
 		free(varname);
 		if (!ptr)
 		{
-			*j += 1;
-			while ((*s)[*j] && (*s)[*j] != '\"' && (*s)[*j] != ' ')
-				*j += 1;
+			pass_until_char(*s, j, SPE_CHAR);
+			// *j += 1;
+			// while ((*s)[*j] && (*s)[*j] != '\"' && (*s)[*j] != ' ')
+			// 	*j += 1;
+			ft_fprintf(2, "s is here |%s|\n", &(*s)[*j]);
 			return (tab);
 		}
 		varvalue = ft_strdup(ptr);
@@ -85,12 +85,10 @@ char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env)
 		while ((*s)[*j] && (*s)[*j] != ' ' && (*s)[*j] != '\'' && (*s)[*j] != '\"' && (*s)[*j] != '$')
 			*j += 1;	
 	}
+	i = 0;
 	while (varvalue[i])
-	{
-		tab[*k] = varvalue[i];
-		*k += 1;
-		i++;
-	}
+		tab = cpy_char(tab, k, varvalue, &i);
 	free(varvalue);
+	ft_fprintf(2, "joinvar tab: |%s| s:|%s|\n", tab, &(*s)[*j]);
 	return (tab);
 }

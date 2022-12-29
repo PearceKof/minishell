@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/29 14:30:24 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/29 17:18:18 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # include <signal.h>
 # include <sys/wait.h>
 # include <stdlib.h>
+
+# define SPE_CHAR " $\\|#=[]!><;{}()*?~&+-/\"'°"
 
 enum	e_error
 {
@@ -138,6 +140,8 @@ char	*fill_tab(char *tab, const char **s, char **env, int size);
 /*
 	parse_utils.c
 */
+void	pass_until_char(const char *s, int *i, char *ending_char);
+char	*cpy_char(char *dest, int *i, const char *src, int *j);
 int		status_size(int *i);
 int		var_value_size(char **env, const char *s, int *i);
 int		get_str_size(const char *s, char **env, char del);
