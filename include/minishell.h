@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/18 15:32:28 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/22 16:49:33 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,18 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }	t_cmd;
 /*
-	builtins.c
+	builtins.c + built_*.c
 */
-int		ft_cd(t_cmd *c, t_data *d);
 void	cd_root(t_cmd *c, t_data *d);
-int		exec_builtin(t_cmd *cmd, t_data *d);
+int		ft_cd(t_cmd *c, t_data *d);
+void	ft_echo(char **full_cmd);
 int		ft_exit(char **full_cmd);
+int		ft_export(t_cmd *c, t_data *d);
+int		ft_unset(t_cmd *c, t_data *d);
+int		exec_builtin(t_cmd *cmd, t_data *d);
 void	exit_test(void);
 int		ft_env(char **env);
+void	new_pwd(t_data *d);
 /*
 	dup_cmd.c
 */
@@ -121,14 +125,6 @@ int		error(int errorid, int error_status, char *infoa, char *infob);
 	signaux.c
 */
 void    signaux();
-/*
-	export_build.c
-*/
-int		ft_export(t_cmd *c, t_data *d);
 
 int	is_only_space(char *s);
-/*
-	built_unset.c
-*/
-int		ft_unset(t_cmd *c, t_data *d);
 #endif
