@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/22 16:49:33 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/29 13:46:43 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,4 +127,12 @@ int		error(int errorid, int error_status, char *infoa, char *infob);
 void    signaux();
 
 int	is_only_space(char *s);
+/*
+	built_unset.c
+*/
+int		ft_unset(t_cmd *c, t_data *d);
+
+void	new_pwd(t_data *d);
+void	ft_echo(char **full_cmd);
+
 #endif
