@@ -27,7 +27,7 @@ char	*dup_cmd(const char *src)
 		return (NULL);
 	mem = malloc((size + 1) * sizeof(char));
 	if (!mem)
-		return (NULL);
+		malloc_error();
 	i = 0;
 	while (src[i] != '\0')
 	{
@@ -48,14 +48,14 @@ char	**dup_fullcmd(char **tab)
 		i++;
 	tabdup = (char **)malloc(sizeof(char *) * (i + 1));
 	if (!tabdup)
-		return (NULL);
+		malloc_error();
 	tabdup[i] = NULL;
 	i = 0;
 	while (tab[i])
 	{
 		tabdup[i] = ft_strdup(tab[i]);
 		if (!tabdup[i] && tab[i])
-			exit(EXIT_FAILURE);
+			malloc_error();
 		i++;
 	}
 	return (tabdup);
