@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 13:58:40 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/29 16:31:57 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/29 16:34:00 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ char	*fill_tab(char *tab, const char **s, char **env, int size)
 	j = 0;
 	while (i < size && (*s)[j])
 	{
-		// ft_fprintf(2, "fill loooop begin :)\n");
 		if ((*s)[j] == '\"' || (*s)[j] == '\'')
 		{
 			del = (*s)[j];

@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/22 16:34:01 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/29 16:47:28 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ static char	*ft_getpaths(char **env, char *cmd)
 	char	**env_paths;
 	char	*ptr;
 
+	if (*cmd == '\0')
+		return (NULL);
 	if (ft_strnstr(cmd, "/", ft_strlen(cmd)))
 	{
 		if (access(cmd, X_OK))

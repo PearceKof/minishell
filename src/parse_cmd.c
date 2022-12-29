@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:36:53 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/29 14:53:12 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/29 16:39:24 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,8 @@ char	**parse_cmd(char const *s, char **env)
 	if (!s)
 		return (NULL);
 	nbrofc = ft_count_space(s);
-	ft_fprintf(2, "TEST 1 nbrofc %d\n", nbrofc);
 	if (nbrofc == -1)
 		return (NULL);
-	ft_fprintf(2, "TEST 2\n");
 	tab = (char **)malloc(sizeof(char *) * (nbrofc + 1));
 	if (!tab)
 		malloc_error();
@@ -90,13 +88,11 @@ char	**parse_cmd(char const *s, char **env)
 	{
 		while (s && *s == ' ')
 			s++;
-		ft_fprintf(2, "TEST 3 LOOOOOP\n");
 		tab[i] = malloc_and_fill_tab(&s, env, get_str_size(s, env, ' '));
 		if (!tab[i])
 			malloc_error();
 		i++;
 	}
-	ft_fprintf(2, "TEST 4\n");
 	tab[i] = NULL;
 	return (tab);
 }
