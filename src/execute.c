@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/29 16:47:28 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/30 19:06:25 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,25 +165,18 @@ int	execute(t_cmd *c, t_data *d)
 {
 	int		piper[2];
 	int		ret;
-	t_cmd	*ptr;
 
-	ptr = c;
 	ret = execute_exit(c, d);
 	while (c && !ret)
 	{
 		if (c->next)
 			if (pipe(piper))
-				return (1);
+				return (error(PERROR, 1, NULL, NULL));
 		if (execute_fork(c, d, piper))
 			return (1);
-		c = c->next;
-	}
-	while (ptr && !ret)
-	{
-		waitpid(ptr->pid, &g_status, 0);
+		waitpid(c->pid, &g_status, 0);
 		g_status = WEXITSTATUS(g_status);
-		// ft_fprintf(2, "[%d]\n", g_status);
-		ptr = ptr->next;
+		c = c->next;
 	}
 	return (0);
 }
