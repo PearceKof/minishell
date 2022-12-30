@@ -6,31 +6,31 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 23:37:34 by root              #+#    #+#             */
-/*   Updated: 2022/12/29 13:45:15 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/30 20:44:52 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	check_var_env(t_data *d, char *str, int len)
-{
-	int		i;
-	int		check;
+// static int	check_var_env(t_data *d, char *str, int len)
+// {
+// 	int		i;
+// 	int		check;
 
-	i = 0;
-	check = 0;
-	while (d->env[i])
-	{
-		if (!ft_strncmp(d->env[i], str, len))
-		{
-			check = 1;
-			return (i);
-		}
-		else
-			i++;
-	}
-	return (check);
-}
+// 	i = 0;
+// 	check = 0;
+// 	while (d->env[i])
+// 	{
+// 		if (!ft_strncmp(d->env[i], str, len))
+// 		{
+// 			check = 1;
+// 			return (i);
+// 		}
+// 		else
+// 			i++;
+// 	}
+// 	return (check);
+// }
 
 // static void		dup_var(char *str)
 // {
@@ -54,40 +54,45 @@ static int	check_var_env(t_data *d, char *str, int len)
 
 int		ft_export(t_cmd *c, t_data *d)
 {
-	char	*str;
-	char	*dup;
-	char	*hel;
-	int		i;
-	int		len;
-	int		ret;
+	char *full;
+	char *varname;
+	char *value;
+	int	i;
+	int j;
 
+	full = c->full_cmd[1];
+	if (*full == '=' || (*full >= '0' && *full <= '9'))
+		 return(error(INVID, 1, full, NULL));
 	i = 0;
-	ret = 0;
-	str = c->full_cmd[1];
-	len = ft_strlen(str);
-	if (str[0] == '=')
-		 return(error(INVID, 1, str, NULL));
-	dup = malloc(sizeof(char *) * len);
-	if (!dup)
-		return (0);
-	while (str[i] != '=' && i < len)
-	{
-		dup[i] = str[i];
+	while (full[i] && full[i] != '=')
 		i++;
-	}
-	if (str[i] == '\0')
+	if (full[i] != '=')
 		return (0);
-	if (dup[0] >= '0' && dup[0] <= '9')
-		return(error(INVID, 1, dup, NULL));
-	if (check_var_env(d, dup, i))
+	varname = malloc(sizeof(char *) * (i + 1));
+	if (!varname)
+		malloc_error();
+	varname[i] = '\0';
+	j = 0;
+	while (j < i)
 	{
-		ret = check_var_env(d, dup, i);
-		//printf("%d", ret);
-		hel = edit_envvar(d->env[ret], c->full_cmd[1], 0);
-		addvar_to_env(d, hel);
-		return (0);
+		varname[j] = full[j];
+		j++;
 	}
-	else
-		addvar_to_env(d, str);
+	full += j;
+	i = 0;
+	while (full[i])
+		i++;
+	value = malloc(sizeof(char *) * (i + 1));
+	if (!value)
+		malloc_error();
+	value[i] = '\0';
+	j = 0;
+	while (j < i)
+	{
+		value[j] = full[j];
+		j++;
+	}
+	ft_fprintf(2, "VALUE: %s\n", value);
+	d->env = set_env_var(varname, value, d, ft_strlen(varname));
 	return (0);
 }

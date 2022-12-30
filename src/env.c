@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:48:00 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/30 19:51:41 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/30 20:35:50 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ char	**set_env_var(char *varname, char *value, t_data *d, int size)
 
 	if (ft_getenv(varname, d->env, size) == NULL)
 	{
+		ft_fprintf(2, "TEST\n");
 		newvar = new_envvar(varname, value);
 		addvar_to_env(d, newvar);
 		free(newvar);
