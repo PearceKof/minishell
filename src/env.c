@@ -6,12 +6,15 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:48:00 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/20 16:04:37 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/30 19:51:41 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
+	prends le nom d'une variable et return sa taille au premier =
+	sinon, return 0
+*/
 int	varname_size(char *varname)
 {
 	int	i;
@@ -25,7 +28,12 @@ int	varname_size(char *varname)
 	}
 	return (0);
 }
-
+/*
+	prends le nom d'une variable, l'env dans lequelle on veut la chercher
+	et la longueur de varname
+	return un ptr juste aprés le = (sur la valeur de la variable)
+	return NULL si varname ne correspond pas à un variable de l'env
+*/
 char	*ft_getenv(char *varname, char **env, int len)
 {
 	int	lencmp;
@@ -41,18 +49,30 @@ char	*ft_getenv(char *varname, char **env, int len)
 	}
 	return (NULL);
 }
-
+/*
+	prends un nom de variable et une valeur, alloue et return un char *
+	composé de varname, suivi d'un = et de value
+*/
 char	*new_envvar(char *varname, char *value)
 {
 	char	*new_var;
 	char	*tmp;
 
 	tmp =ft_strjoin(varname, "=");
+	if (!tmp)
+		malloc_error();;
 	new_var = ft_strjoin(tmp, value);
+	if (!new_var)
+		malloc_error();
 	free(tmp);
 	return (new_var);
 }
-
+/*
+	prends en arg un ptr sur d du minishell et la variable à ajouter dans env
+	alloue un nouvel env et y ajoute la nouvelle variable
+	!!! Ajoute addvar peut importe si il est déjà dans l'env
+	à utiliser seulement pour une nouvelle variable !!!
+*/
 void	addvar_to_env(t_data *d, char *addvar)
 {
 	char	**new_env;
@@ -66,31 +86,44 @@ void	addvar_to_env(t_data *d, char *addvar)
 	{
 		new_env[i] = ft_strdup(d->env[i]);
 		if (!new_env[i])
-			exit(EXIT_FAILURE);
+			malloc_error();
 		i++;
 	}
 	new_env[i] = ft_strdup(addvar);
 	if (!new_env[i])
-		exit(EXIT_FAILURE);
+		malloc_error();
 	new_env[i + 1] = NULL;
 	ft_freetab(d->env);
 	d->env = new_env;
 }
-
+/*
+	prends un ptr sur la variable à changer, 
+	la nouvelle valeur et la taille de la variable
+	return la variable suivi de sa nouvelle valeur
+*/
 char	*edit_envvar(char *to_edit, char *value, int size)
 {
 	char	*newvar;
 	char	*tmp;
 
 	tmp = ft_substr(to_edit, 0, size);
+	if (!tmp)
+		malloc_error();
 	newvar = ft_strjoin(tmp, value);
+	if (!newvar)
+		malloc_error();
 	free(tmp);
 	tmp = to_edit;
 	to_edit = newvar;
 	free(tmp);
 	return (to_edit);
 }
-
+/*
+	prends un nom de variable à créer ou éditer, la valeur qu'on veut
+	lui donner, les data du shell, et la taille de varname
+	si varname n'existe pas déjà dans l'env, créer la var,
+	sinon il ne fait que changer la valeur
+*/
 char	**set_env_var(char *varname, char *value, t_data *d, int size)
 {
 	char	*newvar;
