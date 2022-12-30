@@ -6,22 +6,22 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:36:53 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/29 18:06:07 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/30 18:29:05 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	nxt_del(char const *s, char del, size_t *i)
+char	nxt_del(char const *s, char del, char dfdel, int *i)
 {
 	if (del == s[*i] && (s[*i] == '\"' || s[*i] == '\''))
-		del = ' ';
-	else if (del == ' ' && (s[*i] == '\"' || s[*i] == '\''))
+		del = dfdel;
+	else if (del == dfdel && (s[*i] == '\"' || s[*i] == '\''))
 		del = s[*i];
 	*i += 1;
-	if (del != ' ' && s[*i] == del)
+	if (del != dfdel && s[*i] == del)
 	{
-		del = ' ';
+		del = dfdel;
 		*i += 1;
 	}
 	return (del);
@@ -36,7 +36,7 @@ static int	ft_count_space(char const *s)
 {
 	char	del;
 	int		count;
-	size_t	i;
+	int		i;
 
 	i = 0;
 	count = 0;
@@ -47,8 +47,8 @@ static int	ft_count_space(char const *s)
 		if (s[i] != '\0')
 			count++;
 		del = ' ';
-		while (s[i] && s[i] != del)
-			del = nxt_del(s, del, &i);
+		while (s[i] != del && s[i] != '\0')
+			del = nxt_del(s, del, ' ', &i);
 	}
 	if (del != ' ')
 		return (-1);

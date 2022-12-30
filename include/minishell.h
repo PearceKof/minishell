@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/29 17:18:18 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/30 17:33:08 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,11 +132,16 @@ int		env_size(char **env);
 /*
 	parse_cmd.c
 */
+char	nxt_del(char const *s, char del, char dfdel, int *i);
 char	**parse_cmd(char const *s, char **env);
 /*
 	parse_fill.c
 */
 char	*fill_tab(char *tab, const char **s, char **env, int size);
+/*
+	parse_pipe.c
+*/
+char	**parse_pipe(char const *s);
 /*
 	parse_utils.c
 */

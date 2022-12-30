@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:01:14 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/29 18:16:33 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/12/30 16:54:17 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,6 @@ char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env)
 		if (!ptr)
 		{
 			pass_until_char(*s, j, SPE_CHAR);
-			// *j += 1;
-			// while ((*s)[*j] && (*s)[*j] != '\"' && (*s)[*j] != ' ')
-			// 	*j += 1;
 			ft_fprintf(2, "s is here |%s|\n", &(*s)[*j]);
 			return (tab);
 		}
