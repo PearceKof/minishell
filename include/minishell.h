@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/30 17:33:08 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/02 20:29:48 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	new_pwd(t_data *d);
 /*
 	dup_cmd.c
 */
-char	*dup_cmd(const char *src);
+char	*dup_cmd(char *src);
 char	**dup_fullcmd(char **tab);
 /*
 	env.c
@@ -121,7 +121,7 @@ t_cmd	*init_cmd(char *input, char **env);
 	init.c
 */
 t_data	*init_term(char **av, char **envp);
-int		redirection(char **input, t_cmd *c, size_t i, size_t j);
+t_cmd 	*redirection(t_cmd *c, const char *s);
 void	*ft_mallerror(char **tab, size_t i);
 char	**split_cmd(char const *s, char **env);
 char	*get_input(void);
@@ -143,13 +143,21 @@ char	*fill_tab(char *tab, const char **s, char **env, int size);
 */
 char	**parse_pipe(char const *s);
 /*
+	parse_redirection.c
+*/
+
+/*
+	parse_size.c
+*/
+int		status_size(int *i);
+int		var_value_size(char **env, const char *s, int *i);
+int		get_str_size(const char *s, char **env, char del);
+/*
 	parse_utils.c
 */
 void	pass_until_char(const char *s, int *i, char *ending_char);
 char	*cpy_char(char *dest, int *i, const char *src, int *j);
-int		status_size(int *i);
-int		var_value_size(char **env, const char *s, int *i);
-int		get_str_size(const char *s, char **env, char del);
+void	*free_tab_and_ret_null(char **tab, int size);
 /*
 	parse_var.c
 */

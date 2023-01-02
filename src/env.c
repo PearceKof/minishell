@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:48:00 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/30 20:35:50 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/02 21:40:45 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*new_envvar(char *varname, char *value)
 	char	*new_var;
 	char	*tmp;
 
-	tmp =ft_strjoin(varname, "=");
+	tmp = ft_strjoin(varname, "=");
 	if (!tmp)
 		malloc_error();;
 	new_var = ft_strjoin(tmp, value);
@@ -106,9 +106,10 @@ char	*edit_envvar(char *to_edit, char *value, int size)
 	char	*newvar;
 	char	*tmp;
 
-	tmp = ft_substr(to_edit, 0, size);
+	tmp = ft_substr(to_edit, 0, size + 1);
 	if (!tmp)
 		malloc_error();
+	ft_fprintf(2, "to_edit |%s| value|%s|\n", to_edit, value);
 	newvar = ft_strjoin(tmp, value);
 	if (!newvar)
 		malloc_error();
@@ -131,16 +132,18 @@ char	**set_env_var(char *varname, char *value, t_data *d, int size)
 
 	if (ft_getenv(varname, d->env, size) == NULL)
 	{
-		ft_fprintf(2, "TEST\n");
 		newvar = new_envvar(varname, value);
 		addvar_to_env(d, newvar);
 		free(newvar);
 	}
-	i = -1;
-	while (d->env[++i])
+	i = 0;
+	while (d->env[i])
+	{
 		if (ft_strnstr(d->env[i], varname, ft_strlen(varname)))
 			if (varname_size(d->env[i]) == size)
 				d->env[i] = edit_envvar(d->env[i], value, size);
+		i++;
+	}
 	return (d->env);
 }
 

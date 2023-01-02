@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:33:08 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/30 18:11:05 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/02 20:33:47 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,25 +45,11 @@ t_cmd	*add_cmd(t_cmd *first)
 t_cmd	*fill_cmd(char **input, t_cmd *first)
 {
 	t_cmd	*ptr;
-	size_t	i;
-	size_t	j;
 
 	ptr = first;
 	while (ptr->next)
 		ptr = ptr->next;
-	i = 0;
-	while (input[i])
-	{
-		j = 0;
-		while (input[i][j])
-		{
-			if (input[i][j] == '<' || input[i][j] == '>')
-				if (redirection(input, ptr, i, j))
-					return (NULL);
-			j++;
-		}
-		i++;
-	}
+
 	ptr->full_cmd = dup_fullcmd(input);
 	return (first);
 }
@@ -105,6 +91,7 @@ t_cmd	*init_cmd(char *input, char **env)
 	while (input_split[i])
 	{
 		ft_fprintf(2, "input_split: |%s|\n", input_split[i]);
+		c = redirection(c, input_split[i]);
 		c = create_cmdlist(input_split[i], c, env);
 		i++;
 	}

@@ -6,13 +6,13 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 16:56:03 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/30 18:35:19 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/02 20:29:01 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	count_pipe(char const *s)
+static int	count_pipe(const char *s)
 {
 	char	del;
 	int		i;
@@ -25,7 +25,6 @@ static int	count_pipe(char const *s)
 	del = '|';
 	while (s[i])
 	{
-		ft_fprintf(2, "DEBUG\n");
 		if (s[i] == '|' && s[i + 1] && s[i + 1] == '|')
 			return (-1);
 		else if (s[i] == '|' && del == '|')
@@ -41,7 +40,7 @@ static int	count_pipe(char const *s)
 	return (count);
 }
 
-char	*fill_btw_pipe(char *tab, const char **s, int size)
+static char	*fill_btw_pipe(char *tab, const char **s, int size)
 {
 	int		i;
 	int		j;
@@ -49,7 +48,7 @@ char	*fill_btw_pipe(char *tab, const char **s, int size)
 	i = 0;
 	j = 0;
 	while (i < size && (*s)[j])
-			tab = cpy_char(tab, &i, *s, &j);
+		tab = cpy_char(tab, &i, *s, &j);
 	tab[i] = '\0';
 	*s += j;
 	if (*s[0] == '|')
@@ -96,7 +95,7 @@ static int	size_btw_pipe(const char *s, char del)
 	return (size);
 }
 
-char	**parse_pipe(char const *s)
+char	**parse_pipe(const char *s)
 {
 	char	**tab;
 	int		i;
@@ -114,7 +113,7 @@ char	**parse_pipe(char const *s)
 	{
 		tab[i] = malloc_btw_pipe(&s, size_btw_pipe(s, '|'));
 		if (!tab[i])
-			malloc_error();
+			return (free_tab_and_ret_null(tab, i));
 		i++;
 	}
 	tab[i] = NULL;

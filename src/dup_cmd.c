@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char	*dup_cmd(const char *src)
+char	*dup_cmd(char *src)
 {
 	char	*mem;
 	size_t	size;
