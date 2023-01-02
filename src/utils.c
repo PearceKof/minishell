@@ -21,4 +21,3 @@ int	env_size(char **env)
 		i++;
 	return (i);
 }
-
