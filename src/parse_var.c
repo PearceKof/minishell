@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:01:14 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/02 20:31:33 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/02 22:12:29 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env)
 		if (!ptr)
 		{
 			pass_until_char(*s, j, SPE_CHAR);
-			ft_fprintf(2, "s is here |%s|\n", &(*s)[*j]);
+			// ft_fprintf(2, "s is here |%s|\n", &(*s)[*j]);
 			return (tab);
 		}
 		varvalue = ft_strdup(ptr);
@@ -86,6 +86,6 @@ char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env)
 	while (varvalue[i])
 		tab = cpy_char(tab, k, varvalue, &i);
 	free(varvalue);
-	ft_fprintf(2, "joinvar tab: |%s| s:|%s|\n", tab, &(*s)[*j]);
+	// ft_fprintf(2, "joinvar tab: |%s| s:|%s|\n", tab, &(*s)[*j]);
 	return (tab);
 }

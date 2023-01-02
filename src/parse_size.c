@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 18:11:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/02 20:26:10 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/02 22:11:51 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int	get_str_size(const char *s, char **env, char del)
 
 	i = 0;
 	size = 0;
-	ft_fprintf(2, "strsize bgin wth |%s|", s);
 	while (s[i] && s[i] != del)
 	{
 		if (del == s[i] && (s[i] == '\"' || s[i] == '\''))
@@ -83,6 +82,5 @@ int	get_str_size(const char *s, char **env, char del)
 			i++;
 		}
 	}
-	ft_fprintf(2, "getstsrsize %d\n", size);
 	return (size);
 }

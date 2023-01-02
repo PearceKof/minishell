@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 16:56:03 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/02 20:29:01 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/02 22:12:57 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int	size_btw_pipe(const char *s, char del)
 
 	i = 0;
 	size = 0;
-	ft_fprintf(2, "size_btw_pipe begin wth |%s|\n", s);
+	// ft_fprintf(2, "size_btw_pipe begin wth |%s|\n", s);
 	while (s[i] && s[i] != del)
 	{
 		if (del == s[i] && (s[i] == '\"' || s[i] == '\''))
@@ -91,7 +91,7 @@ static int	size_btw_pipe(const char *s, char del)
 			size++;
 		}
 	}
-	ft_fprintf(2, "size_btw_pipe %d\n", size);
+	// ft_fprintf(2, "size_btw_pipe %d\n", size);
 	return (size);
 }
 
@@ -104,7 +104,7 @@ char	**parse_pipe(const char *s)
 	nb_of_pipe = count_pipe(s);
 	if (nb_of_pipe == -1)
 		return (NULL);
-	ft_fprintf(2, "nb_of_pipe: %d\n", nb_of_pipe);
+	// ft_fprintf(2, "nb_of_pipe: %d\n", nb_of_pipe);
 	tab = (char **)malloc(sizeof(char *) * (nb_of_pipe + 1));
 	if (!tab)
 		malloc_error();

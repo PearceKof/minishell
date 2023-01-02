@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:33:08 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/02 20:33:47 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/02 22:13:34 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ t_cmd	*init_cmd(char *input, char **env)
 	}
 	while (input_split[i])
 	{
-		ft_fprintf(2, "input_split: |%s|\n", input_split[i]);
 		c = redirection(c, input_split[i]);
 		c = create_cmdlist(input_split[i], c, env);
 		i++;

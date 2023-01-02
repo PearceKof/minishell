@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 17:40:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/02 21:01:01 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/02 22:13:23 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static char *get_file_name(const char *s, char red, int *i, int size)
 	char	*file_name;
 	char	del;
 	int		j;
-	ft_fprintf(2, "\n\nFILE_SIZE HERE %d\n\n", size);
+	// ft_fprintf(2, "\n\nFILE_SIZE HERE %d\n\n", size);
 	file_name = malloc(sizeof(char) * (size + 1));
 	if (!file_name)
 		malloc_error();

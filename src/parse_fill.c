@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 13:58:40 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/02 20:23:32 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/02 22:12:45 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ char	*fill_tab(char *tab, const char **s, char **env, int size)
 	}
 	tab[i] = '\0';
 	go_nxt_char(s, j, size);
-	ft_fprintf(2, "tab: |%s|s:|%s|\n", tab, *s);
+	// ft_fprintf(2, "tab: |%s|s:|%s|\n", tab, *s);
 	return (tab);
 }
