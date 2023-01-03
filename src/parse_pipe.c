@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 16:56:03 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/02 22:12:57 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/03 19:37:06 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,12 @@ static int	count_pipe(const char *s)
 	int		i;
 	int		count;
 
-	if (s[0] == '|')
-		return (-1);
 	i = 0;
 	count = 0;
 	del = '|';
 	while (s[i])
 	{
-		if (s[i] == '|' && s[i + 1] && s[i + 1] == '|')
-			return (-1);
-		else if (s[i] == '|' && del == '|')
+		if (s[i] == '|' && del == '|')
 			i++;
 		if (s[i] != '\0')
 			count++;

@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:59:32 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/29 14:28:58 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/03 18:45:46 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static char	*error_type(int errorid)
 
 	ft_strlcpy(error[QUOTE], ": Closing quote not found\n", 50);
 	ft_strlcpy(error[PIPEN], "syntax error near unexpected token `|'\n", 50);
-	ft_strlcpy(error[SUPERR], "syntax error near unexpected token `>'\n", 50);
-	ft_strlcpy(error[INFERR], "syntax error near unexpected token `<'\n", 50);
+	ft_strlcpy(error[OUTERR], "syntax error near unexpected token `>'\n", 50);
+	ft_strlcpy(error[INERR], "syntax error near unexpected token `<'\n", 50);
 	ft_strlcpy(error[DSUPERR], "syntax error near unexpected token `>>'\n", 50);
 	ft_strlcpy(error[DINFERR], "syntax error near unexpected token `<<'\n", 50);
 	ft_strlcpy(error[NL], "syntax error near unexpected token `newline'\n", 50);
