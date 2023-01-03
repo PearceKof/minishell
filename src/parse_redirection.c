@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 17:40:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/03 17:47:29 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/03 17:54:58 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,35 +41,12 @@ static char *get_file_name(const char *s, char red, int *i, int size)
 	return (file_name);
 }
 
-static int	file_name_size(const char *s, char red, int i)
-{
-	int		size;
-	char	del;
-
-	i++;
-	while (s[i] && s[i] == ' ')
-		i++;
-	del = ' ';
-	if (s[i] && (s[i] == '\'' || s[i] == '\"'))
-	{
-		del = s[i];
-		i++;
-	}
-	size = 0;
-	while (s[i] && s[i] != red && s[i] != del && !ft_strchr("$\\#=[]!|;{}()*?~&+-", s[i]))
-	{
-		size++;
-		i++;
-	}
-	// ft_fprintf(2, "\n\nFILE_SIZE HERE %d\n\n", size);
-	return (size);
-}
 /*
 	prends le pointeur sur s et la redirection red que l'on cherche,
 	return 0 si il y a encore des redirections
 	return 1 si il n'y en a plus.
 */
-int	no_more_red(const char *s, char red)
+static int	no_more_red(const char *s, char red)
 {
 	char	del;
 	int		i;

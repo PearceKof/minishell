@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:37:16 by blaurent          #+#    #+#             */
-/*   Updated: 2022/12/22 16:41:37 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/03 17:58:05 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ reproduit la commande echo
 */
 void	ft_echo(char **full_cmd)
 {
-	size_t	i;
-	size_t	j;
-	int		flag;
+	int	i;
+	int	j;
+	int	flag;
 
 	i = 1;
 	flag = 0;

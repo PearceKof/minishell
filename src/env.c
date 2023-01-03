@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:48:00 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/02 21:40:45 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/03 17:56:00 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ char	*edit_envvar(char *to_edit, char *value, int size)
 	tmp = ft_substr(to_edit, 0, size + 1);
 	if (!tmp)
 		malloc_error();
-	ft_fprintf(2, "to_edit |%s| value|%s|\n", to_edit, value);
 	newvar = ft_strjoin(tmp, value);
 	if (!newvar)
 		malloc_error();
