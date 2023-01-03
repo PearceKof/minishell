@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/02 21:12:36 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/03 17:52:20 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,6 @@ int	execute(t_cmd *c, t_data *d)
 	ret = execute_exit(c, d);
 	while (c && !ret)
 	{
-		if (execute_exit(c, d))
 		if (c->next)
 			if (pipe(piper))
 				return (error(PERROR, 1, NULL, NULL));

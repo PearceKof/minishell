@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 17:40:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/02 22:13:23 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/03 17:47:29 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,64 +15,6 @@
 #include "minishell.h"
 
 extern int g_status;
-
-// static int	redirect_input(t_cmd *c, char *input, int i)
-// {
-// 	int	i;
-
-// 	i = j;
-// 	while (input[i])
-// 	{
-// 		if (input[i] != '\0' && input[i] != '<')
-// 		{
-// 			c->in = open(&input[i][j], O_RDONLY);
-// 			if (c->in == -1)
-// 				return (1);
-// 				return (0);	
-// 			}
-// 			j++;
-// 		}
-// 		j++;
-// 	}
-// 	if (!input[i])
-// 	{
-// 		ft_fprintf(2, "syntax error near unexpected token `newline'\n");
-// 		return (1);
-// 	}
-// 	return (0);
-// }
-
-// static int	redirect_output(t_cmd *c, char *input, int i)
-// {
-// 	int	i;
-
-// 	i = j;
-// 	while (input[i][j])
-// 	{
-// 		if (input[i][j] != '\0' && input[i][j] != '>')
-// 		{
-// 			c->out = open(&input[i][j], O_WRONLY | O_TRUNC | O_CREAT, 00777);
-// 			while (i >= k)
-// 			{
-// 				while (input[k][l])
-// 					input[k][l++] = 0;
-// 				l = 0;
-// 				k++;
-// 				}
-// 				return (0);	
-// 			}
-// 			j++;
-// 		}
-// 		j = 0;
-// 		i++;
-// 	}
-// 	if (!input[i])
-// 	{
-// 		ft_fprintf(2, "syntax error near unexpected token `newline'\n");
-// 		return (1);
-// 	}
-// 	return (0);
-// }
 
 static char *get_file_name(const char *s, char red, int *i, int size)
 {
@@ -122,26 +64,81 @@ static int	file_name_size(const char *s, char red, int i)
 	// ft_fprintf(2, "\n\nFILE_SIZE HERE %d\n\n", size);
 	return (size);
 }
+/*
+	prends le pointeur sur s et la redirection red que l'on cherche,
+	return 0 si il y a encore des redirections
+	return 1 si il n'y en a plus.
+*/
+int	no_more_red(const char *s, char red)
+{
+	char	del;
+	int		i;
+
+	i = 0;
+	del = ' ';
+	while (s[i])
+	{
+		if (del == ' ' && (s[i] == '\'' || s[i] == '\"'))
+			del = s[i];
+		else if (del == s[i] && (s[i] == '\'' || s[i] == '\"'))
+			del = ' ';
+		else if ((s[i]) == red && del == ' ')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+static t_cmd	*open_file(t_cmd *c, char *file_name, char red, const char *s)
+{
+	if (red == '<')
+	{
+		if (c->in != 0 && c->in != -1)
+			close(c->in);
+		c->in = open(file_name, O_RDONLY);
+		if (c->in == -1 && no_more_red(s, red))
+			error(NDIR, 1, file_name, NULL);
+	}
+	else if (red == '>')
+	{
+		if (c->out != 1 && c->out != -1)
+			close(c->out);
+		c->out = open(file_name, O_WRONLY | O_TRUNC | O_CREAT, 00777);
+		if (c->out == -1 && no_more_red(s, red))
+			error(NPERM, 1, file_name, NULL);
+	}
+	return (c);
+}
 
 t_cmd	*redirection(t_cmd *c, const char *s)
 {
-	int		i;
+	t_cmd	*ptr;
 	char	*file_name;
+	char	del;
+	char	red;
+	int		i;
 
-	file_name = NULL;
+	ptr = c;
+	while (ptr->next)
+		ptr = ptr->next;
 	i = 0;
+	del = ' ';
 	while (s[i])
 	{
-		if (s[i] == '<' || s[i] == '>')
+		if (del == ' ' && (s[i] == '\'' || s[i] == '\"'))
+			del = s[i];
+		else if (del == s[i] && (s[i] == '\'' || s[i] == '\"'))
+			del = ' ';
+		if ((s[i] == '<' || s[i] == '>') && del == ' ')
 		{
+			red = s[i];
 			file_name = get_file_name(s, s[i], &i, file_name_size(s, s[i], i));
-			ft_fprintf(2, "\n\nFILE_NAME HERE %s\n\n", file_name);
+			ft_fprintf(2, "\n\nFILE_NAME HERE |%s|\n\ns= |%s||%s|\n\n", file_name, &s[i], s);
+			ptr = open_file(ptr, file_name, red, &s[i]);
+			if (file_name)
+				free(file_name);
 		}
 		i++;
 	}
-	// if (s[i] == '<')
-	// 	return (redirect_input(c, s, i));
-	// if (s[i] == '>')
-	// 	return (redirect_output(c, s, i));
 	return (c);
 }

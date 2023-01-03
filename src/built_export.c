@@ -6,13 +6,13 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 23:37:34 by root              #+#    #+#             */
-/*   Updated: 2023/01/02 22:14:38 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/03 16:30:13 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char		*get_name(int i, char *full)
+static char	*get_name(int i, char *full)
 {
 	char	*varname;
 	int		j;
@@ -30,9 +30,9 @@ static char		*get_name(int i, char *full)
 	return (varname);
 }
 
-static char		*point_value(int i, char *full)
+static char	*point_value(int i, char *full)
 {
-	int		j;
+	int	j;
 
 	j = 0;
 	while (j < i)
@@ -64,11 +64,11 @@ static char	*get_value(char *full)
 	return (value);
 }
 
-int		ft_export(t_cmd *c, t_data *d)
+int	ft_export(t_cmd *c, t_data *d)
 {
-	char *full;
-	char *varname;
-	char *value;
+	char	*full;
+	char	*varname;
+	char	*value;
 	int	i;
 
 	full = c->full_cmd[1];
