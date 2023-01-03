@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:59:32 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/03 18:45:46 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/03 20:39:28 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static char	*error_type(int errorid)
 	static char	error[19][50];
 
 	ft_strlcpy(error[QUOTE], ": Closing quote not found\n", 50);
-	ft_strlcpy(error[PIPEN], "syntax error near unexpected token `|'\n", 50);
+	ft_strlcpy(error[ANDEND], "syntax error near unexpected token `&'\n", 50);
+	ft_strlcpy(error[PIPEND], "syntax error near unexpected token `|'\n", 50);
 	ft_strlcpy(error[OUTERR], "syntax error near unexpected token `>'\n", 50);
 	ft_strlcpy(error[INERR], "syntax error near unexpected token `<'\n", 50);
 	ft_strlcpy(error[DSUPERR], "syntax error near unexpected token `>>'\n", 50);
@@ -42,7 +43,6 @@ static char	*error_type(int errorid)
 
 int	error(int errorid, int error_status, char *infoa, char *infob)
 {
-	g_status = error_status;
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(infoa, 2);
 	if (errorid)
@@ -50,6 +50,7 @@ int	error(int errorid, int error_status, char *infoa, char *infob)
 	else
 		perror(infob);
 	ft_putstr_fd(error_type(errorid), 2);
+	g_status = error_status;
 	return (error_status);
 }
 

@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/03 19:57:16 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/03 20:17:21 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ enum	e_error
 {
 	PERROR,
 	QUOTE,
+	ANDEND,
 	PIPEND,
 	OUTERR,
 	INERR,
@@ -143,7 +144,7 @@ char	**parse_pipe(char const *s);
 /*
 	parse_redirection.c
 */
-t_cmd	*redirection(t_cmd *c, const char *s);
+t_cmd	*redirection(t_cmd *c, char *s);
 /*
 	parse_size.c
 */
@@ -154,7 +155,7 @@ int		file_name_size(const char *s, char red, int i);
 /*
 	parse_utils.c
 */
-int		is_invalid_syntax(const char *s);
+int		is_invalid_syntax(char *s);
 void	pass_until_char(const char *s, int *i, char *ending_char);
 char	*cpy_char(char *dest, int *i, const char *src, int *j);
 void	*free_tab_and_ret_null(char **tab, int size);

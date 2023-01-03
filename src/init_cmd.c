@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:33:08 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/03 19:42:24 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/03 20:30:34 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,6 @@ t_cmd	*init_cmd(char *input, char **env)
 
 	c = NULL;
 	i = 0;
-	if (is_invalid_syntax(input))
-		return (NULL);
 	input_split = parse_pipe(input);
 	if (!input_split)
 	{

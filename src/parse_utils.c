@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 13:57:51 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/03 19:56:52 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/03 20:23:27 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int g_status;
 
-static int	check_nxt_char(const char *s, int i)
+static int	check_nxt_syntax(char *s, int i)
 {
 	i++;
 	while (s[i] == ' ')
@@ -27,10 +27,12 @@ static int	check_nxt_char(const char *s, int i)
 		return (error(PIPEND, 2, NULL, NULL));
 	else if (s[i] == '\0')
 		return (error(NL, 2, NULL, NULL));
+	else if (s[i] == '&')
+		return (error(ANDEND, 2, NULL, NULL));
 	return (0);
 }
 
-int	is_invalid_syntax(const char *s)
+int	is_invalid_syntax(char *s)
 {
 	char	del;
 	int		i;
@@ -47,8 +49,8 @@ int	is_invalid_syntax(const char *s)
 			del = s[i];
 		else if (del == s[i] && (s[i] == '\'' || s[i] == '\"'))
 			del = ' ';
-		if (ft_strchr("|<>", s[i]) && del == ' ')
-			if (check_nxt_char(s, i))
+		if (ft_strchr("|<>&", s[i]) && del == ' ')
+			if (check_nxt_syntax(s, i))
 				return (1);
 		i++;
 	}

@@ -6,22 +6,21 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 17:40:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/03 19:25:52 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/03 20:51:03 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "minishell.h"
 
 #include "minishell.h"
 
 extern int g_status;
 
 
-static char *get_file_name(const char *s, char red, int *i, int size)
+static char *get_file_name(char *s, char red, int *i, int size)
 {
 	char	*file_name;
 	char	del;
 	int		j;
+	int		len;
 
 	file_name = malloc(sizeof(char) * (size + 1));
 	if (!file_name)
@@ -38,6 +37,13 @@ static char *get_file_name(const char *s, char red, int *i, int size)
 	j = 0;
 	while (s[*i] && s[*i] != red && s[*i] != del && !ft_strchr("$\\#=[]!|;{}()*?~&+-", s[*i]))
 		file_name = cpy_char(file_name , &j, s, i);
+	len = *i;
+	while (s[len] != red)
+	{
+		s[len] = ' ';
+		len--;
+	}
+	s[len] = ' ';
 	file_name[j] = '\0';
 	return (file_name);
 }
@@ -47,7 +53,7 @@ static char *get_file_name(const char *s, char red, int *i, int size)
 	return 0 si il y a encore des redirections
 	return 1 si il n'y en a plus.
 */
-static int	no_more_red(const char *s, char red)
+static int	no_more_red(char *s, char red)
 {
 	char	del;
 	int		i;
@@ -67,7 +73,7 @@ static int	no_more_red(const char *s, char red)
 	return (1);
 }
 
-static t_cmd	*open_file(t_cmd *c, char *file_name, char red, const char *s)
+static t_cmd	*open_file(t_cmd *c, char *file_name, char red, char *s)
 {
 	if (red == '<')
 	{
@@ -88,7 +94,7 @@ static t_cmd	*open_file(t_cmd *c, char *file_name, char red, const char *s)
 	return (c);
 }
 
-t_cmd	*redirection(t_cmd *c, const char *s)
+t_cmd	*redirection(t_cmd *c, char *s)
 {
 	t_cmd	*ptr;
 	char	*file_name;

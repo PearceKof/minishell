@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/03 18:58:57 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/03 20:41:48 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,16 @@ enregistre dans l'historique si la commande est correct
 return 1 si l'input est correct
 return 0 si incorrect
 */
-static	int	is_correct_input(t_data *d)
+static	int	is_correct_input(char *input)
 {
-	if (!d->input)
+	if (!input)
 	{
 		ft_putstr_fd("exit\n", 2);
 		exit(0);
 	}
-	if (is_only_space(d->input) || d->input[0] == '\0')
+	if (is_only_space(input) || input[0] == '\0' || is_invalid_syntax(input))
 		return(0);
-	add_history(d->input);
+	add_history(input);
 	return (1);
 }
 /*
@@ -100,7 +100,7 @@ int main(int ac, char **av, char **envp)
 	{
 		signaux();
 		d->input = readline("=>");
-		if (is_correct_input(d))
+		if (is_correct_input(d->input))
 		{
 			c = init_cmd(d->input, d->env);
 			if (c)
