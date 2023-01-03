@@ -6,11 +6,13 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:38:37 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/02 21:15:04 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/03 21:01:47 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int g_status;
 
 void	cd_root(t_cmd *c, t_data *d)
 {
@@ -32,6 +34,7 @@ void	cd_root(t_cmd *c, t_data *d)
 
 int	ft_cd(t_cmd *c, t_data *d)
 {
+	g_status = 0;
 	if (!c->full_cmd[1] || c->full_cmd[1][0] == '~')
 	{
 		cd_root(c, d);

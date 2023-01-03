@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/03 20:17:21 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/03 20:58:03 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,15 @@ typedef struct s_data
 {
 	char	**env;
 	char	*input;
-	int		end;
-	pid_t	pid;
 }	t_data;
 
 typedef struct s_cmd
 {
-	int					in;
-	int					out;
-	pid_t				pid;
-	char				**full_cmd;
-	char				*full_path;
+	int				in;
+	int				out;
+	pid_t			pid;
+	char			**full_cmd;
+	char			*full_path;
 	struct s_cmd	*prev;
 	struct s_cmd	*next;
 }	t_cmd;
