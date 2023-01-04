@@ -9,8 +9,25 @@
 /*   Updated: 2022/01/08 15:46:23 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "libft.h"
+
+static char	*str_utils(char *str, char const *s1, char const *s2)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
+	while (s1[i] != '\0')
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	while (s2[j] != '\0')
+		str[i++] = s2[j++];
+	str[i] = '\0';
+	return (str);
+}
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
@@ -29,15 +46,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	str = (char *)malloc((i + j + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
-	i = 0;
-	j = 0;
-	while (s1[i] != '\0')
-	{
-		str[i] = s1[i];
-		i++;
-	}
-	while (s2[j] != '\0')
-		str[i++] = s2[j++];
-	str[i] = '\0';
+	str = str_utils(str, s1, s2);
 	return (str);
 }

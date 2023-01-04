@@ -49,7 +49,6 @@ static char	*fill_btw_pipe(char *tab, const char **s, int size)
 	*s += j;
 	if (*s[0] == '|')
 		*s += 1;
-	// ft_fprintf(2, "tab: |%s|s:|%s|\n", tab, *s);
 	return (tab);
 }
 
@@ -71,7 +70,6 @@ static int	size_btw_pipe(const char *s, char del)
 
 	i = 0;
 	size = 0;
-	// ft_fprintf(2, "size_btw_pipe begin wth |%s|\n", s);
 	while (s[i] && s[i] != del)
 	{
 		if (del == s[i] && (s[i] == '\"' || s[i] == '\''))
@@ -87,7 +85,6 @@ static int	size_btw_pipe(const char *s, char del)
 			size++;
 		}
 	}
-	// ft_fprintf(2, "size_btw_pipe %d\n", size);
 	return (size);
 }
 
@@ -100,7 +97,6 @@ char	**parse_pipe(const char *s)
 	nb_of_pipe = count_pipe(s);
 	if (nb_of_pipe == -1)
 		return (NULL);
-	// ft_fprintf(2, "nb_of_pipe: %d\n", nb_of_pipe);
 	tab = (char **)malloc(sizeof(char *) * (nb_of_pipe + 1));
 	if (!tab)
 		malloc_error();

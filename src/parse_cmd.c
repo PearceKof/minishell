@@ -32,6 +32,7 @@ char	nxt_del(char const *s, char del, char dfdel, int *i)
 	dire qu'un bracket n'est pas fermé et la ft return -1
 	si tout s'est bien passé, return le nbr de string à allouer
 */
+
 static int	ft_count_space(char const *s)
 {
 	char	del;
@@ -69,6 +70,7 @@ static char	*malloc_and_fill_tab(const char **s, char **env, int size)
 	parsing de l'input, alloue la mémoire et return un char** créé à partir
 	de l'argument s si tout s'est bien passé. sinon, il renvoi NULL
 */
+
 char	**parse_cmd(char const *s, char **env)
 {
 	char	**tab;
@@ -78,7 +80,6 @@ char	**parse_cmd(char const *s, char **env)
 	if (!s)
 		return (NULL);
 	nbrofc = ft_count_space(s);
-	// ft_fprintf(2, "nbrofc: %d\n", nbrofc);
 	if (nbrofc == -1)
 		return (NULL);
 	tab = (char **)malloc(sizeof(char *) * (nbrofc + 1));

@@ -9,7 +9,6 @@
 /*   Updated: 2023/01/03 20:41:48 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
 
 int	g_status;
@@ -18,6 +17,7 @@ void	exit_test(void)
 {
 	exit(g_status);
 }
+
 /*
 	check si l'argument s contient autre chose que des caractéres "vides"
 	" \t\n\v\f\r\'\""
@@ -34,7 +34,7 @@ int	is_only_space(char *s)
 			return (0);
 		i++;
 	}
-	return(1);
+	return (1);
 }
 /*
 vérifie que l'input à bien été lu et qu'il contient bien une commande
@@ -42,6 +42,7 @@ enregistre dans l'historique si la commande est correct
 return 1 si l'input est correct
 return 0 si incorrect
 */
+
 static	int	is_correct_input(char *input)
 {
 	if (!input)
@@ -50,7 +51,7 @@ static	int	is_correct_input(char *input)
 		exit(0);
 	}
 	if (is_only_space(input) || input[0] == '\0' || is_invalid_syntax(input))
-		return(0);
+		return (0);
 	add_history(input);
 	return (1);
 }
@@ -58,11 +59,11 @@ static	int	is_correct_input(char *input)
 affiche les infos de la commande c en argumant
 Juste pour debugger
 */
+
 void	printcmd(t_cmd *c)
 {
-	int i;
-	int j;
-	
+	int	i;
+	int	j;
 
 	while (c)
 	{
@@ -87,7 +88,7 @@ void	printcmd(t_cmd *c)
 	}
 }
 
-int main(int ac, char **av, char **envp)
+int	main(int ac, char **av, char **envp)
 {
 	t_data	*d;
 	t_cmd	*c;

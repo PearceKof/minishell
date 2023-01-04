@@ -9,9 +9,9 @@
 /*   Updated: 2023/01/03 18:01:42 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
-extern int g_status;
+
+extern int	g_status;
 
 int	ft_env(char **env)
 {
@@ -47,10 +47,11 @@ static int	ft_pwd(void)
 	return (0);
 }
 /*
-check le premier mot de la commande, si il correspond à un builin, il va l'éxecuter
-et return 1
+check le premier mot de la commande, si il correspond à un builin, 
+il va l'éxecuter et return 1
 sinon, return 0
 */
+
 int	exec_builtin(t_cmd *cmd, t_data *d)
 {
 	int	size;
@@ -61,7 +62,8 @@ int	exec_builtin(t_cmd *cmd, t_data *d)
 		ft_echo(cmd->full_cmd);
 		return (1);
 	}
-	else if (ft_strnstr(cmd->full_cmd[0], "export", size) && size == 6 && !cmd->full_cmd[1])
+	else if (ft_strnstr(cmd->full_cmd[0], "export", size)
+		&& size == 6 && !cmd->full_cmd[1])
 		return (ft_env(d->env));
 	else if (ft_strnstr(cmd->full_cmd[0], "pwd", size) && size == 3)
 	{

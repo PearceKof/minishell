@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-extern int g_status;
+extern int	g_status;
 
 int	status_size(int *i)
 {
@@ -100,7 +100,8 @@ int	file_name_size(const char *s, char red, int i)
 		i++;
 	}
 	size = 0;
-	while (s[i] && s[i] != red && s[i] != del && !ft_strchr("$\\#=[]!|;{}()*?~&+-", s[i]))
+	while (s[i] && s[i] != red && s[i] != del
+		&& !ft_strchr("$\\#=[]!|;{}()*?~&+-", s[i]))
 	{
 		size++;
 		i++;

@@ -9,46 +9,7 @@
 /*   Updated: 2023/01/03 17:56:00 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
-/*
-	prends le nom d'une variable et return sa taille au premier =
-	sinon, return 0
-*/
-int	varname_size(char *varname)
-{
-	int	i;
-
-	i = 0;
-	while (varname[i])
-	{
-		if (varname[i] == '=')
-			return (i);
-		i++;
-	}
-	return (0);
-}
-/*
-	prends le nom d'une variable, l'env dans lequelle on veut la chercher
-	et la longueur de varname
-	return un ptr juste aprés le = (sur la valeur de la variable)
-	return NULL si varname ne correspond pas à un variable de l'env
-*/
-char	*ft_getenv(char *varname, char **env, int len)
-{
-	int	lencmp;
-	int	i;
-
-	i = 0;
-	while (env[i])
-	{
-		lencmp = varname_size(env[i]);
-		if (ft_strnstr(env[i], varname, ft_strlen(varname)) && lencmp == len)
-			return (ft_strchr(env[i], '=') + 1);
-		i++;
-	}
-	return (NULL);
-}
 /*
 	prends un nom de variable et une valeur, alloue et return un char *
 	composé de varname, suivi d'un = et de value
@@ -60,7 +21,7 @@ char	*new_envvar(char *varname, char *value)
 
 	tmp = ft_strjoin(varname, "=");
 	if (!tmp)
-		malloc_error();;
+		malloc_error();
 	new_var = ft_strjoin(tmp, value);
 	if (!new_var)
 		malloc_error();
@@ -73,6 +34,7 @@ char	*new_envvar(char *varname, char *value)
 	!!! Ajoute addvar peut importe si il est déjà dans l'env
 	à utiliser seulement pour une nouvelle variable !!!
 */
+
 void	addvar_to_env(t_data *d, char *addvar)
 {
 	char	**new_env;
@@ -101,6 +63,7 @@ void	addvar_to_env(t_data *d, char *addvar)
 	la nouvelle valeur et la taille de la variable
 	return la variable suivi de sa nouvelle valeur
 */
+
 char	*edit_envvar(char *to_edit, char *value, int size)
 {
 	char	*newvar;
@@ -124,6 +87,7 @@ char	*edit_envvar(char *to_edit, char *value, int size)
 	si varname n'existe pas déjà dans l'env, créer la var,
 	sinon il ne fait que changer la valeur
 */
+
 char	**set_env_var(char *varname, char *value, t_data *d, int size)
 {
 	char	*newvar;
@@ -158,8 +122,8 @@ char	**init_env(char **av, t_data *d)
 	if (!ft_getenv("SHLVL", d->env, 5))
 		d->env = set_env_var("SHLVL", "1", d, 5);
 	if (!ft_getenv("PATH", d->env, 4))
-		d->env = set_env_var("PATH", 
-			"/usr/local/sbin:/usr/local/bin:/usr/bin:/bin", d, 4);
+		d->env = set_env_var("PATH",
+				"/usr/local/sbin:/usr/local/bin:/usr/bin:/bin", d, 4);
 	if (!ft_getenv("_", d->env, 1))
 		d->env = set_env_var("_", av[0], d, 1);
 	return (d->env);

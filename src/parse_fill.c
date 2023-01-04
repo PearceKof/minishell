@@ -14,10 +14,10 @@
 
 static void	go_nxt_char(const char **s, int j, int size)
 {
-	char del;
+	char	del;
 
 	*s += j;
-	if (size == 0 && ((*s)[0] == '\'' || (*s)[0]  == '\"'))
+	if (size == 0 && ((*s)[0] == '\'' || (*s)[0] == '\"'))
 	{
 		del = *s[0];
 		*s += 1;
@@ -63,6 +63,5 @@ char	*fill_tab(char *tab, const char **s, char **env, int size)
 	}
 	tab[i] = '\0';
 	go_nxt_char(s, j, size);
-	// ft_fprintf(2, "tab: |%s|s:|%s|\n", tab, *s);
 	return (tab);
 }

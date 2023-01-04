@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-extern int g_status;
+extern int	g_status;
 
 /*
 	isole le nom de la variable de la string s à partir de start
@@ -29,7 +29,8 @@ char	*isolate_varname(const char *s, int start)
 	varname = NULL;
 	start++;
 	end = start + 1;
-	while (s[end] && s[end] != ' ' && s[end] != '\"' && s[end] != '\'' && s[end] != '$')
+	while (s[end] && s[end] != ' ' && s[end] != '\"'
+		&& s[end] != '\'' && s[end] != '$')
 		end++;
 	varname = (char *)ft_calloc(sizeof(char), (end - start) + 1);
 	if (!varname)
@@ -72,20 +73,19 @@ char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env)
 		if (!ptr)
 		{
 			pass_until_char(*s, j, SPE_CHAR);
-			// ft_fprintf(2, "s is here |%s|\n", &(*s)[*j]);
 			return (tab);
 		}
 		varvalue = ft_strdup(ptr);
 		if (!varvalue)
 			malloc_error();
 		*j += 1;
-		while ((*s)[*j] && (*s)[*j] != ' ' && (*s)[*j] != '\'' && (*s)[*j] != '\"' && (*s)[*j] != '$')
-			*j += 1;	
+		while ((*s)[*j] && (*s)[*j] != ' ' && (*s)[*j] != '\''
+			&& (*s)[*j] != '\"' && (*s)[*j] != '$')
+			*j += 1;
 	}
 	i = 0;
 	while (varvalue[i])
 		tab = cpy_char(tab, k, varvalue, &i);
 	free(varvalue);
-	// ft_fprintf(2, "joinvar tab: |%s| s:|%s|\n", tab, &(*s)[*j]);
 	return (tab);
 }

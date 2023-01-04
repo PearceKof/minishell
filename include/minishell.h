@@ -102,12 +102,15 @@ char	**init_env(char **av, t_data *d);
 	error.c
 */
 int		error(int errorid, int error_status, char *infoa, char *infob);
-void	malloc_error();
+void	malloc_error(void);
 /*
 	execute.c
 */
 void	execute_cmd(char **env, char **cmd);
 int		execute(t_cmd *c, t_data *d);
+int		execute_exit(t_cmd *c, t_data *d);
+char	*ft_getpaths(char **env, char *cmd);
+char	*checkpaths(char **env_paths, char *cmd);
 /*
 	free.c
 */
@@ -122,7 +125,7 @@ t_cmd	*init_cmd(char *input, char **env);
 t_data	*init_term(char **av, char **envp);
 void	*ft_mallerror(char **tab, size_t i);
 char	*get_input(void);
-t_cmd	*new_cmd();
+t_cmd	*new_cmd(void);
 t_cmd	*add_cmd(t_cmd *first);
 t_cmd	*fill_cmd(char **input, t_cmd *first);
 int		env_size(char **env);
@@ -142,7 +145,10 @@ char	**parse_pipe(char const *s);
 /*
 	parse_redirection.c
 */
+void	redi_utls(char del, int i, char *s);
+void	file_name_uts(char *s, char red, int *i);
 t_cmd	*redirection(t_cmd *c, char *s);
+t_cmd	*ptr_utls(t_cmd *c);
 /*
 	parse_size.c
 */
@@ -165,7 +171,7 @@ char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env);
 /*
 	signaux.c
 */
-void	signaux();
+void	signaux(void);
 
 int		is_only_space(char *s);
 

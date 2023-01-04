@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-extern int g_status;
+extern int	g_status;
 
 static int	check_nxt_syntax(char *s, int i)
 {
@@ -56,6 +56,7 @@ int	is_invalid_syntax(char *s)
 	}
 	return (0);
 }
+
 void	pass_until_char(const char *s, int *i, char *ending_char)
 {
 	*i += 1;
@@ -81,7 +82,7 @@ void	*free_tab_and_ret_null(char **tab, int size)
 				free(tab[size]);
 			size--;
 		}
-		free(tab);	
+		free(tab);
 	}
 	return (NULL);
 }

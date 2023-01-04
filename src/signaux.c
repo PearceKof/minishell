@@ -9,10 +9,9 @@
 /*   Updated: 2022/12/15 16:19:55 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
 
-extern int g_status;
+extern int	g_status;
 
 // char *prompt (void)
 // {
@@ -41,28 +40,28 @@ extern int g_status;
 	nettoie la ligne
 	puis réaffiche le prompt
 */
-static void sigint_handler(int sig)
+static void	sigint_handler(int sig)
 {
-    pid_t   pid;
-    int     states;
+	pid_t	pid;
+	int		states;
 
-    pid = waitpid(-1, &states, WNOHANG);
+	pid = waitpid(-1, &states, WNOHANG);
 	if (sig == SIGINT)
 	{
-        if (pid == -1)
+		if (pid == -1)
 		{
 			write(1, "\n", 1);
-		    rl_on_new_line();
-		    rl_replace_line("", 0);
-		    rl_redisplay();
-		    g_status = 130;
+			rl_on_new_line();
+			rl_replace_line("", 0);
+			rl_redisplay();
+			g_status = 130;
 		}
 		else
 			write(1, "\n", 1);
 	}
 }
 
-void    signaux()
+void	signaux(void)
 {
-    signal(SIGINT, sigint_handler);
+	signal(SIGINT, sigint_handler);
 }

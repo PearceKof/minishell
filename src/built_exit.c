@@ -9,7 +9,6 @@
 /*   Updated: 2023/01/03 17:58:13 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
 
 extern int	g_status;
@@ -50,7 +49,7 @@ int	ft_exit(char **full_cmd)
 		exit(2);
 	}
 	if (full_cmd[2])
-		return(error(TOOARGS, 1, "exit", NULL));
+		return (error(TOOARGS, 1, "exit", NULL));
 	nbr = (unsigned char)ft_atoi(full_cmd[1]);
 	if (exit_check_num(full_cmd))
 	{

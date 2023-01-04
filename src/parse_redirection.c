@@ -9,18 +9,15 @@
 /*   Updated: 2023/01/03 20:51:03 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
 
-extern int g_status;
+extern int	g_status;
 
-
-static char *get_file_name(char *s, char red, int *i, int size)
+static char	*get_file_name(char *s, char red, int *i, int size)
 {
 	char	*file_name;
 	char	del;
 	int		j;
-	int		len;
 
 	file_name = malloc(sizeof(char) * (size + 1));
 	if (!file_name)
@@ -35,15 +32,10 @@ static char *get_file_name(char *s, char red, int *i, int size)
 		*i += 1;
 	}
 	j = 0;
-	while (s[*i] && s[*i] != red && s[*i] != del && !ft_strchr("$\\#=[]!|;{}()*?~&+-", s[*i]))
-		file_name = cpy_char(file_name , &j, s, i);
-	len = *i;
-	while (s[len] != red)
-	{
-		s[len] = ' ';
-		len--;
-	}
-	s[len] = ' ';
+	while (s[*i] && s[*i] != red && s[*i] != del
+		&& !ft_strchr("$\\#=[]!|;{}()*?~&+-", s[*i]))
+		file_name = cpy_char(file_name, &j, s, i);
+	file_name_uts(s, red, i);
 	file_name[j] = '\0';
 	return (file_name);
 }
@@ -102,22 +94,18 @@ t_cmd	*redirection(t_cmd *c, char *s)
 	char	red;
 	int		i;
 
-	ptr = c;
-	while (ptr->next)
-		ptr = ptr->next;
+	ptr = ptr_utls(c);
 	i = 0;
 	del = ' ';
 	while (s[i])
 	{
-		if (del == ' ' && (s[i] == '\'' || s[i] == '\"'))
-			del = s[i];
-		else if (del == s[i] && (s[i] == '\'' || s[i] == '\"'))
-			del = ' ';
 		if ((s[i] == '<' || s[i] == '>') && del == ' ')
 		{
+			redi_utls(del, i, s);
 			red = s[i];
 			file_name = get_file_name(s, s[i], &i, file_name_size(s, s[i], i));
-			ft_fprintf(2, "\n\nFILE_NAME HERE |%s|\n\ns= |%s||%s|\n\n", file_name, &s[i], s);
+			ft_fprintf(2, "\n\nFILE_NAME HERE |%s|\n\ns= |%s||%s|\n\n",
+				file_name, &s[i], s);
 			ptr = open_file(ptr, file_name, red, &s[i]);
 			if (file_name)
 				free(file_name);

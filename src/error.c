@@ -11,9 +11,8 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-extern int g_status;
 
-
+extern int	g_status;
 
 static char	*error_type(int errorid)
 {
@@ -54,7 +53,7 @@ int	error(int errorid, int error_status, char *infoa, char *infob)
 	return (error_status);
 }
 
-void	malloc_error()
+void	malloc_error(void)
 {
 	ft_putstr_fd("malloc_failed\nexit\n", 2);
 	exit(EXIT_FAILURE);

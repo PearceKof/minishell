@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-extern int g_status;
+extern int	g_status;
 
 void	cd_root(t_cmd *c, t_data *d)
 {
@@ -41,7 +41,7 @@ int	ft_cd(t_cmd *c, t_data *d)
 		return (0);
 	}
 	else if (c->full_cmd[2])
-		return(error(TOOARGS, 1, "cd", NULL));
+		return (error(TOOARGS, 1, "cd", NULL));
 	if (chdir(c->full_cmd[1]))
 		return (error(PERROR, 1, "cd: ", c->full_cmd[1]));
 	new_pwd(d);

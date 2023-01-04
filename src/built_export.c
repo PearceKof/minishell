@@ -69,11 +69,11 @@ int	ft_export(t_cmd *c, t_data *d)
 	char	*full;
 	char	*varname;
 	char	*value;
-	int	i;
+	int		i;
 
 	full = c->full_cmd[1];
 	if (*full == '=' || (*full >= '0' && *full <= '9'))
-		 return(error(INVID, 1, full, NULL));
+		return (error(INVID, 1, full, NULL));
 	i = 0;
 	while (full[i] && full[i] != '=')
 		i++;

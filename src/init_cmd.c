@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-t_cmd	*new_cmd()
+t_cmd	*new_cmd(void)
 {
 	t_cmd	*new_cmd;
 
@@ -49,7 +49,6 @@ t_cmd	*fill_cmd(char **input, t_cmd *first)
 	ptr = first;
 	while (ptr->next)
 		ptr = ptr->next;
-
 	ptr->full_cmd = dup_fullcmd(input);
 	return (first);
 }

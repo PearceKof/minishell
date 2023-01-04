@@ -35,7 +35,6 @@ static void	var_del(t_data *d, char *str, char **tmp)
 
 static int	env_dup(t_data *d, t_cmd *c, int index)
 {
-	
 	int		len;
 	char	*str;
 	char	**tmp;
