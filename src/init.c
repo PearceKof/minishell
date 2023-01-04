@@ -23,6 +23,7 @@ t_data	*init_term(char **av, char **envp)
 		ft_putstr_fd("malloc failled\n", 2);
 		exit(1);
 	}
+	d->index = 1;
 	d->input = NULL;
 	d->env = ft_tabdup(envp);
 	d->env = init_env(av, d);

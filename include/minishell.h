@@ -56,6 +56,7 @@ typedef struct s_data
 {
 	char	**env;
 	char	*input;
+	int		index;
 }	t_data;
 
 typedef struct s_cmd
@@ -83,6 +84,7 @@ int		exec_builtin(t_cmd *cmd, t_data *d);
 void	exit_test(void);
 int		ft_env(char **env);
 void	new_pwd(t_data *d);
+t_data	*ft_mini(t_data *d);
 /*
 	dup_cmd.c
 */

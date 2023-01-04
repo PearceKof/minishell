@@ -46,6 +46,13 @@ static int	ft_pwd(void)
 		printf("%s\n", str);
 	return (0);
 }
+
+t_data	*ft_mini(t_data *d)
+{
+	d->index++;
+	set_env_var("SHLVL", ft_itoa(d->index), d, 5);
+	return (d);
+}
 /*
 check le premier mot de la commande, si il correspond à un builin, 
 il va l'éxecuter et return 1
@@ -72,5 +79,7 @@ int	exec_builtin(t_cmd *cmd, t_data *d)
 	}
 	else if (ft_strnstr(cmd->full_cmd[0], "env", size) && size == 3)
 		return (ft_env(d->env));
+	else if (ft_strnstr(cmd->full_cmd[0], "./minishell", size) && size == 11)
+		ft_mini(d);
 	return (0);
 }

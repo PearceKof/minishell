@@ -120,7 +120,7 @@ char	**init_env(char **av, t_data *d)
 	d->env = set_env_var("PWD", tmp, d, 3);
 	free(tmp);
 	if (!ft_getenv("SHLVL", d->env, 5))
-		d->env = set_env_var("SHLVL", "1", d, 5);
+		d->env = set_env_var("SHLVL", ft_itoa(d->index), d, 5);
 	if (!ft_getenv("PATH", d->env, 4))
 		d->env = set_env_var("PATH",
 				"/usr/local/sbin:/usr/local/bin:/usr/bin:/bin", d, 4);
