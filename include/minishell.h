@@ -85,6 +85,7 @@ void	exit_test(void);
 int		ft_env(char **env);
 void	new_pwd(t_data *d);
 t_data	*ft_mini(t_data *d);
+void	rl_replace_line(const char *text, int clear_undo);
 /*
 	dup_cmd.c
 */

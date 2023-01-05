@@ -16,7 +16,7 @@ extern int	g_status;
 
 static char	*error_type(int errorid)
 {
-	static char	error[19][50];
+	static char	error[20][50];
 
 	ft_strlcpy(error[QUOTE], ": Closing quote not found\n", 50);
 	ft_strlcpy(error[ANDEND], "syntax error near unexpected token `&'\n", 50);

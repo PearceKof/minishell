@@ -16,7 +16,7 @@ NAME = minishell
 SRCDIR = ./src/
 SRCNAMES = $(shell ls $(SRCDIR) | grep -E ".+\.c")
 SRC = $(addprefix $(SRCDIR), $(SRCNAMES))
-INC = ./include/
+INC = ./include/ -I /Users/$(USER)/.brew/opt/readline/include
 BUILDDIR = ./build/
 BUILDOBJS = $(addprefix $(BUILDDIR), $(SRCNAMES:.c=.o))
 
@@ -45,7 +45,7 @@ $(BUILDDIR)%.o:$(SRCDIR)%.c
 
 # Project file rule
 $(NAME): $(BUILDOBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(BUILDOBJS) $(LIBFT) -lreadline 
+	$(CC) $(CFLAGS) -o $(NAME) $(BUILDOBJS) $(LIBFT) -L /Users/$(USER)/.brew/opt/readline/lib -lreadline
 
 # Libft rule
 $(LIBFT):
