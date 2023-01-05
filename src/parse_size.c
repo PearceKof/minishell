@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 18:11:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/03 17:54:21 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/05 16:37:12 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,16 +94,16 @@ int	file_name_size(const char *s, char red, int i)
 	while (s[i] && s[i] == ' ')
 		i++;
 	del = ' ';
-	if (s[i] && (s[i] == '\'' || s[i] == '\"'))
-	{
-		del = s[i];
-		i++;
-	}
 	size = 0;
-	while (s[i] && s[i] != red && s[i] != del
+	while (s[i] && s[i] != red && (s[i] != ' ' && del != ' ')
 		&& !ft_strchr("$\\#=[]!|;{}()*?~&+-", s[i]))
 	{
-		size++;
+		if (del == ' ' &&(s[i] == '\'' || s[i] == '\"'))
+			del = s[i];
+		else if (del == s[i] &&(s[i] == '\'' || s[i] == '\"'))
+			del = s[i];
+		else
+			size++;
 		i++;
 	}
 	return (size);

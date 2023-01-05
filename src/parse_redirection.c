@@ -6,10 +6,11 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 17:40:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/03 20:51:03 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/05 16:46:30 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minishell.h"
+
+# include "minishell.h"
 
 extern int	g_status;
 
@@ -26,15 +27,21 @@ static char	*get_file_name(char *s, char red, int *i, int size)
 	while (s[*i] && s[*i] == ' ')
 		*i += 1;
 	del = ' ';
-	if (s[*i] && (s[*i] == '\'' || s[*i] == '\"'))
+	j = 0;
+	while (s[*i] && s[*i] != red && (s[*i] != ' ' && del != ' ')
+	&& !ft_strchr("$\\#=[]!|;{}()*?~&+-", s[*i]))
 	{
-		del = s[*i];
+		if (del == ' ' &&(s[*i] == '\'' || s[*i] == '\"'))
+			del = s[*i];
+		else if (del == s[*i] &&(s[*i] == '\'' || s[*i] == '\"'))
+			del = ' ';
+		else
+		{
+			file_name[j] = s[*i];
+			j++;
+		}
 		*i += 1;
 	}
-	j = 0;
-	while (s[*i] && s[*i] != red && s[*i] != del
-		&& !ft_strchr("$\\#=[]!|;{}()*?~&+-", s[*i]))
-		file_name = cpy_char(file_name, &j, s, i);
 	file_name_uts(s, red, i);
 	file_name[j] = '\0';
 	return (file_name);
