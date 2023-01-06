@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 17:40:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/06 19:38:50 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/06 22:20:32 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,24 @@ static char	*get_file_name(char *s, int *i, int size)
 		*i += 1;
 	del = ' ';
 	j = 0;
-	while (s[*i] && !ft_strchr("<>$\\#=[]!|;{}()*?~&+-", s[*i]))
+	while (s[*i] && !ft_strchr("$|;()?&", s[*i]))
 	{
 		if (del == ' ' && (s[*i] == '\'' || s[*i] == '\"'))
 			del = s[*i];
 		else if (del == s[*i] && (s[*i] == '\'' || s[*i] == '\"'))
 			del = ' ';
-		else if (del == ' ' && s[*i] == ' ')
-			break;
 		else
 		{
 			file_name[j] = s[*i];
 			j++;
 		}
 		*i += 1;
+		if (del == ' ' && ft_strchr("<>$|;()?&", s[*i]))
+			break;
 	}
 	replace_with_space(s, red_pos, i);
 	file_name[j] = '\0';
+	ft_fprintf(2, "DEBUG filename:|%s|\n", file_name);
 	return (file_name);
 }
 
@@ -96,22 +97,24 @@ static t_cmd	*open_file(t_cmd *c, char *file_name, char red, char *s)
 	return (c);
 }
 
-t_cmd	*redirection(t_cmd *c, char *s)
+t_cmd	*redirection(t_cmd *c, char *s, t_cmd *ptr)
 {
-	t_cmd	*ptr;
 	char	*file_name;
 	char	del;
 	char	red;
 	int		i;
 
-	ptr = get_last_cmd(c);
 	i = 0;
 	del = ' ';
 	while (s[i])
 	{
+		if (del == ' ' && (s[i] == '\'' || s[i] == '\"'))
+			del = s[i];
+		else if (del == s[i] && (s[i] == '\'' || s[i] == '\"'))
+			del = ' ';
 		if ((s[i] == '<' || s[i] == '>') && del == ' ')
 		{
-			redi_utls(del, i, s);
+			ft_fprintf(2, "DEBUG: found redirection\n");
 			red = s[i];
 			file_name = get_file_name(s, &i, file_name_size(s, i));
 			ptr = open_file(ptr, file_name, red, &s[i]);

@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 15:42:53 by ctechy            #+#    #+#             */
-/*   Updated: 2023/01/06 19:14:33 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/06 20:38:12 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,4 @@ void	replace_with_space(char *s, int red_pos, int *i)
 		s[*i] = ' ';
 		*i -= 1;
 	}
-}
-
-void	redi_utls(char del, int i, char *s)
-{
-	if (del == ' ' && (s[i] == '\'' || s[i] == '\"'))
-		del = s[i];
-	else if (del == s[i] && (s[i] == '\'' || s[i] == '\"'))
-		del = ' ';
 }

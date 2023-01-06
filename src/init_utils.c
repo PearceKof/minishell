@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:33:08 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/06 19:58:08 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/06 20:37:07 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env)
 		c = add_cmd(c);
 	if (!c)
 		malloc_error();
-	c = redirection(c, input_split);
+	c = redirection(c, input_split, get_last_cmd(c));
 	if (!c)
 		return (NULL);
 	parsed_input = parse_cmd(input_split, env);
