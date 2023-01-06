@@ -3,27 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redi_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctechy <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 15:42:53 by ctechy            #+#    #+#             */
-/*   Updated: 2023/01/04 15:42:56 by ctechy           ###   ########.fr       */
+/*   Updated: 2023/01/06 19:14:33 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 extern int	g_status;
 
-void	file_name_uts(char *s, char red, int *i)
+void	replace_with_space(char *s, int red_pos, int *i)
 {
-	int	len;
-
-	len = *i;
-	while (s[len] != red)
+	*i -= 1;
+	while (*i >= red_pos)
 	{
-		s[len] = ' ';
-		len--;
+		s[*i] = ' ';
+		*i -= 1;
 	}
-	s[len] = ' ';
 }
 
 void	redi_utls(char del, int i, char *s)
@@ -32,14 +30,4 @@ void	redi_utls(char del, int i, char *s)
 		del = s[i];
 	else if (del == s[i] && (s[i] == '\'' || s[i] == '\"'))
 		del = ' ';
-}
-
-t_cmd	*ptr_utls(t_cmd *c)
-{
-	t_cmd	*ptr;
-
-	ptr = c;
-	while (ptr->next)
-		ptr = ptr->next;
-	return (ptr);
 }

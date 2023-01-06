@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 17:40:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/05 16:46:30 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/06 19:38:50 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,30 @@
 
 extern int	g_status;
 
-static char	*get_file_name(char *s, char red, int *i, int size)
+static char	*get_file_name(char *s, int *i, int size)
 {
 	char	*file_name;
 	char	del;
 	int		j;
+	int		red_pos;
 
 	file_name = malloc(sizeof(char) * (size + 1));
 	if (!file_name)
 		malloc_error();
+	red_pos = *i;
 	*i += 1;
 	while (s[*i] && s[*i] == ' ')
 		*i += 1;
 	del = ' ';
 	j = 0;
-	while (s[*i] && s[*i] != red && (s[*i] != ' ' && del != ' ')
-	&& !ft_strchr("$\\#=[]!|;{}()*?~&+-", s[*i]))
+	while (s[*i] && !ft_strchr("<>$\\#=[]!|;{}()*?~&+-", s[*i]))
 	{
-		if (del == ' ' &&(s[*i] == '\'' || s[*i] == '\"'))
+		if (del == ' ' && (s[*i] == '\'' || s[*i] == '\"'))
 			del = s[*i];
-		else if (del == s[*i] &&(s[*i] == '\'' || s[*i] == '\"'))
+		else if (del == s[*i] && (s[*i] == '\'' || s[*i] == '\"'))
 			del = ' ';
+		else if (del == ' ' && s[*i] == ' ')
+			break;
 		else
 		{
 			file_name[j] = s[*i];
@@ -42,14 +45,14 @@ static char	*get_file_name(char *s, char red, int *i, int size)
 		}
 		*i += 1;
 	}
-	file_name_uts(s, red, i);
+	replace_with_space(s, red_pos, i);
 	file_name[j] = '\0';
 	return (file_name);
 }
 
 /*
 	prends le pointeur sur s et la redirection red que l'on cherche,
-	return 0 si il y a encore des redirections
+	return 0 si il y a encore au moins une redirection
 	return 1 si il n'y en a plus.
 */
 static int	no_more_red(char *s, char red)
@@ -101,7 +104,7 @@ t_cmd	*redirection(t_cmd *c, char *s)
 	char	red;
 	int		i;
 
-	ptr = ptr_utls(c);
+	ptr = get_last_cmd(c);
 	i = 0;
 	del = ' ';
 	while (s[i])
@@ -110,9 +113,7 @@ t_cmd	*redirection(t_cmd *c, char *s)
 		{
 			redi_utls(del, i, s);
 			red = s[i];
-			file_name = get_file_name(s, s[i], &i, file_name_size(s, s[i], i));
-			ft_fprintf(2, "\n\nFILE_NAME HERE |%s|\n\ns= |%s||%s|\n\n",
-				file_name, &s[i], s);
+			file_name = get_file_name(s, &i, file_name_size(s, i));
 			ptr = open_file(ptr, file_name, red, &s[i]);
 			if (file_name)
 				free(file_name);

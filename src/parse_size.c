@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 18:11:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/05 16:37:12 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/06 18:03:52 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	get_str_size(const char *s, char **env, char del)
 	return (size);
 }
 
-int	file_name_size(const char *s, char red, int i)
+int	file_name_size(const char *s, int i)
 {
 	int		size;
 	char	del;
@@ -95,16 +95,17 @@ int	file_name_size(const char *s, char red, int i)
 		i++;
 	del = ' ';
 	size = 0;
-	while (s[i] && s[i] != red && (s[i] != ' ' && del != ' ')
-		&& !ft_strchr("$\\#=[]!|;{}()*?~&+-", s[i]))
+	while (s[i] && !ft_strchr("<>$\\#=[]!|;{}()*?~&+-", s[i]))
 	{
 		if (del == ' ' &&(s[i] == '\'' || s[i] == '\"'))
 			del = s[i];
 		else if (del == s[i] &&(s[i] == '\'' || s[i] == '\"'))
-			del = s[i];
+			del = ' ';
 		else
 			size++;
 		i++;
+		if (s[i] == ' ' && del == ' ')
+			break;
 	}
 	return (size);
 }

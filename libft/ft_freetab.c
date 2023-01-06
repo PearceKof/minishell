@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:34:20 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/31 14:11:33 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/06 20:05:10 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ void	ft_freetab(char **tab)
 	if (tab)
 	{
 		while (tab[i])
-			free(tab[i++]);
+		{
+			free(tab[i]);
+			i++;
+		}
 		free(tab);
 	}
 }
