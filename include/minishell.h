@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/03 20:58:03 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/06 21:27:31 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ char	*checkpaths(char **env_paths, char *cmd);
 */
 void	*free_cmd(t_cmd *c);
 /*
-	init_cmd.c
+	init_utils.c
 */
 t_cmd	*init_cmd(char *input, char **env);
 /*
@@ -131,7 +131,11 @@ char	*get_input(void);
 t_cmd	*new_cmd(void);
 t_cmd	*add_cmd(t_cmd *first);
 t_cmd	*fill_cmd(char **input, t_cmd *first);
-int		env_size(char **env);
+/*
+	init.c
+*/
+t_cmd	*init_cmd(char *input, char **env);
+t_data	*init_term(char **av, char **envp);
 /*
 	parse_cmd.c
 */
@@ -149,20 +153,18 @@ char	**parse_pipe(char const *s);
 	parse_redirection.c
 */
 void	redi_utls(char del, int i, char *s);
-void	file_name_uts(char *s, char red, int *i);
-t_cmd	*redirection(t_cmd *c, char *s);
-t_cmd	*ptr_utls(t_cmd *c);
+void	replace_with_space(char *s, int red_pos, int *i);
+t_cmd	*redirection(t_cmd *c, char *s, t_cmd *ptr);
 /*
 	parse_size.c
 */
 int		status_size(int *i);
 int		var_value_size(char **env, const char *s, int *i);
 int		get_str_size(const char *s, char **env, char del);
-int		file_name_size(const char *s, char red, int i);
+int		file_name_size(const char *s, int i);
 /*
 	parse_utils.c
 */
-int		is_invalid_syntax(char *s);
 void	pass_until_char(const char *s, int *i, char *ending_char);
 char	*cpy_char(char *dest, int *i, const char *src, int *j);
 void	*free_tab_and_ret_null(char **tab, int size);
@@ -175,7 +177,10 @@ char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env);
 	signaux.c
 */
 void	signaux(void);
-
+/*
+	syntax.c
+*/
+int		is_invalid_syntax(char *s);
 int		is_only_space(char *s);
 
 #endif

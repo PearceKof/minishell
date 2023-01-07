@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 18:11:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/05 16:37:12 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/06 22:31:01 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	var_value_size(char **env, const char *s, int *i)
 	if (s[(*i) + 1] == '?')
 		return (status_size(i));
 	varname = isolate_varname(s, *i);
-	pass_until_char(s, i, " $\'\"");
+	pass_until_char(s, i, " <>$|;()?&");
 	ptr = ft_getenv(varname, env, ft_strlen(varname));
 	size = ft_strlen(varname) + 1;
 	free(varname);
@@ -85,26 +85,26 @@ int	get_str_size(const char *s, char **env, char del)
 	return (size);
 }
 
-int	file_name_size(const char *s, char red, int i)
+int	file_name_size(const char *s, int i)
 {
 	int		size;
 	char	del;
 
 	i++;
-	while (s[i] && s[i] == ' ')
+	while (s[i] == ' ')
 		i++;
 	del = ' ';
 	size = 0;
-	while (s[i] && s[i] != red && (s[i] != ' ' && del != ' ')
-		&& !ft_strchr("$\\#=[]!|;{}()*?~&+-", s[i]))
+	while (s[i] && !ft_strchr("<>$|;()?&", s[i]))
 	{
 		if (del == ' ' &&(s[i] == '\'' || s[i] == '\"'))
 			del = s[i];
 		else if (del == s[i] &&(s[i] == '\'' || s[i] == '\"'))
-			del = s[i];
+			del = ' ';
 		else
 			size++;
 		i++;
 	}
+	ft_fprintf(2, "size: %d\n", size);
 	return (size);
 }

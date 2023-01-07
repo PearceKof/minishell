@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/03 17:52:20 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/06 19:54:07 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,13 @@ int	execute(t_cmd *c, t_data *d)
 	int		piper[2];
 	int		ret;
 
+	if (c && c->full_cmd[0] == NULL)
+	{
+		ft_fprintf(2, "TEST\n");
+		return (0);
+	}
 	ret = execute_exit(c, d);
-	while (c && !ret)
+	while (c && c->full_cmd && !ret)
 	{
 		if (c->next)
 			if (pipe(piper))

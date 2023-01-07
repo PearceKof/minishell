@@ -1,16 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_cmd.c                                         :+:      :+:    :+:   */
+/*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:33:08 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/03 20:30:34 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/06 20:37:07 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_cmd	*get_last_cmd(t_cmd *c)
+{
+	t_cmd	*ptr;
+
+	ptr = c;
+	while (ptr && ptr->next)
+		ptr = ptr->next;
+	return (ptr);
+}
 
 t_cmd	*new_cmd(void)
 {
@@ -46,14 +56,12 @@ t_cmd	*fill_cmd(char **input, t_cmd *first)
 {
 	t_cmd	*ptr;
 
-	ptr = first;
-	while (ptr->next)
-		ptr = ptr->next;
+	ptr = get_last_cmd(first);
 	ptr->full_cmd = dup_fullcmd(input);
 	return (first);
 }
 
-static t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env)
+t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env)
 {
 	char	**parsed_input;
 
@@ -63,12 +71,15 @@ static t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env)
 		c = add_cmd(c);
 	if (!c)
 		malloc_error();
-	c = redirection(c, input_split);
+	c = redirection(c, input_split, get_last_cmd(c));
 	if (!c)
 		return (NULL);
 	parsed_input = parse_cmd(input_split, env);
-	if (!parsed_input)
-		return (NULL);
+	// if (!parsed_input)
+	// {
+		
+	// 	return (NULL);
+	// }
 	c = fill_cmd(parsed_input, c);
 	if (!c)
 		malloc_error();
@@ -76,30 +87,3 @@ static t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env)
 	return (c);
 }
 
-t_cmd	*init_cmd(char *input, char **env)
-{
-	char	**input_split;
-	t_cmd	*c;
-	int		i;
-
-	c = NULL;
-	i = 0;
-	input_split = parse_pipe(input);
-	if (!input_split)
-	{
-		error(PIPEND, 2, NULL, NULL);
-		return (NULL);
-	}
-	while (input_split[i])
-	{
-		c = create_cmdlist(input_split[i], c, env);
-		if (!c)
-		{
-			ft_freetab(input_split);
-			return (NULL);
-		}
-		i++;
-	}
-	ft_freetab(input_split);
-	return (c);
-}
