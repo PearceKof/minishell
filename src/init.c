@@ -48,6 +48,34 @@ static t_data	init_vars(t_data d, char *str, char **av)
 	return (d);
 }
 
+t_cmd	*init_cmd(char *input, char **env)
+{
+	char	**input_split;
+	t_cmd	*c;
+	int		i;
+
+	c = NULL;
+	i = 0;
+	input_split = parse_pipe(input);
+	if (!input_split)
+	{
+		error(PIPEND, 2, NULL, NULL);
+		return (NULL);
+	}
+	while (input_split[i])
+	{
+		c = create_cmdlist(input_split[i], c, env);
+		if (!c)
+		{
+			ft_freetab(input_split);
+			return (NULL);
+		}
+		i++;
+	}
+	ft_freetab(input_split);
+	return (c);
+}
+
 t_data	init_term(char **av, char **envp, t_data d)
 {
 	char		*str;

@@ -121,11 +121,10 @@ void	*free_cmd(t_cmd *c);
 /*
 	init_utils.c
 */
-t_cmd	*init_cmd(char *input, char **env);
+t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env);
 /*
 	init.c
 */
-t_data	init_term(char **av, char **envp, t_data d);
 void	*ft_mallerror(char **tab, size_t i);
 char	*get_input(void);
 t_cmd	*new_cmd(void);
@@ -135,7 +134,7 @@ t_cmd	*fill_cmd(char **input, t_cmd *first);
 	init.c
 */
 t_cmd	*init_cmd(char *input, char **env);
-t_data	*init_term(char **av, char **envp);
+t_data	init_term(char **av, char **envp, t_data d);
 /*
 	parse_cmd.c
 */
