@@ -90,27 +90,25 @@ void	printcmd(t_cmd *c)
 
 int	main(int ac, char **av, char **envp)
 {
-	t_data	*d;
+	t_data	d;
 	t_cmd	*c;
 
-	d = init_term(av, envp);
-	if (!d)
-		exit(EXIT_FAILURE);
+	d = init_term(av, envp, d);
 	g_status = 0;
 	while (ac && av)
 	{
 		signaux();
-		d->input = readline("=>");
-		if (is_correct_input(d->input))
+		d.input = readline("=>");
+		if (is_correct_input(d.input))
 		{
-			c = init_cmd(d->input, d->env);
+			c = init_cmd(d.input, d.env);
 			if (c)
 			{
 				printcmd(c);
-				execute(c, d);
+				execute(c, &d);
 				free_cmd(c);
 			}
 		}
-		free(d->input);
+		free(d.input);
 	}
 }

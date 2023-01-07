@@ -56,7 +56,7 @@ typedef struct s_data
 {
 	char	**env;
 	char	*input;
-	int		index;
+	pid_t	pid;
 }	t_data;
 
 typedef struct s_cmd
@@ -125,7 +125,7 @@ t_cmd	*init_cmd(char *input, char **env);
 /*
 	init.c
 */
-t_data	*init_term(char **av, char **envp);
+t_data	init_term(char **av, char **envp, t_data d);
 void	*ft_mallerror(char **tab, size_t i);
 char	*get_input(void);
 t_cmd	*new_cmd(void);

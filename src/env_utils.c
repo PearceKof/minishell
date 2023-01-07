@@ -37,15 +37,19 @@ int	varname_size(char *varname)
 
 char	*ft_getenv(char *varname, char **env, int len)
 {
-	int	lencmp;
 	int	i;
+	int	tmp_len;
 
 	i = 0;
-	while (env[i])
+	if (len < 0)
+		len = ft_strlen(varname);
+	while (!ft_strchr(varname, '=') && env && env[i])
 	{
-		lencmp = varname_size(env[i]);
-		if (ft_strnstr(env[i], varname, ft_strlen(varname)) && lencmp == len)
-			return (ft_strchr(env[i], '=') + 1);
+		tmp_len = len;
+		if (tmp_len < ft_strchr_nb(env[i], '='))
+			tmp_len = ft_strchr_nb(env[i], '=');
+		if (!ft_strncmp(env[i], varname, tmp_len))
+			return (ft_substr(env[i], tmp_len + 1, ft_strlen(env[i])));
 		i++;
 	}
 	return (NULL);

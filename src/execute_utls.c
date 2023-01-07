@@ -40,11 +40,6 @@ int	execute_exit(t_cmd *c, t_data *d)
 		ft_unset(c, d);
 		return (1);
 	}
-	else if (ft_strnstr(c->full_cmd[0], "./minishell", size) && size == 11)
-	{
-		ft_mini(d);
-		return (0);
-	}
 	return (0);
 }
 

@@ -65,5 +65,6 @@ char	**ft_tabdup(char **tab);
 int		ft_tablen(char **tab);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
+int		ft_strchr_nb(const char *s, int c);
 
 #endif

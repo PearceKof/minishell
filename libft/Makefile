@@ -71,6 +71,7 @@ FILES 		= ft_atoi.c \
 						ft_tablen.c \
 						ft_tolower.c \
 						ft_toupper.c \
+						ft_strchr_nb.c \
 
 OBJ 		= $(FILES:%.c=%.o)
 
