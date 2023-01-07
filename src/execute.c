@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/06 19:54:07 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/07 18:29:49 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ static void	child(t_cmd *c, t_data *d, int *pipe)
 static int	execute_fork(t_cmd *c, t_data *d, int *pipe)
 {
 	c->pid = fork();
+	if (!ft_strnstr(c->full_cmd[0], "./minishell", 11))
+		signal(SIGINT, handle_fork_sigint);
 	if (c->pid == -1)
 	{
 		ft_fprintf(2, "Fork failed\n");
@@ -94,10 +96,7 @@ int	execute(t_cmd *c, t_data *d)
 	int		ret;
 
 	if (c && c->full_cmd[0] == NULL)
-	{
-		ft_fprintf(2, "TEST\n");
 		return (0);
-	}
 	ret = execute_exit(c, d);
 	while (c && c->full_cmd && !ret)
 	{
