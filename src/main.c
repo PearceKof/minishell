@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/06 19:56:36 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/08 16:39:12 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,8 @@ int	main(int ac, char **av, char **envp)
 	g_status = 0;
 	while (ac && av)
 	{
-		signaux();
+		signal(SIGINT, sigint_handler);
+		// signal(SIGKILL, SIG_IGN);
 		d.input = readline("=>");
 		if (is_correct_input(d.input))
 		{

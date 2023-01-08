@@ -6,13 +6,13 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:01:29 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/06 19:20:36 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/07 22:29:23 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ft_getpid(t_data *d)
+pid_t	ft_getpid(void)
 {
 	pid_t	pid;
 
@@ -22,7 +22,7 @@ static void	ft_getpid(t_data *d)
 	if (!pid)
 		exit(1);
 	waitpid(pid, NULL, 0);
-	d->pid = pid - 1;
+	return (pid - 1);
 }
 
 static t_data	init_vars(t_data d, char *str, char **av)
@@ -34,7 +34,7 @@ static t_data	init_vars(t_data d, char *str, char **av)
 		tmp = ft_strdup("1");
 	else
 		tmp = ft_itoa(ft_atoi(str) + 1);
-	free(str);
+	// free(str);
 	d.env = set_env_var("SHLVL", tmp, &d, 5);
 	free(tmp);
 	tmp = getcwd(NULL, 0);
@@ -83,7 +83,7 @@ t_data	init_term(char **av, char **envp, t_data d)
 	str = NULL;
 	d.input = NULL;
 	d.env = ft_tabdup(envp);
-	ft_getpid(&d);
+	d.pid = ft_getpid();
 	d = init_vars(d, str, av);
 	return (d);
 }

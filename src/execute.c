@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/07 18:29:49 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/08 17:49:43 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ void	execute_cmd(char **env, char **cmd)
 	cmdpath = ft_getpaths(env, cmd[0]);
 	if (!cmdpath)
 	{
-		error(NCMD, 127, cmd[0], NULL);
+		// error(NCMD, 127, cmd[0], NULL);
 		exit(127);
 	}
 	if (execve(cmdpath, cmd, env) == -1)
 	{
-		error(PERROR, 126, cmd[0], NULL);
+		// error(PERROR, 126, cmd[0], NULL);
 		exit(126);
 	}
 }
@@ -74,9 +74,8 @@ static void	child(t_cmd *c, t_data *d, int *pipe)
 
 static int	execute_fork(t_cmd *c, t_data *d, int *pipe)
 {
+	
 	c->pid = fork();
-	if (!ft_strnstr(c->full_cmd[0], "./minishell", 11))
-		signal(SIGINT, handle_fork_sigint);
 	if (c->pid == -1)
 	{
 		ft_fprintf(2, "Fork failed\n");
@@ -89,14 +88,45 @@ static int	execute_fork(t_cmd *c, t_data *d, int *pipe)
 	return (0);
 }
 
+void	kill_all(t_cmd *c)
+{
+	while (c)
+	{
+		kill(c->pid, SIGINT);
+		c = c->next;
+	}
+}
+
+char	*find_same_pid(pid_t pid, t_cmd *c)
+{
+	t_cmd	*ptr;
+
+	ptr = c;
+	while (ptr)
+	{
+		if (ptr->pid == pid)
+			return (ptr->full_cmd[0]);
+		ptr = ptr->next;
+	}
+	return (NULL);
+}
 /*On check l'exit avant de fork sinon la fonction exit ne fonctionne pas*/
 int	execute(t_cmd *c, t_data *d)
 {
 	int		piper[2];
 	int		ret;
+	t_cmd *ptr;
+	pid_t	pid;
+	int state;
 
 	if (c && c->full_cmd[0] == NULL)
 		return (0);
+	ptr = c;
+	if (!ft_strnstr(c->full_cmd[0], "./minishell", 11))
+	{
+		signal(SIGINT, sigint_in_fork_handler);
+		signal(SIGQUIT, sigint_in_fork_handler);
+	}
 	ret = execute_exit(c, d);
 	while (c && c->full_cmd && !ret)
 	{
@@ -105,9 +135,31 @@ int	execute(t_cmd *c, t_data *d)
 				return (error(PERROR, 1, NULL, NULL));
 		if (execute_fork(c, d, piper))
 			return (1);
-		waitpid(c->pid, &g_status, 0);
-		g_status = WEXITSTATUS(g_status);
 		c = c->next;
 	}
+	c = ptr;
+	while (ptr)
+	{
+		pid = waitpid(0 , &state, WUNTRACED|WNOHANG);
+		while (!pid)
+			pid = waitpid(0 , &state, WUNTRACED|WNOHANG);
+		if (WIFEXITED(state))
+		{
+			if (g_status == 2)
+				g_status = 130;
+			g_status = WEXITSTATUS(state);
+			if (g_status == 127)
+				error(NCMD, 127, find_same_pid(pid, c), NULL);
+			else if (g_status == 127)
+				error(PERROR, 126, find_same_pid(pid, c), NULL);
+		}
+		else if (WIFSIGNALED(g_status))
+		{
+			kill_all(c);
+			break ;
+		}
+		ptr = ptr->next;
+	}
+	(void)pid;
 	return (0);
 }

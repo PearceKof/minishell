@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/07 18:06:12 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/07 22:29:04 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,13 +175,12 @@ char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env);
 /*
 	signaux.c
 */
-void	handle_sigint_parent(int sig);
-void	handle_fork_sigint(int sig);
-void	signaux(void);
+void	sigint_handler(int sig);
+void	sigint_in_fork_handler(int sig);
 /*
 	syntax.c
 */
 int		is_invalid_syntax(char *s);
 int		is_only_space(char *s);
-
+pid_t	ft_getpid(void);
 #endif

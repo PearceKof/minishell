@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 14:23:57 by root              #+#    #+#             */
-/*   Updated: 2023/01/07 18:26:58 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/08 16:39:08 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,18 @@ extern int	g_status;
 //    }
 //    return (0);
 // }
-void	handle_sigint_parent(int sig)
+
+void	sigint_in_fork_handler(int sig)
 {
-	ft_fprintf(2, "F");
-	if (sig == SIGINT)
-		g_status = 130;
-}
-void	handle_fork_sigint(int sig)
-{
-	// kill(-2, sig);
+	kill(-2, sig);
+	ft_fprintf(2, "sig:%d", sig);
 	if (sig == SIGINT)
 	{
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		g_status = 130;
+		// ft_fprintf(2, "SIGNAL: status %d\n", g_status);
 	}
 }
 /*
@@ -58,28 +55,21 @@ void	handle_fork_sigint(int sig)
 	nettoie la ligne
 	puis réaffiche le prompt
 */
-static void	sigint_handler(int sig)
+void	sigint_handler(int sig)
 {
 	pid_t	pid;
 	int		states;
 
-	pid = waitpid(-1, &states, WNOHANG);
-	// ft_fprintf(2, "%d %d %d\n", pid, states, sig);
+	pid = waitpid(0, &states, WNOHANG);
 	if (sig == SIGINT)
 	{
 		if (pid == -1)
 		{
-			// ft_fprintf(2, "A");
 			write(1, "\n", 1);
 			rl_on_new_line();
 			rl_replace_line("", 0);
 			rl_redisplay();
-			g_status = 130;
 		}
+		g_status = 130;
 	}
-}
-
-void	signaux(void)
-{
-	signal(SIGINT, sigint_handler);
 }
