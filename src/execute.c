@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/08 17:49:43 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/08 18:10:13 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,9 @@ void	execute_cmd(char **env, char **cmd)
 
 	cmdpath = ft_getpaths(env, cmd[0]);
 	if (!cmdpath)
-	{
-		// error(NCMD, 127, cmd[0], NULL);
 		exit(127);
-	}
 	if (execve(cmdpath, cmd, env) == -1)
-	{
-		// error(PERROR, 126, cmd[0], NULL);
 		exit(126);
-	}
 }
 
 static void	close_fd(t_cmd *c, int *pipe)
@@ -93,6 +87,7 @@ void	kill_all(t_cmd *c)
 	while (c)
 	{
 		kill(c->pid, SIGINT);
+		waitpid(c->pid, NULL, 0);
 		c = c->next;
 	}
 }
@@ -141,7 +136,7 @@ int	execute(t_cmd *c, t_data *d)
 	while (ptr)
 	{
 		pid = waitpid(0 , &state, WUNTRACED|WNOHANG);
-		while (!pid)
+		while (!pid && pid != -1)
 			pid = waitpid(0 , &state, WUNTRACED|WNOHANG);
 		if (WIFEXITED(state))
 		{
@@ -153,13 +148,12 @@ int	execute(t_cmd *c, t_data *d)
 			else if (g_status == 127)
 				error(PERROR, 126, find_same_pid(pid, c), NULL);
 		}
-		else if (WIFSIGNALED(g_status))
+		else if (WIFSIGNALED(state))
 		{
 			kill_all(c);
 			break ;
 		}
 		ptr = ptr->next;
 	}
-	(void)pid;
 	return (0);
 }

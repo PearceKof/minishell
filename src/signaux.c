@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 14:23:57 by root              #+#    #+#             */
-/*   Updated: 2023/01/08 16:39:08 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/08 18:11:30 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,12 @@ extern int	g_status;
 
 void	sigint_in_fork_handler(int sig)
 {
-	kill(-2, sig);
-	ft_fprintf(2, "sig:%d", sig);
 	if (sig == SIGINT)
 	{
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		g_status = 130;
-		// ft_fprintf(2, "SIGNAL: status %d\n", g_status);
 	}
 }
 /*
