@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/08 18:10:13 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/08 18:14:00 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,10 +118,7 @@ int	execute(t_cmd *c, t_data *d)
 		return (0);
 	ptr = c;
 	if (!ft_strnstr(c->full_cmd[0], "./minishell", 11))
-	{
 		signal(SIGINT, sigint_in_fork_handler);
-		signal(SIGQUIT, sigint_in_fork_handler);
-	}
 	ret = execute_exit(c, d);
 	while (c && c->full_cmd && !ret)
 	{
