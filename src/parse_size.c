@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 18:11:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/06 22:31:01 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/09 17:22:21 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,22 @@ int	var_value_size(char **env, const char *s, int *i)
 	char	*value;
 	int		size;
 
+	ft_fprintf(2, "var_value_size begin\n");
 	if (s[(*i) + 1] == '\0')
 	{
 		*i += 1;
 		return (1);
 	}
+	ft_fprintf(2, "var_value_size 1\n");
 	if (s[(*i) + 1] == '?')
 		return (status_size(i));
 	varname = isolate_varname(s, *i);
+	ft_fprintf(2, "var_value_size 2\n");
 	pass_until_char(s, i, " <>$|;()?&");
+	ft_fprintf(2, "var_value_size 3\n");
 	ptr = ft_getenv(varname, env, ft_strlen(varname));
+	if (!ptr)
+		return (1);
 	size = ft_strlen(varname) + 1;
 	free(varname);
 	if (!ptr)
@@ -55,6 +61,7 @@ int	var_value_size(char **env, const char *s, int *i)
 		malloc_error();
 	size = ft_strlen(value);
 	free(value);
+	ft_fprintf(2, "var_value_size %d\n", size);
 	return (size);
 }
 
@@ -83,6 +90,7 @@ int	get_str_size(const char *s, char **env, char del)
 			i++;
 		}
 	}
+	ft_fprintf(2, "get_str_size %d\n", size);
 	return (size);
 }
 

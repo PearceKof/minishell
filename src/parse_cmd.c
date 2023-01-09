@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:36:53 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/06 19:57:51 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:52:31 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ char	**parse_cmd(char const *s, char **env)
 	int		nbrofc;
 	int		i;
 
+	ft_fprintf(2, "parse_cmd begin\n");
 	if (!s)
 		return (NULL);
 	nbrofc = ft_count_space(s);
@@ -96,5 +97,6 @@ char	**parse_cmd(char const *s, char **env)
 		i++;
 	}
 	tab[i] = NULL;
+	ft_fprintf(2, "parse_cmd end\n");
 	return (tab);
 }

@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:01:14 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/02 22:12:29 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/09 17:02:19 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char	*isolate_varname(const char *s, int start)
 	int		end;
 	int		i;
 
+	ft_fprintf(2, "parse_cmd isolate_varname begin\n");
 	varname = NULL;
 	start++;
 	end = start + 1;
@@ -35,6 +36,7 @@ char	*isolate_varname(const char *s, int start)
 	varname = (char *)ft_calloc(sizeof(char), (end - start) + 1);
 	if (!varname)
 		malloc_error();
+	ft_fprintf(2, "end %d - start %d = %d\n", end, start, (end - start));
 	i = 0;
 	while ((i + start) < end)
 	{
@@ -42,6 +44,7 @@ char	*isolate_varname(const char *s, int start)
 		i++;
 	}
 	varname[i] = '\0';
+	ft_fprintf(2, "parse_cmd isolate_varname end\n");
 	return (varname);
 }
 
@@ -52,6 +55,7 @@ char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env)
 	char	*varvalue;
 	int		i;
 
+	ft_fprintf(2, "parse_cmd join_varvalue begin\n");
 	if ((*s)[(*j) + 1] && (*s)[(*j) + 1] == '?')
 	{
 		varvalue = ft_itoa(g_status);
@@ -87,5 +91,6 @@ char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env)
 	while (varvalue[i])
 		tab = cpy_char(tab, k, varvalue, &i);
 	free(varvalue);
+	ft_fprintf(2, "parse_cmd join_varvalue end\n");
 	return (tab);
 }

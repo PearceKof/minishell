@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctechy <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 15:26:33 by ctechy            #+#    #+#             */
-/*   Updated: 2023/01/04 15:26:36 by ctechy           ###   ########.fr       */
+/*   Updated: 2023/01/09 17:13:48 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 /*
@@ -37,8 +38,9 @@ int	varname_size(char *varname)
 
 char	*ft_getenv(char *varname, char **env, int len)
 {
-	int	i;
-	int	tmp_len;
+	int		i;
+	int		tmp_len;
+	char	*var_value;
 
 	i = 0;
 	if (len < 0)
@@ -49,7 +51,12 @@ char	*ft_getenv(char *varname, char **env, int len)
 		if (tmp_len < ft_strchr_nb(env[i], '='))
 			tmp_len = ft_strchr_nb(env[i], '=');
 		if (!ft_strncmp(env[i], varname, tmp_len))
-			return (ft_substr(env[i], tmp_len + 1, ft_strlen(env[i])));
+		{
+			var_value = ft_substr(env[i], tmp_len + 1, ft_strlen(env[i]));
+			if (!var_value)
+				malloc_error();
+			return (var_value);
+		}
 		i++;
 	}
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/09 16:39:07 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:51:45 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ static	int	is_correct_input(char *input)
 		exit(0);
 	}
 	if (is_heredoc(input))
+	{
 		ft_fprintf(2, "HEREDOC\n");
+		return (1);
+	}
 	else if (is_only_space(input) || input[0] == '\0' || is_invalid_syntax(input))
 		return (0);
 	add_history(input);

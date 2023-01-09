@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 16:56:03 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/09 16:47:18 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/09 17:02:56 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,7 @@ char	**parse_pipe(const char *s)
 	int		i;
 	int		nb_of_pipe;
 
-	// ft_fprintf(2, "parse_pipe begin\n");
 	nb_of_pipe = count_pipe(s);
-	// ft_fprintf(2, "parse_pipe nb of pipe: %d\n", nb_of_pipe);
 	if (nb_of_pipe == -1)
 		return (NULL);
 	tab = (char **)malloc(sizeof(char *) * (nb_of_pipe + 1));
@@ -113,6 +111,5 @@ char	**parse_pipe(const char *s)
 		i++;
 	}
 	tab[i] = NULL;
-	// ft_fprintf(2, "parse_pipe end\n");
 	return (tab);
 }
