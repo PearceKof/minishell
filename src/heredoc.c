@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:35:06 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/09 16:21:03 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:47:47 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	is_heredoc(char *input)
 	int	i;
 
 	i = 0;
-	hdoc_char = 1;
+	hdoc_char = 0;
 	while (input[i])
 	{
 		if (input[i] == '<' && input[i + 1] == '<')
