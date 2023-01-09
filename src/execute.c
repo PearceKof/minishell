@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/08 18:14:00 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/09 15:40:34 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,10 +116,10 @@ int	execute(t_cmd *c, t_data *d)
 
 	if (c && c->full_cmd[0] == NULL)
 		return (0);
-	ptr = c;
 	if (!ft_strnstr(c->full_cmd[0], "./minishell", 11))
 		signal(SIGINT, sigint_in_fork_handler);
 	ret = execute_exit(c, d);
+	ptr = c;
 	while (c && c->full_cmd && !ret)
 	{
 		if (c->next)
@@ -137,8 +137,6 @@ int	execute(t_cmd *c, t_data *d)
 			pid = waitpid(0 , &state, WUNTRACED|WNOHANG);
 		if (WIFEXITED(state))
 		{
-			if (g_status == 2)
-				g_status = 130;
 			g_status = WEXITSTATUS(state);
 			if (g_status == 127)
 				error(NCMD, 127, find_same_pid(pid, c), NULL);
