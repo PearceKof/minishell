@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:01:14 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/09 21:50:05 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/09 23:49:23 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env)
 	char	*varvalue;
 	int		i;
 
-	ft_fprintf(2, "\n\njoin_var_value: |%s| |%s|\n\n", s[0], &s[0][*j]);
 	if ((*s)[(*j) + 1] && (*s)[(*j) + 1] == '?')
 	{
 		varvalue = ft_itoa(g_status);
@@ -74,9 +73,7 @@ char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env)
 		free(varname);
 		if (!ptr)
 		{
-			ft_fprintf(2, "\n\njoin_var_value: |%s| |%s|\n\n", s[0], &s[0][*j]);
 			pass_until_char(*s, j, SPE_CHAR);
-			ft_fprintf(2, "\n\njoin_var_value: |%s| |%s|\n\n", s[0], &s[0][*j]);
 			return (tab);
 		}
 		varvalue = ft_strdup(ptr);
