@@ -73,6 +73,7 @@ char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env)
 		if (!ptr)
 		{
 			pass_until_char(*s, j, SPE_CHAR);
+			free(ptr);
 			return (tab);
 		}
 		varvalue = ft_strdup(ptr);
@@ -87,5 +88,6 @@ char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env)
 	while (varvalue[i])
 		tab = cpy_char(tab, k, varvalue, &i);
 	free(varvalue);
+	free(ptr);
 	return (tab);
 }

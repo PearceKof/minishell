@@ -26,3 +26,18 @@ void	*free_cmd(t_cmd *c)
 	}
 	return (NULL);
 }
+
+void	*free_env(t_data *d)
+{
+	int i;
+
+	i = 0;
+	while (d->env[i])
+	{
+		free(d->env[i]);
+		i++;
+	}
+	free(d->env);
+	free(d->input);
+	return (NULL);
+}

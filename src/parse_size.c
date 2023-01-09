@@ -48,8 +48,9 @@ int	var_value_size(char **env, const char *s, int *i)
 	size = ft_strlen(varname) + 1;
 	free(varname);
 	if (!ptr)
-		return (0);
+		malloc_error();
 	value = ft_strdup(ptr);
+	free(ptr);
 	if (!value)
 		malloc_error();
 	size = ft_strlen(value);
