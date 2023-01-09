@@ -91,13 +91,16 @@ char	*edit_envvar(char *to_edit, char *value, int size)
 char	**set_env_var(char *varname, char *value, t_data *d, int size)
 {
 	char	*newvar;
+	char	*str;
 	int		i;
 
-	if (ft_getenv(varname, d->env, size) == NULL)
+	str = ft_getenv(varname, d->env, size);
+	if (!str)
 	{
 		newvar = new_envvar(varname, value);
 		addvar_to_env(d, newvar);
 		free(newvar);
+		free(str);
 	}
 	i = 0;
 	while (d->env[i])
@@ -107,5 +110,6 @@ char	**set_env_var(char *varname, char *value, t_data *d, int size)
 				d->env[i] = edit_envvar(d->env[i], value, size);
 		i++;
 	}
+	free(str);
 	return (d->env);
 }

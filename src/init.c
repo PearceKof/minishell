@@ -29,6 +29,9 @@ static t_data	init_vars(t_data d, char *str, char **av)
 {
 	char	*tmp;
 
+	str = getcwd(NULL, 0);
+	d.env = set_env_var("PWD", str, &d, 3);
+	free(str);
 	str = ft_getenv("SHLVL", d.env, 5);
 	if (!str || ft_atoi(str) <= 0)
 		tmp = ft_strdup("1");
@@ -37,14 +40,15 @@ static t_data	init_vars(t_data d, char *str, char **av)
 	free(str);
 	d.env = set_env_var("SHLVL", tmp, &d, 5);
 	free(tmp);
-	tmp = getcwd(NULL, 0);
-	d.env = set_env_var("PWD", tmp, &d, 3);
-	free(tmp);
-	if (!ft_getenv("PATH", d.env, 4))
+	str = ft_getenv("PATH", d.env, 4);
+	if (!str)
 		d.env = set_env_var("PATH",
 				"/usr/local/sbin:/usr/local/bin:/usr/bin:/bin", &d, 4);
-	if (!ft_getenv("_", d.env, 1))
+	free(str);
+	str = ft_getenv("_", d.env, 1);
+	if (!str)
 		d.env = set_env_var("_", av[0], &d, 1);
+	free(str);
 	return (d);
 }
 
