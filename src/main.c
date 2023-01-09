@@ -62,7 +62,7 @@ static	int	is_correct_input(char *input)
 affiche les infos de la commande c en argumant
 Juste pour debugger
 */
-
+/*
 void	printcmd(t_cmd *c)
 {
 	int	i;
@@ -90,7 +90,7 @@ void	printcmd(t_cmd *c)
 		c = c->next;
 	}
 }
-
+*/
 int	main(int ac, char **av, char **envp)
 {
 	t_data	d;
@@ -107,7 +107,7 @@ int	main(int ac, char **av, char **envp)
 			c = init_cmd(d.input, d.env);
 			if (c)
 			{
-				printcmd(c);
+				//printcmd(c);
 				execute(c, &d);
 				free_cmd(c);
 			}

@@ -75,11 +75,6 @@ t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env)
 	if (!c)
 		return (NULL);
 	parsed_input = parse_cmd(input_split, env);
-	// if (!parsed_input)
-	// {
-		
-	// 	return (NULL);
-	// }
 	c = fill_cmd(parsed_input, c);
 	if (!c)
 		malloc_error();
