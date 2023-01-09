@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/07 22:29:04 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:21:34 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,10 @@ char	*checkpaths(char **env_paths, char *cmd);
 */
 void	*free_cmd(t_cmd *c);
 void	*free_env(t_data *d);
+/*
+	heredoc.c
+*/
+int	is_heredoc(char *input);
 /*
 	init_utils.c
 */
