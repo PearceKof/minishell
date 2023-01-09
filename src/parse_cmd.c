@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:36:53 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/09 16:52:31 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/09 23:29:31 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,48 @@ char	nxt_del(char const *s, char del, char dfdel, int *i)
 	si tout s'est bien passé, return le nbr de string à allouer
 */
 
-static int	ft_count_space(char const *s)
+// int	is_existing_value(const char *s, )
+
+static int	ft_count_space(char *s, char **env)
 {
 	char	del;
 	int		count;
 	int		i;
+	int		j;
+	char	*tmp;
+	char	*varvalue;
 
 	i = 0;
 	count = 0;
+	del = ' ';
 	while (s[i])
 	{
 		while (s[i] == ' ')
 			i++;
-		if (s[i] != '\0')
+		if (s[i] == '$' && !ft_strchr(" \"\'", s[i + 1]) && del != '\'')
+		{
+			tmp = isolate_varname(s, i);
+			varvalue = ft_getenv(tmp, env, ft_strlen(tmp));
+			j = 0;
+			if (!varvalue)
+			{
+				while (tmp[j])
+				{
+					s[i + j] = ' ';
+					j++;
+					s[i + j] = ' ';
+				}
+			}
+			free(tmp);
+			if (varvalue)
+				count++;
+			free(varvalue);
+		}
+		else if (s[i] != '\0')
 			count++;
 		del = ' ';
 		while (s[i] != del && s[i] != '\0')
-			del = nxt_del(s, del, ' ', &i);
+			del = nxt_del((const char *)s, del, ' ', &i);
 	}
 	if (del != ' ')
 		return (-1);
@@ -77,10 +102,9 @@ char	**parse_cmd(char const *s, char **env)
 	int		nbrofc;
 	int		i;
 
-	ft_fprintf(2, "parse_cmd begin\n");
 	if (!s)
 		return (NULL);
-	nbrofc = ft_count_space(s);
+	nbrofc = ft_count_space((char *)s, env);
 	if (nbrofc == -1)
 		return (NULL);
 	tab = (char **)malloc(sizeof(char *) * (nbrofc + 1));
@@ -97,6 +121,5 @@ char	**parse_cmd(char const *s, char **env)
 		i++;
 	}
 	tab[i] = NULL;
-	ft_fprintf(2, "parse_cmd end\n");
 	return (tab);
 }

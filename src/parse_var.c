@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:01:14 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/09 17:02:19 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/09 21:50:05 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,14 @@ char	*isolate_varname(const char *s, int start)
 	int		end;
 	int		i;
 
-	ft_fprintf(2, "parse_cmd isolate_varname begin\n");
 	varname = NULL;
 	start++;
-	end = start + 1;
-	while (s[end] && s[end] != ' ' && s[end] != '\"'
-		&& s[end] != '\'' && s[end] != '$')
+	end = start;
+	while (s[end] && !ft_strchr(" \"\'$", s[end]))
 		end++;
 	varname = (char *)ft_calloc(sizeof(char), (end - start) + 1);
 	if (!varname)
 		malloc_error();
-	ft_fprintf(2, "end %d - start %d = %d\n", end, start, (end - start));
 	i = 0;
 	while ((i + start) < end)
 	{
@@ -44,7 +41,6 @@ char	*isolate_varname(const char *s, int start)
 		i++;
 	}
 	varname[i] = '\0';
-	ft_fprintf(2, "parse_cmd isolate_varname end\n");
 	return (varname);
 }
 
@@ -55,7 +51,7 @@ char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env)
 	char	*varvalue;
 	int		i;
 
-	ft_fprintf(2, "parse_cmd join_varvalue begin\n");
+	ft_fprintf(2, "\n\njoin_var_value: |%s| |%s|\n\n", s[0], &s[0][*j]);
 	if ((*s)[(*j) + 1] && (*s)[(*j) + 1] == '?')
 	{
 		varvalue = ft_itoa(g_status);
@@ -66,6 +62,8 @@ char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env)
 	else if ((*s)[(*j) + 1] == '\0')
 	{
 		varvalue = ft_strdup("$");
+		if (!varvalue)
+			malloc_error();
 		*j += 1;
 	}
 	else
@@ -76,21 +74,21 @@ char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env)
 		free(varname);
 		if (!ptr)
 		{
+			ft_fprintf(2, "\n\njoin_var_value: |%s| |%s|\n\n", s[0], &s[0][*j]);
 			pass_until_char(*s, j, SPE_CHAR);
+			ft_fprintf(2, "\n\njoin_var_value: |%s| |%s|\n\n", s[0], &s[0][*j]);
 			return (tab);
 		}
 		varvalue = ft_strdup(ptr);
 		if (!varvalue)
 			malloc_error();
 		*j += 1;
-		while ((*s)[*j] && (*s)[*j] != ' ' && (*s)[*j] != '\''
-			&& (*s)[*j] != '\"' && (*s)[*j] != '$')
+		while ((*s)[*j] && !ft_strchr(" \'\"$", (*s)[*j]))
 			*j += 1;
 	}
 	i = 0;
 	while (varvalue[i])
 		tab = cpy_char(tab, k, varvalue, &i);
 	free(varvalue);
-	ft_fprintf(2, "parse_cmd join_varvalue end\n");
 	return (tab);
 }

@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 18:11:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/09 17:22:21 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/09 23:29:47 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,18 @@ int	var_value_size(char **env, const char *s, int *i)
 	char	*value;
 	int		size;
 
-	ft_fprintf(2, "var_value_size begin\n");
-	if (s[(*i) + 1] == '\0')
+	if (ft_strchr(" \"\'", s[*i + 1]))
 	{
 		*i += 1;
 		return (1);
 	}
-	ft_fprintf(2, "var_value_size 1\n");
 	if (s[(*i) + 1] == '?')
 		return (status_size(i));
 	varname = isolate_varname(s, *i);
-	ft_fprintf(2, "var_value_size 2\n");
-	pass_until_char(s, i, " <>$|;()?&");
-	ft_fprintf(2, "var_value_size 3\n");
+	pass_until_char(s, i, " <>$|;()?&\"\'");
 	ptr = ft_getenv(varname, env, ft_strlen(varname));
 	if (!ptr)
-		return (1);
-	size = ft_strlen(varname) + 1;
+		return (0);
 	free(varname);
 	if (!ptr)
 		malloc_error();
@@ -61,7 +56,6 @@ int	var_value_size(char **env, const char *s, int *i)
 		malloc_error();
 	size = ft_strlen(value);
 	free(value);
-	ft_fprintf(2, "var_value_size %d\n", size);
 	return (size);
 }
 
@@ -72,8 +66,9 @@ int	get_str_size(const char *s, char **env, char del)
 
 	i = 0;
 	size = 0;
-	while (s[i] && s[i] != del)
+	while (s[i])
 	{
+		ft_fprintf(2, "\nbegin loop %d :get_str_size s= |%s| del=|%c|\n", i, &s[i], del);
 		if (del == s[i] && (s[i] == '\"' || s[i] == '\''))
 			del = ' ';
 		else if (del == ' ' && (s[i] == '\"' || s[i] == '\''))
@@ -81,7 +76,10 @@ int	get_str_size(const char *s, char **env, char del)
 		else if (s[i] != '$' || del == '\'')
 			size++;
 		if (s[i] == '$' && del != '\'')
+		{
 			size += var_value_size(env, s, &i);
+			ft_fprintf(2, "get_str_size s= |%s| del=|%c|\n", &s[i], del);
+		}
 		else
 			i++;
 		if (del != ' ' && s[i] == del)
@@ -89,8 +87,11 @@ int	get_str_size(const char *s, char **env, char del)
 			del = ' ';
 			i++;
 		}
+		if (s[i] == ' ' && del == ' ')
+			break;
+		// ft_fprintf(2, "end of loop get_str_size s= |%s| del=|%c|\n", &s[i], del);
 	}
-	ft_fprintf(2, "get_str_size %d\n", size);
+	ft_fprintf(2, "\n\nget_str_size %d del|%c|\n\n", size, del);
 	return (size);
 }
 
