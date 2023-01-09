@@ -6,10 +6,12 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:48:00 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/03 17:56:00 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:39:39 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
+
 /*
 	prends un nom de variable et une valeur, alloue et return un char *
 	composé de varname, suivi d'un = et de value
@@ -107,5 +109,22 @@ char	**set_env_var(char *varname, char *value, t_data *d, int size)
 				d->env[i] = edit_envvar(d->env[i], value, size);
 		i++;
 	}
+	return (d->env);
+}
+
+char	**init_env(char **av, t_data *d)
+{
+	char	*tmp;
+
+	if (!d)
+		return (NULL);
+	tmp = getcwd(NULL, 0);
+	d->env = set_env_var("PWD", tmp, d, 3);
+	free(tmp);
+	if (!ft_getenv("PATH", d->env, 4))
+		d->env = set_env_var("PATH",
+				"/usr/local/sbin:/usr/local/bin:/usr/bin:/bin", d, 4);
+	if (!ft_getenv("_", d->env, 1))
+		d->env = set_env_var("_", av[0], d, 1);
 	return (d->env);
 }

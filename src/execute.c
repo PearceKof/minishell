@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/09 15:40:34 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/09 15:47:56 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ int	execute(t_cmd *c, t_data *d)
 	t_cmd *ptr;
 	pid_t	pid;
 	int state;
+	int tmp;
 
 	if (c && c->full_cmd[0] == NULL)
 		return (0);
@@ -138,9 +139,10 @@ int	execute(t_cmd *c, t_data *d)
 		if (WIFEXITED(state))
 		{
 			g_status = WEXITSTATUS(state);
-			if (g_status == 127)
+			tmp = g_status;
+			if (tmp == 127)
 				error(NCMD, 127, find_same_pid(pid, c), NULL);
-			else if (g_status == 127)
+			else if (tmp == 126)
 				error(PERROR, 126, find_same_pid(pid, c), NULL);
 		}
 		else if (WIFSIGNALED(state))
