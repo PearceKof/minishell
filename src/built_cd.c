@@ -27,8 +27,10 @@ void	cd_root(t_cmd *c, t_data *d)
 	if (chdir(home))
 	{
 		error(PERROR, 1, "cd: ", c->full_cmd[1]);
+		free(home);
 		return ;
 	}
+	free(home);
 	new_pwd(d);
 }
 

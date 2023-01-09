@@ -75,7 +75,7 @@ typedef struct s_cmd
 void	cd_root(t_cmd *c, t_data *d);
 int		ft_cd(t_cmd *c, t_data *d);
 void	ft_echo(char **full_cmd);
-int		ft_exit(char **full_cmd);
+int		ft_exit(char **full_cmd, t_cmd *c, t_data *d);
 int		ft_export(t_cmd *c, t_data *d);
 int		ft_unset(t_cmd *c, t_data *d);
 void	new_pwd(t_data *d);
@@ -118,6 +118,7 @@ char	*checkpaths(char **env_paths, char *cmd);
 	free.c
 */
 void	*free_cmd(t_cmd *c);
+void	*free_env(t_data *d);
 /*
 	init_utils.c
 */

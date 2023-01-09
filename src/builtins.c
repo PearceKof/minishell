@@ -36,6 +36,7 @@ void	new_pwd(t_data *d)
 	new_pwd = getcwd(NULL, 0);
 	set_env_var("OLDPWD", old_pwd, d, 6);
 	set_env_var("PWD", new_pwd, d, 3);
+	free(old_pwd);
 	free(new_pwd);
 }
 

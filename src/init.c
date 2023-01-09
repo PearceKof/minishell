@@ -34,7 +34,7 @@ static t_data	init_vars(t_data d, char *str, char **av)
 		tmp = ft_strdup("1");
 	else
 		tmp = ft_itoa(ft_atoi(str) + 1);
-	// free(str);
+	free(str);
 	d.env = set_env_var("SHLVL", tmp, &d, 5);
 	free(tmp);
 	tmp = getcwd(NULL, 0);

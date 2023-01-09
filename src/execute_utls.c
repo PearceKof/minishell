@@ -21,7 +21,7 @@ int	execute_exit(t_cmd *c, t_data *d)
 	size = ft_strlen(c->full_cmd[0]);
 	if (ft_strnstr(c->full_cmd[0], "exit", size) && size == 4)
 	{
-		ft_exit(c->full_cmd);
+		ft_exit(c->full_cmd, c, d);
 		return (1);
 	}
 	else if (ft_strnstr(c->full_cmd[0], "cd", size) && size == 2)
@@ -82,5 +82,6 @@ char	*ft_getpaths(char **env, char *cmd)
 	}
 	ptr = ft_getenv("PATH", env, 4);
 	env_paths = ft_split(ptr, ':');
+	free(ptr);
 	return (checkpaths(env_paths, cmd));
 }

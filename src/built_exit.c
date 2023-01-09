@@ -38,12 +38,17 @@ static int	exit_check_num(char **full_cmd)
 	return (1);
 }
 
-int	ft_exit(char **full_cmd)
+int	ft_exit(char **full_cmd, t_cmd *c, t_data *d)
 {
 	unsigned char	nbr;
 
 	if (!full_cmd[1])
+	{
+		free_cmd(c);
+		free_env(d);
 		exit(g_status);
+	}
+		
 	if (!exit_check_num(full_cmd))
 	{
 		error(NUMARGS, 1, "exit", NULL);
