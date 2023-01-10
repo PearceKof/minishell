@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 18:11:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/10 14:58:21 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/10 15:18:21 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ int	var_value_size(char **env, const char *s, int *i)
 	if (s[(*i) + 1] == '?')
 		return (status_size(i));
 	varname = isolate_varname(s, *i);
-	pass_until_char(s, i, SPE_CHAR);
+	*i += 1;
+	while (s[*i] && ft_isalpha(s[*i]))
+		*i += 1;
 	ptr = ft_getenv(varname, env, ft_strlen(varname));
-	if (!ptr)
-		return (0);
 	free(varname);
 	if (!ptr)
-		malloc_error();
+		return (0);
 	value = ft_strdup(ptr);
 	free(ptr);
 	if (!value)

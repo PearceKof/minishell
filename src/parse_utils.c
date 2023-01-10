@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 13:57:51 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/06 21:26:52 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/10 16:29:29 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ char	*cpy_char(char *dest, int *i, const char *src, int *j)
 
 void	*free_tab_and_ret_null(char **tab, int size)
 {
+	ft_fprintf(2, "size= %d\n", size);
 	if (tab)
 	{
 		while (size >= 0)

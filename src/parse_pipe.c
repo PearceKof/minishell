@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 16:56:03 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/09 17:02:56 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/10 16:27:27 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,10 @@ static char	*malloc_btw_pipe(const char **s, int size)
 	char	*tab;
 
 	tab = NULL;
-	tab = (char *)ft_calloc(sizeof(char), (size + 1));
+	tab = (char *)malloc(sizeof(char) * (size + 1));
 	if (!tab)
 		malloc_error();
+	// ft_fprintf(2, "TAB=|%s|\n", tab);
 	return (fill_btw_pipe(tab, s, size));
 }
 
@@ -103,11 +104,9 @@ char	**parse_pipe(const char *s)
 	i = 0;
 	while (i < nb_of_pipe)
 	{
-		// ft_fprintf(2, "parse_pipe loop %d\n", i);
 		tab[i] = malloc_btw_pipe(&s, size_btw_pipe(s, '|'));
 		if (!tab[i])
 			return (free_tab_and_ret_null(tab, i));
-		// ft_fprintf(2, "parse_pipe loop tab=|%s|\n", tab[i]);
 		i++;
 	}
 	tab[i] = NULL;

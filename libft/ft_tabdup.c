@@ -6,12 +6,12 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:55:59 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/31 14:21:02 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/10 18:15:54 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
+#include <stdio.h>
 char	**ft_tabdup(char **tab)
 {
 	char	**tabdup;

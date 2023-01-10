@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:48:00 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/09 16:39:39 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/10 15:57:00 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	addvar_to_env(t_data *d, char *addvar)
 
 	new_env = (char **)malloc((ft_tablen(d->env) + 2) * sizeof(char *));
 	if (!new_env)
-		return ;
+		malloc_error();
 	i = 0;
 	while (d->env[i])
 	{

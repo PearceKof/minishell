@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 15:42:53 by ctechy            #+#    #+#             */
-/*   Updated: 2023/01/06 20:38:12 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/10 17:39:43 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 extern int	g_status;
 
-void	replace_with_space(char *s, int red_pos, int *i)
+void	replace_with_space(char **s, int red_pos, int *i)
 {
 	*i -= 1;
 	while (*i >= red_pos)
 	{
-		s[*i] = ' ';
+		(*s)[*i] = ' ';
 		*i -= 1;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/09 15:47:56 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/10 16:03:54 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,11 +133,13 @@ int	execute(t_cmd *c, t_data *d)
 	c = ptr;
 	while (ptr)
 	{
+		state = 0;
 		pid = waitpid(0 , &state, WUNTRACED|WNOHANG);
 		while (!pid && pid != -1)
 			pid = waitpid(0 , &state, WUNTRACED|WNOHANG);
 		if (WIFEXITED(state))
 		{
+			tmp = 0;
 			g_status = WEXITSTATUS(state);
 			tmp = g_status;
 			if (tmp == 127)

@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:01:29 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/07 22:29:23 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/10 18:09:15 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,21 @@ static t_data	init_vars(t_data d, char *str, char **av)
 		tmp = ft_strdup("1");
 	else
 		tmp = ft_itoa(ft_atoi(str) + 1);
-	free(str);
+	if (str)
+		free(str);
 	d.env = set_env_var("SHLVL", tmp, &d, 5);
 	free(tmp);
 	str = ft_getenv("PATH", d.env, 4);
 	if (!str)
 		d.env = set_env_var("PATH",
 				"/usr/local/sbin:/usr/local/bin:/usr/bin:/bin", &d, 4);
-	free(str);
+	else
+		free(str);
 	str = ft_getenv("_", d.env, 1);
 	if (!str)
 		d.env = set_env_var("_", av[0], &d, 1);
-	free(str);
+	else
+		free(str);
 	return (d);
 }
 
@@ -63,7 +66,7 @@ t_cmd	*init_cmd(char *input, char **env)
 	input_split = parse_pipe(input);
 	if (!input_split)
 	{
-		error(PIPEND, 2, NULL, NULL);
+		error(NL, 2, NULL, NULL);
 		return (NULL);
 	}
 	while (input_split[i])
@@ -82,11 +85,13 @@ t_cmd	*init_cmd(char *input, char **env)
 
 t_data	init_term(char **av, char **envp, t_data d)
 {
-	char		*str;
+	char	*str;
 
 	str = NULL;
 	d.input = NULL;
 	d.env = ft_tabdup(envp);
+	if (!d.env)
+		malloc_error();
 	d.pid = ft_getpid();
 	d = init_vars(d, str, av);
 	return (d);

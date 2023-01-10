@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 17:40:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/09 23:49:55 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/10 18:05:56 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	*get_file_name(char *s, int *i, int size)
 		if (del == ' ' && ft_strchr(" <>|;()?&", s[*i]))
 			break;
 	}
-	replace_with_space(s, red_pos, i);
+	replace_with_space(&s, red_pos, i);
 	file_name[j] = '\0';
 	return (file_name);
 }
@@ -55,14 +55,14 @@ static char	*get_file_name(char *s, int *i, int size)
 	return 0 si il y a encore au moins une redirection
 	return 1 si il n'y en a plus.
 */
-static int	no_more_red(char *s, char red)
+static int	no_more_red(char *s, char red, int i)
 {
 	char	del;
-	int		i;
+	// int		i;
 
-	i = 0;
+	i++;
 	del = ' ';
-	while (s[i])
+	while (s && s[i])
 	{
 		if (del == ' ' && (s[i] == '\'' || s[i] == '\"'))
 			del = s[i];
@@ -75,14 +75,14 @@ static int	no_more_red(char *s, char red)
 	return (1);
 }
 
-static t_cmd	*open_file(t_cmd *c, char *file_name, char red, char *s)
+static t_cmd	*open_file(t_cmd *c, char *file_name, char red, char *s, int i)
 {
 	if (red == '<')
 	{
 		if (c->in != 0 && c->in != -1)
 			close(c->in);
 		c->in = open(file_name, O_RDONLY);
-		if (c->in == -1 && no_more_red(s, red))
+		if (c->in == -1 && no_more_red(s, red, i))
 			error(NDIR, 1, file_name, NULL);
 	}
 	else if (red == '>')
@@ -90,22 +90,24 @@ static t_cmd	*open_file(t_cmd *c, char *file_name, char red, char *s)
 		if (c->out != 1 && c->out != -1)
 			close(c->out);
 		c->out = open(file_name, O_WRONLY | O_TRUNC | O_CREAT, 00777);
-		if (c->out == -1 && no_more_red(s, red))
+		if (c->out == -1 && no_more_red(s, red, i))
 			error(NPERM, 1, file_name, NULL);
 	}
 	return (c);
 }
 
-t_cmd	*redirection(t_cmd *c, char *s, t_cmd *ptr)
+t_cmd	*redirection(t_cmd *c, char *s)
 {
 	char	*file_name;
 	char	del;
 	char	red;
 	int		i;
+	t_cmd	*last;
 
 	i = 0;
 	del = ' ';
-	while (s[i])
+	last = get_last_cmd(c);
+	while (s && s[i])
 	{
 		if (del == ' ' && (s[i] == '\'' || s[i] == '\"'))
 			del = s[i];
@@ -115,9 +117,8 @@ t_cmd	*redirection(t_cmd *c, char *s, t_cmd *ptr)
 		{
 			red = s[i];
 			file_name = get_file_name(s, &i, file_name_size(s, i));
-			ptr = open_file(ptr, file_name, red, &s[i]);
-			if (file_name)
-				free(file_name);
+			last = open_file(last, file_name, red, s, i);
+			free(file_name);
 		}
 		i++;
 	}

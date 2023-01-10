@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:01:14 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/10 15:01:27 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/10 16:44:32 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*isolate_varname(const char *s, int start)
 	varname = NULL;
 	start++;
 	end = start;
-	while (s[end] && !ft_strchr(" $\\|#=[]!><,;{}()*~&+-/\"'°", s[end]))
+	while (s[end] && ft_isalnum(s[end]))
 		end++;
 	varname = (char *)ft_calloc(sizeof(char), (end - start) + 1);
 	if (!varname)
@@ -51,7 +51,6 @@ char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env)
 	char	*varvalue;
 	int		i;
 
-	ft_fprintf(2, "TEST\n\n");
 	if ((*s)[(*j) + 1] && (*s)[(*j) + 1] == '?')
 	{
 		varvalue = ft_itoa(g_status);
@@ -74,14 +73,18 @@ char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env)
 		free(varname);
 		if (!ptr)
 		{
-			pass_until_char(*s, j, SPE_CHAR);
+			*j += 1;
+			while ((*s)[*j] && ft_isalnum((*s)[*j]))
+				*j += 1;
+			// pass_until_char(*s, j, SPE_CHAR);
 			return (tab);
 		}
 		varvalue = ft_strdup(ptr);
 		if (!varvalue)
 			malloc_error();
+		free(ptr);
 		*j += 1;
-		while ((*s)[*j] && !ft_strchr(SPE_CHAR, (*s)[*j]))
+		while ((*s)[*j] && ft_isalnum((*s)[*j]))
 			*j += 1;
 	}
 	i = 0;

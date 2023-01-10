@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:59:32 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/06 18:32:40 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/10 15:12:13 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,6 @@ int	error(int errorid, int error_status, char *infoa, char *infob)
 
 void	malloc_error(void)
 {
-	ft_putstr_fd("malloc_failed\nexit\n", 2);
+	ft_putstr_fd("minishell: malloc failed\nexit\n", 2);
 	exit(EXIT_FAILURE);
 }

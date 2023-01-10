@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:37:16 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/03 17:58:05 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/10 15:53:29 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	ft_echo(char **full_cmd)
 
 	i = 1;
 	flag = 0;
-	if (full_cmd[1][0] == '-' && full_cmd[1][1] == 'n' && !full_cmd[1][2])
+	if (full_cmd[1]
+		&& full_cmd[1][0] == '-' && full_cmd[1][1] == 'n' && !full_cmd[1][2])
 	{
 		flag = 1;
 		i = 2;

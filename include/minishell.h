@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/10 14:58:51 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/10 18:02:56 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <sys/wait.h>
 # include <stdlib.h>
 
-# define SPE_CHAR " $\\|#=[]!><,;{}()*?~&+-/\"'°"
+# define SPE_CHAR " $\\|#=[]!><,;{}()*?~&+-/\"'°:¨"
 
 enum	e_error
 {
@@ -65,7 +65,6 @@ typedef struct s_cmd
 	int				out;
 	pid_t			pid;
 	char			**full_cmd;
-	char			*full_path;
 	struct s_cmd	*prev;
 	struct s_cmd	*next;
 }	t_cmd;
@@ -130,6 +129,7 @@ t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env);
 /*
 	init.c
 */
+t_cmd	*get_last_cmd(t_cmd *c);
 void	*ft_mallerror(char **tab, size_t i);
 char	*get_input(void);
 t_cmd	*new_cmd(void);
@@ -157,8 +157,8 @@ char	**parse_pipe(char const *s);
 	parse_redirection.c
 */
 void	redi_utls(char del, int i, char *s);
-void	replace_with_space(char *s, int red_pos, int *i);
-t_cmd	*redirection(t_cmd *c, char *s, t_cmd *ptr);
+void	replace_with_space(char **s, int red_pos, int *i);
+t_cmd	*redirection(t_cmd *c, char *s);
 /*
 	parse_size.c
 */
