@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/09 18:41:21 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/10 14:58:51 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <sys/wait.h>
 # include <stdlib.h>
 
-# define SPE_CHAR " $\\|#=[]!><;{}()*?~&+-/\"'°"
+# define SPE_CHAR " $\\|#=[]!><,;{}()*?~&+-/\"'°"
 
 enum	e_error
 {

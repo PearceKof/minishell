@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:01:14 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/09 23:49:23 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/10 15:01:27 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*isolate_varname(const char *s, int start)
 	varname = NULL;
 	start++;
 	end = start;
-	while (s[end] && !ft_strchr(" \"\'$", s[end]))
+	while (s[end] && !ft_strchr(" $\\|#=[]!><,;{}()*~&+-/\"'°", s[end]))
 		end++;
 	varname = (char *)ft_calloc(sizeof(char), (end - start) + 1);
 	if (!varname)
@@ -51,6 +51,7 @@ char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env)
 	char	*varvalue;
 	int		i;
 
+	ft_fprintf(2, "TEST\n\n");
 	if ((*s)[(*j) + 1] && (*s)[(*j) + 1] == '?')
 	{
 		varvalue = ft_itoa(g_status);
@@ -58,7 +59,7 @@ char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env)
 			malloc_error();
 		*j += 2;
 	}
-	else if ((*s)[(*j) + 1] == '\0')
+	else if (ft_strchr(",;", (*s)[(*j) + 1]))
 	{
 		varvalue = ft_strdup("$");
 		if (!varvalue)
@@ -80,7 +81,7 @@ char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env)
 		if (!varvalue)
 			malloc_error();
 		*j += 1;
-		while ((*s)[*j] && !ft_strchr(" \'\"$", (*s)[*j]))
+		while ((*s)[*j] && !ft_strchr(SPE_CHAR, (*s)[*j]))
 			*j += 1;
 	}
 	i = 0;

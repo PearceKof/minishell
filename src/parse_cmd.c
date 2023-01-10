@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:36:53 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/09 23:29:31 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/10 15:03:10 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	ft_count_space(char *s, char **env)
 	{
 		while (s[i] == ' ')
 			i++;
-		if (s[i] == '$' && !ft_strchr(" \"\'", s[i + 1]) && del != '\'')
+		if (s[i] == '$' && !ft_strchr(" \"\'?", s[i + 1]) && del != '\'')
 		{
 			tmp = isolate_varname(s, i);
 			varvalue = ft_getenv(tmp, env, ft_strlen(tmp));
