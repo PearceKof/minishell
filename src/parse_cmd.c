@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:36:53 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/11 16:05:58 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/11 20:39:39 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ static char	*malloc_and_fill_tab(const char **s, char **env, int size)
 	tab = (char *)ft_calloc(sizeof(char), (size + 1));
 	if (!tab)
 		malloc_error();
-	return (fill_tab(tab, s, env, size));
+	tab = fill_tab(tab, s, env, size);
+	return (tab);
 }
 /*
 	parsing de l'input, alloue la mémoire et return un char** créé à partir
