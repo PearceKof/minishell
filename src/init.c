@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:01:29 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/11 21:42:43 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/11 21:52:02 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ t_cmd	*init_cmd(char *input, char **env)
 	char	**input_btw_pipe;
 	t_cmd	*c;
 	int		i;
-	char	*file_name;
 
 	c = NULL;
 	i = 0;
@@ -64,11 +63,6 @@ t_cmd	*init_cmd(char *input, char **env)
 			return (NULL);
 		}
 		i++;
-	}
-	if (is_heredoc(input) == 1)
-	{
-		file_name = move_to_filename(input, env);
-		ft_heredoc(c, file_name);
 	}
 	ft_freetab(input_btw_pipe);
 	return (c);

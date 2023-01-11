@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:01:14 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/11 20:57:48 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/11 23:02:18 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*isolate_varname(const char *s, int start)
 	varname = NULL;
 	start++;
 	end = start;
-	while (s[end] && ft_isalnum(s[end]))
+	while (!ft_strchr(" \'\"", s[end]) && ft_isalpha(s[end]))
 		end++;
 	varname = (char *)ft_calloc(sizeof(char), (end - start) + 1);
 	if (!varname)
@@ -57,7 +57,7 @@ char	*get_var_value(const char *s, int *j, char **env)
 			malloc_error();
 		*j += 2;
 	}
-	else if (ft_strchr(" ,;", s[(*j) + 1]))
+	else if ((ft_strchr(" ", s[(*j) + 1]) || !ft_isalnum(s[(*j) + 1])) && !ft_strchr("\"\'", s[(*j) + 1]))
 	{
 		varvalue = ft_strdup("$");
 		if (!varvalue)
@@ -85,7 +85,6 @@ char	*get_var_value(const char *s, int *j, char **env)
 		while (s[*j] && ft_isalnum(s[*j]))
 			*j += 1;
 	}
-	ft_fprintf(2, "s= |%s|", &s[*j]);
 	return (varvalue);
 }
 

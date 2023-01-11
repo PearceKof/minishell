@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:35:06 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/11 21:41:37 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/11 21:49:46 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ int	ft_heredoc(t_cmd *c, char *limiter)
 			write(c->in, "\n", 1);
 			free(line);
 		}
-		close(c->in);
+		if (c->in != -1 && c->in != 0)
+			close(c->in);
 		exit(0);
 	}
 	waitpid(c->pid, &g_status, 0);
