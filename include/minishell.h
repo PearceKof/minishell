@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/10 18:02:56 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:39:27 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,12 @@ int		exec_builtin(t_cmd *cmd, t_data *d);
 void	exit_test(void);
 int		ft_env(char **env);
 void	new_pwd(t_data *d);
-t_data	*ft_mini(t_data *d);
+// t_data	*ft_mini(t_data *d);
 void	rl_replace_line(const char *text, int clear_undo);
+/*
+	create_cmdlist.c
+*/
+t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env);
 /*
 	dup_cmd.c
 */
@@ -126,18 +130,11 @@ char	*move_to_filename(char *s);
 int		ft_heredoc(t_cmd *c, char *limiter);;
 
 /*
-	init_utils.c
-*/
-t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env);
-/*
 	init.c
 */
 t_cmd	*get_last_cmd(t_cmd *c);
 void	*ft_mallerror(char **tab, size_t i);
 char	*get_input(void);
-t_cmd	*new_cmd(void);
-t_cmd	*add_cmd(t_cmd *first);
-t_cmd	*fill_cmd(char **input, t_cmd *first);
 /*
 	init.c
 */
@@ -169,18 +166,21 @@ char	*get_file_name(char *s, int *i, int size);
 int		status_size(int *i);
 int		var_value_size(char **env, const char *s, int *i);
 int		get_str_size(const char *s, char **env, char del);
-int		file_name_size(const char *s, int i);
+int		file_name_size(const char *s, int i, char **env);
 /*
 	parse_utils.c
 */
+char	new_delimiter(char del, const char s);
+void	pass_while_char(const char *s, int *i, char *passing_char);
 void	pass_until_char(const char *s, int *i, char *ending_char);
 char	*cpy_char(char *dest, int *i, const char *src, int *j);
 void	*free_tab_and_ret_null(char **tab, int size);
 /*
 	parse_var.c
 */
+char	*get_var_value(const char *s, int *j, char **env);
 char	*isolate_varname(const char *s, int start);
-char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env);
+char	*join_varvalue(char *tab, int *k, char *varvalue);
 /*
 	signaux.c
 */
@@ -191,5 +191,8 @@ void	sigint_in_fork_handler(int sig);
 */
 int		is_invalid_syntax(char *s);
 int		is_only_space(char *s);
+/*
+	utils.c
+*/
 pid_t	ft_getpid(void);
 #endif

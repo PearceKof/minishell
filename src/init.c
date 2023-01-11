@@ -6,29 +6,14 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:01:29 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/10 18:09:15 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/11 17:55:56 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-pid_t	ft_getpid(void)
+static t_data	init_vars(t_data d, char **av, char *str, char *tmp)
 {
-	pid_t	pid;
-
-	pid = fork();
-	if (pid < 0)
-		exit(1);
-	if (!pid)
-		exit(1);
-	waitpid(pid, NULL, 0);
-	return (pid - 1);
-}
-
-static t_data	init_vars(t_data d, char *str, char **av)
-{
-	char	*tmp;
-
 	str = getcwd(NULL, 0);
 	d.env = set_env_var("PWD", str, &d, 3);
 	free(str);
@@ -57,25 +42,25 @@ static t_data	init_vars(t_data d, char *str, char **av)
 
 t_cmd	*init_cmd(char *input, char **env)
 {
-	char	**input_split;
+	char	**input_btw_pipe;
 	t_cmd	*c;
 	int		i;
 	char	*file_name;
 
 	c = NULL;
 	i = 0;
-	input_split = parse_pipe(input);
-	if (!input_split)
+	input_btw_pipe = parse_pipe(input);
+	if (!input_btw_pipe)
 	{
 		error(NL, 2, NULL, NULL);
 		return (NULL);
 	}
-	while (input_split[i])
+	while (input_btw_pipe[i])
 	{
-		c = create_cmdlist(input_split[i], c, env);
+		c = create_cmdlist(input_btw_pipe[i], c, env);
 		if (!c)
 		{
-			ft_freetab(input_split);
+			ft_freetab(input_btw_pipe);
 			return (NULL);
 		}
 		i++;
@@ -91,15 +76,12 @@ t_cmd	*init_cmd(char *input, char **env)
 
 t_data	init_term(char **av, char **envp, t_data d)
 {
-	char	*str;
-
-	str = NULL;
 	d.input = NULL;
 	d.env = ft_tabdup(envp);
 	if (!d.env)
 		malloc_error();
 	d.pid = ft_getpid();
-	d = init_vars(d, str, av);
+	d = init_vars(d, av, NULL, NULL);
 	return (d);
 }
 /*

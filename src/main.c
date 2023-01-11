@@ -6,18 +6,13 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/10 17:24:03 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/11 17:56:45 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_status;
-
-void	exit_test(void)
-{
-	exit(g_status);
-}
 
 /*
 	check si l'argument s contient autre chose que des caractéres "vides"
@@ -37,13 +32,13 @@ int	is_only_space(char *s)
 	}
 	return (1);
 }
+
 /*
 vérifie que l'input à bien été lu et qu'il contient bien une commande
 enregistre dans l'historique si la commande est correct
 return 1 si l'input est correct
 return 0 si incorrect
 */
-
 static	int	is_correct_input(char *input)
 {
 	if (!input)
@@ -51,16 +46,18 @@ static	int	is_correct_input(char *input)
 		ft_putstr_fd("exit\n", 2);
 		exit(0);
 	}
-	if (is_only_space(input) || input[0] == '\0' || is_invalid_syntax(input))
+	if (is_only_space(input) || input[0] == '\0')
 		return (0);
 	add_history(input);
+	if (is_invalid_syntax(input))
+		return (0);
 	return (1);
 }
+
 /*
 affiche les infos de la commande c en argumant
 Juste pour debugger
 */
-
 void	printcmd(t_cmd *c)
 {
 	int	i;
@@ -103,7 +100,6 @@ int	main(int ac, char **av, char **envp)
 		d.input = readline("=>");
 		if (is_correct_input(d.input))
 		{
-			
 			c = init_cmd(d.input, d.env);
 			if (c)
 			{

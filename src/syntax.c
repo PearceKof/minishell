@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 21:26:28 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/06 21:45:47 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/11 17:23:19 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,9 @@ static int	check_nxt_syntax(char *s, int i)
 		i++;
 	if (ft_strchr("<>\\|#=[]!;{}()*?~&", s[i]))
 	{
-		ft_fprintf(2, "minishell: syntax error near unexpected token `%c'\n", s[i]);
+		ft_fprintf(2, "minishell: syntax error near unexpected token `%c'\n", s[i - 1]);
 		return (1);
 	}
-	// if (s[i] == '<')
-	// 	return (error(INERR, 2, NULL, NULL));
-	// else if (s[i] == '>')
-	// 	return (error(OUTERR, 2, NULL, NULL));
-	// else if (s[i] == '|')
-	// 	return (error(PIPEND, 2, NULL, NULL));
-	// else if (s[i] == '\0')
-	// 	return (error(NL, 2, NULL, NULL));
-	// else if (s[i] == '&')
-	// 	return (error(ANDEND, 2, NULL, NULL));
 	return (0);
 }*/
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_utils.c                                       :+:      :+:    :+:   */
+/*   create_cmdlist.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:33:08 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/10 17:59:39 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/11 17:49:48 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_cmd	*get_last_cmd(t_cmd *c)
 	return (ptr);
 }
 
-t_cmd	*new_cmd(void)
+static t_cmd	*new_cmd(void)
 {
 	t_cmd	*new_cmd;
 
@@ -37,7 +37,7 @@ t_cmd	*new_cmd(void)
 	return (new_cmd);
 }
 
-t_cmd	*add_cmd(t_cmd *first)
+static t_cmd	*add_cmd(t_cmd *first)
 {
 	t_cmd	*new;
 
@@ -52,7 +52,7 @@ t_cmd	*add_cmd(t_cmd *first)
 	return (first);
 }
 
-t_cmd	*fill_cmd(char **input, t_cmd *first)
+static t_cmd	*fill_cmd(char **input, t_cmd *first)
 {
 	t_cmd	*ptr;
 
@@ -71,8 +71,7 @@ t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env)
 		c = add_cmd(c);
 	if (!c)
 		malloc_error();
-
-	c = redirection(c, input_split);
+	c = redirection(c, NULL, input_split, env);
 	if (!c)
 		return (NULL);
 	parsed_input = parse_cmd(input_split, env);
