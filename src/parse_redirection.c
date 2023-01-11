@@ -14,7 +14,7 @@
 
 extern int	g_status;
 
-static char	*get_file_name(char *s, int *i, int size)
+char	*get_file_name(char *s, int *i, int size)
 {
 	char	*file_name;
 	char	del;

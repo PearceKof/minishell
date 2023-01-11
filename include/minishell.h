@@ -121,7 +121,10 @@ void	*free_env(t_data *d);
 /*
 	heredoc.c
 */
-int	is_heredoc(char *input);
+int		is_heredoc(char *input);
+char	*move_to_filename(char *s);
+int		ft_heredoc(t_cmd *c, char *limiter);;
+
 /*
 	init_utils.c
 */
@@ -159,6 +162,7 @@ char	**parse_pipe(char const *s);
 void	redi_utls(char del, int i, char *s);
 void	replace_with_space(char **s, int red_pos, int *i);
 t_cmd	*redirection(t_cmd *c, char *s);
+char	*get_file_name(char *s, int *i, int size);
 /*
 	parse_size.c
 */

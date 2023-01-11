@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
 static int	check_nxt_syntax(char *s, int i)
 {
 	if ((s[i] == '>' || s[i] == '<')
@@ -36,7 +36,7 @@ static int	check_nxt_syntax(char *s, int i)
 	// else if (s[i] == '&')
 	// 	return (error(ANDEND, 2, NULL, NULL));
 	return (0);
-}
+}*/
 
 int	is_invalid_syntax(char *s)
 {
@@ -55,9 +55,9 @@ int	is_invalid_syntax(char *s)
 			del = s[i];
 		else if (del == s[i] && (s[i] == '\'' || s[i] == '\"'))
 			del = ' ';
-		if (ft_strchr("|<>&", s[i]) && del == ' ')
+		/*if (ft_strchr("|<>&", s[i]) && del == ' ')
 			if (check_nxt_syntax(s, i))
-				return (2);
+				return (2);*/
 		i++;
 	}
 	return (0);
