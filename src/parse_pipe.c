@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 16:56:03 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/10 16:27:27 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/11 16:38:37 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,31 @@ static int	count_pipe(const char *s)
 	return (count);
 }
 
-static char	*fill_btw_pipe(char *tab, const char **s, int size)
+// static char	*fill_btw_pipe(char *tab, const char **s, int size)
+// {
+// 	int		i;
+// 	int		j;
+
+// 	i = 0;
+// 	j = 0;
+// 	while (i < size && (*s)[j])
+// 		tab = cpy_char(tab, &i, *s, &j);
+// 	tab[i] = '\0';
+// 	*s += j;
+// 	if (*s[0] == '|')
+// 		*s += 1;
+// 	return (tab);
+// }
+
+static char	*malloc_btw_pipe(const char **s, int size)
 {
+	char	*tab;
 	int		i;
 	int		j;
 
+	tab = (char *)malloc(sizeof(char) * (size + 1));
+	if (!tab)
+		malloc_error();
 	i = 0;
 	j = 0;
 	while (i < size && (*s)[j])
@@ -50,18 +70,6 @@ static char	*fill_btw_pipe(char *tab, const char **s, int size)
 	if (*s[0] == '|')
 		*s += 1;
 	return (tab);
-}
-
-static char	*malloc_btw_pipe(const char **s, int size)
-{
-	char	*tab;
-
-	tab = NULL;
-	tab = (char *)malloc(sizeof(char) * (size + 1));
-	if (!tab)
-		malloc_error();
-	// ft_fprintf(2, "TAB=|%s|\n", tab);
-	return (fill_btw_pipe(tab, s, size));
 }
 
 static int	size_btw_pipe(const char *s, char del)

@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:36:53 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/10 15:23:24 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/11 16:05:58 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,13 @@ char	nxt_del(char const *s, char del, char dfdel, int *i)
 	}
 	return (del);
 }
+
 /*
 	compte le nombre de string dont on aura besoin en fonction
 	des délimiteurs (espaces ou brackets). Si à la fin del = espace. ça veut
 	dire qu'un bracket n'est pas fermé et la ft return -1
 	si tout s'est bien passé, return le nbr de string à allouer
 */
-
-// int	is_existing_value(const char *s, )
-
 static int	ft_count_space(char *s, char **env)
 {
 	char	del;

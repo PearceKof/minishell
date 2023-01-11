@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/10 18:02:56 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/11 15:53:28 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,8 @@ int		file_name_size(const char *s, int i);
 /*
 	parse_utils.c
 */
+char	new_delimiter(char del, const char s);
+void	pass_while_char(const char *s, int *i, char *passing_char);
 void	pass_until_char(const char *s, int *i, char *ending_char);
 char	*cpy_char(char *dest, int *i, const char *src, int *j);
 void	*free_tab_and_ret_null(char **tab, int size);
@@ -187,5 +189,8 @@ void	sigint_in_fork_handler(int sig);
 */
 int		is_invalid_syntax(char *s);
 int		is_only_space(char *s);
+/*
+	utils.c
+*/
 pid_t	ft_getpid(void);
 #endif

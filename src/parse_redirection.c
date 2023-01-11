@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 17:40:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/10 18:05:56 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/11 17:04:59 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,22 @@
 
 extern int	g_status;
 
-static char	*get_file_name(char *s, int *i, int size)
+static char	*get_file_name(char *s, int *i, int size, int red_pos)
 {
 	char	*file_name;
 	char	del;
 	int		j;
-	int		red_pos;
 
-	file_name = malloc(sizeof(char) * (size + 1));
+	file_name = ft_calloc(sizeof(char), (size + 1));
 	if (!file_name)
 		malloc_error();
-	red_pos = *i;
-	*i += 1;
-	while (s[*i] && s[*i] == ' ')
-		*i += 1;
+	pass_while_char(s, i, " ");
 	del = ' ';
 	j = 0;
 	while (s[*i] && !ft_strchr("|;()?&", s[*i]))
 	{
-		if (del == ' ' && (s[*i] == '\'' || s[*i] == '\"'))
-			del = s[*i];
-		else if (del == s[*i] && (s[*i] == '\'' || s[*i] == '\"'))
-			del = ' ';
+		if (del != new_delimiter(del, s[*i]))
+			del = new_delimiter(del, s[*i]);
 		else
 		{
 			file_name[j] = s[*i];
@@ -46,7 +40,6 @@ static char	*get_file_name(char *s, int *i, int size)
 			break;
 	}
 	replace_with_space(&s, red_pos, i);
-	file_name[j] = '\0';
 	return (file_name);
 }
 
@@ -64,10 +57,12 @@ static int	no_more_red(char *s, char red, int i)
 	del = ' ';
 	while (s && s[i])
 	{
-		if (del == ' ' && (s[i] == '\'' || s[i] == '\"'))
-			del = s[i];
-		else if (del == s[i] && (s[i] == '\'' || s[i] == '\"'))
-			del = ' ';
+		// if (del == ' ' && (s[i] == '\'' || s[i] == '\"'))
+		// 	del = s[i];
+		// else if (del == s[i] && (s[i] == '\'' || s[i] == '\"'))
+		// 	del = ' ';
+		if (del != new_delimiter(del, s[i]))
+			del = new_delimiter(del, s[i]);
 		else if ((s[i]) == red && del == ' ')
 			return (0);
 		i++;
@@ -75,50 +70,58 @@ static int	no_more_red(char *s, char red, int i)
 	return (1);
 }
 
-static t_cmd	*open_file(t_cmd *c, char *file_name, char red, char *s, int i)
+static t_cmd	*open_file(t_cmd *c, char *file_name, char red_type)
 {
-	if (red == '<')
+	if (red_type == '<')
 	{
 		if (c->in != 0 && c->in != -1)
 			close(c->in);
 		c->in = open(file_name, O_RDONLY);
-		if (c->in == -1 && no_more_red(s, red, i))
-			error(NDIR, 1, file_name, NULL);
 	}
-	else if (red == '>')
+	else if (red_type == '>')
 	{
 		if (c->out != 1 && c->out != -1)
 			close(c->out);
 		c->out = open(file_name, O_WRONLY | O_TRUNC | O_CREAT, 00777);
-		if (c->out == -1 && no_more_red(s, red, i))
-			error(NPERM, 1, file_name, NULL);
 	}
 	return (c);
 }
 
-t_cmd	*redirection(t_cmd *c, char *s)
+static t_cmd	*open_attempt(char red_type, char *s, int *i, t_cmd *last)
 {
 	char	*file_name;
-	char	del;
-	char	red;
-	int		i;
+
+	file_name = get_file_name(s, i, file_name_size(s, *i), *i);
+	last = open_file(last, file_name, red_type);
+	if (red_type == '<')
+	{
+		if (last->in == -1 && no_more_red(s, red_type, *i))
+			error(NDIR, 1, file_name, NULL);
+	}
+	else if (red_type == '>')
+	{
+		if (last->out == -1 && no_more_red(s, red_type, *i))
+			error(NPERM, 1, file_name, NULL);
+	}
+	free(file_name);
+	return (last);
+}
+
+t_cmd	*redirection(t_cmd *c, char *s)
+{
 	t_cmd	*last;
+	char	del;
+	int		i;
 
 	i = 0;
 	del = ' ';
 	last = get_last_cmd(c);
 	while (s && s[i])
 	{
-		if (del == ' ' && (s[i] == '\'' || s[i] == '\"'))
-			del = s[i];
-		else if (del == s[i] && (s[i] == '\'' || s[i] == '\"'))
-			del = ' ';
+		del = new_delimiter(del, s[i]);
 		if ((s[i] == '<' || s[i] == '>') && del == ' ')
 		{
-			red = s[i];
-			file_name = get_file_name(s, &i, file_name_size(s, i));
-			last = open_file(last, file_name, red, s, i);
-			free(file_name);
+			last = open_attempt(s[i], s, &i, last);
 		}
 		i++;
 	}
