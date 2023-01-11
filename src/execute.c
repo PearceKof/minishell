@@ -105,6 +105,7 @@ char	*find_same_pid(pid_t pid, t_cmd *c)
 	}
 	return (NULL);
 }
+
 /*On check l'exit avant de fork sinon la fonction exit ne fonctionne pas*/
 int	execute(t_cmd *c, t_data *d)
 {

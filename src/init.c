@@ -45,6 +45,7 @@ t_cmd	*init_cmd(char *input, char **env)
 	char	**input_btw_pipe;
 	t_cmd	*c;
 	int		i;
+	char	*file_name;
 
 	c = NULL;
 	i = 0;
@@ -64,7 +65,12 @@ t_cmd	*init_cmd(char *input, char **env)
 		}
 		i++;
 	}
-	ft_freetab(input_btw_pipe);
+	if (is_heredoc(input) == 1)
+	{
+		file_name = move_to_filename(input);
+		ft_heredoc(c, file_name);
+	}
+	ft_freetab(input_split);
 	return (c);
 }
 

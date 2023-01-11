@@ -72,7 +72,9 @@ FILES 		= ft_atoi.c \
 						ft_tolower.c \
 						ft_toupper.c \
 						ft_strchr_nb.c \
-
+						gnl.c \
+						gnl_utils.c \
+					
 OBJ 		= $(FILES:%.c=%.o)
 
 BOBJ 		= $(BONUSFILES:%.c=%.o)

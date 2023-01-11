@@ -14,14 +14,7 @@
 
 extern int	g_status;
 
-// static	char *cpy_file_name()
-// {
-// 	char	del;
-// 	int		j
-// 	return (file)
-// }
-
-static char	*get_file_name(char *s, int *i, char **env)
+char	*get_file_name(char *s, int *i, int size)
 {
 	char	*file_name;
 	char	*varvalue;
