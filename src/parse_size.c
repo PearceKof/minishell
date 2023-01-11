@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 18:11:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/11 17:07:41 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:33:29 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	get_str_size(const char *s, char **env, char del)
 	return (size);
 }
 
-int	file_name_size(const char *s, int i)
+int	file_name_size(const char *s, int i, char **env)
 {
 	int		size;
 	char	del;
@@ -97,13 +97,15 @@ int	file_name_size(const char *s, int i)
 	size = 0;
 	while (s[i] && !ft_strchr("<>|;()?&", s[i]))
 	{
-		if (del == ' ' && (s[i] == '\'' || s[i] == '\"'))
-			del = s[i];
-		else if (del == s[i] && (s[i] == '\'' || s[i] == '\"'))
-			del = ' ';
-		else
+		if (del != new_delimiter(del, s[i]))
+			del = new_delimiter(del, s[i]);
+		else if (s[i] != '$' || del == '\'')
 			size++;
-		i++;
+		if (s[i] == '$' && del != '\'')
+			size += var_value_size(env, s, &i);
+		else
+			i++;
 	}
+	ft_fprintf(2, "DEBUG size = %d\n", size);
 	return (size);
 }

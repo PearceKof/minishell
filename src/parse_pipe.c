@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 16:56:03 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/11 16:38:37 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/11 17:14:55 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,7 @@ static int	count_pipe(const char *s)
 	return (count);
 }
 
-// static char	*fill_btw_pipe(char *tab, const char **s, int size)
-// {
-// 	int		i;
-// 	int		j;
-
-// 	i = 0;
-// 	j = 0;
-// 	while (i < size && (*s)[j])
-// 		tab = cpy_char(tab, &i, *s, &j);
-// 	tab[i] = '\0';
-// 	*s += j;
-// 	if (*s[0] == '|')
-// 		*s += 1;
-// 	return (tab);
-// }
-
-static char	*malloc_btw_pipe(const char **s, int size)
+static char	*fill_btw_pipe(const char **s, int size)
 {
 	char	*tab;
 	int		i;
@@ -112,7 +96,7 @@ char	**parse_pipe(const char *s)
 	i = 0;
 	while (i < nb_of_pipe)
 	{
-		tab[i] = malloc_btw_pipe(&s, size_btw_pipe(s, '|'));
+		tab[i] = fill_btw_pipe(&s, size_btw_pipe(s, '|'));
 		if (!tab[i])
 			return (free_tab_and_ret_null(tab, i));
 		i++;

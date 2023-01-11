@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/11 15:53:28 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:39:27 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,12 @@ int		exec_builtin(t_cmd *cmd, t_data *d);
 void	exit_test(void);
 int		ft_env(char **env);
 void	new_pwd(t_data *d);
-t_data	*ft_mini(t_data *d);
+// t_data	*ft_mini(t_data *d);
 void	rl_replace_line(const char *text, int clear_undo);
+/*
+	create_cmdlist.c
+*/
+t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env);
 /*
 	dup_cmd.c
 */
@@ -123,18 +127,11 @@ void	*free_env(t_data *d);
 */
 int	is_heredoc(char *input);
 /*
-	init_utils.c
-*/
-t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env);
-/*
 	init.c
 */
 t_cmd	*get_last_cmd(t_cmd *c);
 void	*ft_mallerror(char **tab, size_t i);
 char	*get_input(void);
-t_cmd	*new_cmd(void);
-t_cmd	*add_cmd(t_cmd *first);
-t_cmd	*fill_cmd(char **input, t_cmd *first);
 /*
 	init.c
 */
@@ -158,14 +155,14 @@ char	**parse_pipe(char const *s);
 */
 void	redi_utls(char del, int i, char *s);
 void	replace_with_space(char **s, int red_pos, int *i);
-t_cmd	*redirection(t_cmd *c, char *s);
+t_cmd	*redirection(t_cmd *c, t_cmd *last, char *s, char **env);
 /*
 	parse_size.c
 */
 int		status_size(int *i);
 int		var_value_size(char **env, const char *s, int *i);
 int		get_str_size(const char *s, char **env, char del);
-int		file_name_size(const char *s, int i);
+int		file_name_size(const char *s, int i, char **env);
 /*
 	parse_utils.c
 */
@@ -177,8 +174,9 @@ void	*free_tab_and_ret_null(char **tab, int size);
 /*
 	parse_var.c
 */
+char	*get_var_value(const char *s, int *j, char **env);
 char	*isolate_varname(const char *s, int start);
-char	*join_varvalue(const char **s, int *j, char *tab, int *k, char **env);
+char	*join_varvalue(char *tab, int *k, char *varvalue);
 /*
 	signaux.c
 */

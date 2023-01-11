@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 17:40:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/11 17:04:59 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:36:58 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,39 @@
 
 extern int	g_status;
 
-static char	*get_file_name(char *s, int *i, int size, int red_pos)
+// static	char *cpy_file_name()
+// {
+// 	char	del;
+// 	int		j
+// 	return (file)
+// }
+
+static char	*get_file_name(char *s, int *i, char **env)
 {
 	char	*file_name;
+	char	*varvalue;
 	char	del;
 	int		j;
+	int		size;
 
+	size = file_name_size(s, *i, env);
 	file_name = ft_calloc(sizeof(char), (size + 1));
 	if (!file_name)
 		malloc_error();
 	pass_while_char(s, i, " ");
 	del = ' ';
 	j = 0;
+	// file_name = cpy_file_name
 	while (s[*i] && !ft_strchr("|;()?&", s[*i]))
 	{
 		if (del != new_delimiter(del, s[*i]))
 			del = new_delimiter(del, s[*i]);
+		else if (s[*i] == '$' && ft_isalnum(s[*i + 1]) && del != '\'')
+		{
+			varvalue = get_var_value(s, i, env);
+			file_name = join_varvalue(file_name, &j, varvalue);
+			free(varvalue);
+		}
 		else
 		{
 			file_name[j] = s[*i];
@@ -39,7 +56,6 @@ static char	*get_file_name(char *s, int *i, int size, int red_pos)
 		if (del == ' ' && ft_strchr(" <>|;()?&", s[*i]))
 			break;
 	}
-	replace_with_space(&s, red_pos, i);
 	return (file_name);
 }
 
@@ -57,10 +73,6 @@ static int	no_more_red(char *s, char red, int i)
 	del = ' ';
 	while (s && s[i])
 	{
-		// if (del == ' ' && (s[i] == '\'' || s[i] == '\"'))
-		// 	del = s[i];
-		// else if (del == s[i] && (s[i] == '\'' || s[i] == '\"'))
-		// 	del = ' ';
 		if (del != new_delimiter(del, s[i]))
 			del = new_delimiter(del, s[i]);
 		else if ((s[i]) == red && del == ' ')
@@ -87,30 +99,12 @@ static t_cmd	*open_file(t_cmd *c, char *file_name, char red_type)
 	return (c);
 }
 
-static t_cmd	*open_attempt(char red_type, char *s, int *i, t_cmd *last)
+t_cmd	*redirection(t_cmd *c, t_cmd *last, char *s, char **env)
 {
 	char	*file_name;
-
-	file_name = get_file_name(s, i, file_name_size(s, *i), *i);
-	last = open_file(last, file_name, red_type);
-	if (red_type == '<')
-	{
-		if (last->in == -1 && no_more_red(s, red_type, *i))
-			error(NDIR, 1, file_name, NULL);
-	}
-	else if (red_type == '>')
-	{
-		if (last->out == -1 && no_more_red(s, red_type, *i))
-			error(NPERM, 1, file_name, NULL);
-	}
-	free(file_name);
-	return (last);
-}
-
-t_cmd	*redirection(t_cmd *c, char *s)
-{
-	t_cmd	*last;
 	char	del;
+	char	red_type;
+	int		red_pos;
 	int		i;
 
 	i = 0;
@@ -121,7 +115,22 @@ t_cmd	*redirection(t_cmd *c, char *s)
 		del = new_delimiter(del, s[i]);
 		if ((s[i] == '<' || s[i] == '>') && del == ' ')
 		{
-			last = open_attempt(s[i], s, &i, last);
+			red_type = s[i];
+			red_pos = i;
+			file_name = get_file_name(s, &i, env);
+			replace_with_space(&s, red_pos, &i);
+			last = open_file(last, file_name, red_type);
+			if (red_type == '<')
+			{
+				if (last->in == -1 && no_more_red(s, red_type, i))
+					error(NDIR, 1, file_name, NULL);
+			}
+			else if (red_type == '>')
+			{
+				if (last->out == -1 && no_more_red(s, red_type, i))
+					error(NPERM, 1, file_name, NULL);
+			}
+			free(file_name);
 		}
 		i++;
 	}
