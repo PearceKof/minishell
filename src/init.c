@@ -40,7 +40,7 @@ static t_data	init_vars(t_data d, char **av, char *str, char *tmp)
 	return (d);
 }
 
-t_cmd	*init_cmd(char *input, char **env)
+t_cmd	*init_cmd(char *input, char **env, t_data *d)
 {
 	char	**input_btw_pipe;
 	t_cmd	*c;
@@ -68,7 +68,7 @@ t_cmd	*init_cmd(char *input, char **env)
 	if (is_heredoc(input) == 1)
 	{
 		file_name = move_to_filename(input, env);
-		ft_heredoc(c, file_name);
+		ft_heredoc(c, file_name, d);
 	}
 	ft_freetab(input_btw_pipe);
 	return (c);
@@ -81,6 +81,7 @@ t_data	init_term(char **av, char **envp, t_data d)
 	if (!d.env)
 		malloc_error();
 	d.pid = ft_getpid();
+	d.filename = NULL;
 	d = init_vars(d, av, NULL, NULL);
 	return (d);
 }

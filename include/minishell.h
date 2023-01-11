@@ -56,6 +56,7 @@ typedef struct s_data
 {
 	char	**env;
 	char	*input;
+	char	*filename;
 	pid_t	pid;
 }	t_data;
 
@@ -126,7 +127,7 @@ void	*free_env(t_data *d);
 */
 int		is_heredoc(char *input);
 char	*move_to_filename(char *s, char **env);
-int		ft_heredoc(t_cmd *c, char *limiter);;
+int		ft_heredoc(t_cmd *c, char *limiter, t_data *d);
 
 /*
 	init.c
@@ -137,7 +138,7 @@ char	*get_input(void);
 /*
 	init.c
 */
-t_cmd	*init_cmd(char *input, char **env);
+t_cmd	*init_cmd(char *input, char **env, t_data *d);
 t_data	init_term(char **av, char **envp, t_data d);
 /*
 	parse_cmd.c
