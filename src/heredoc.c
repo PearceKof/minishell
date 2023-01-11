@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:35:06 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/09 16:47:47 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/11 21:41:37 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int g_status;
 
-char	*move_to_filename(char *s)
+char	*move_to_filename(char *s, char **env)
 {
 	char	del;
 	int		i;
@@ -31,7 +31,7 @@ char	*move_to_filename(char *s)
 		if ((s[i] == '<' && s[i + 1] == '<') && del == ' ')
 		{
 			i += 2;
-			file_name = get_file_name(s, &i, file_name_size(s, i));
+			file_name = get_file_name(s, &i, file_name_size(s, i, env), env);
 		}
 		i++;
 	}

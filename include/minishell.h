@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/11 20:40:20 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/11 21:36:58 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ int		ft_unset(t_cmd *c, t_data *d);
 void	new_pwd(t_data *d);
 int		ft_unset(t_cmd *c, t_data *d);
 int		exec_builtin(t_cmd *cmd, t_data *d);
-void	exit_test(void);
 int		ft_env(char **env);
 void	new_pwd(t_data *d);
 // t_data	*ft_mini(t_data *d);
@@ -126,7 +125,7 @@ void	*free_env(t_data *d);
 	heredoc.c
 */
 int		is_heredoc(char *input);
-char	*move_to_filename(char *s);
+char	*move_to_filename(char *s, char **env);
 int		ft_heredoc(t_cmd *c, char *limiter);;
 
 /*
@@ -158,8 +157,8 @@ char	**parse_pipe(char const *s);
 */
 void	redi_utls(char del, int i, char *s);
 void	replace_with_space(char **s, int red_pos, int *i);
-t_cmd	*redirection(t_cmd *c, char *s);
-char	*get_file_name(char *s, int *i, int size);
+t_cmd	*redirection(t_cmd *c, t_cmd *last, char *s, char **env);
+char	*get_file_name(char *s, int *i, int size, char **env);
 /*
 	parse_size.c
 */

@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 17:40:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/11 19:36:58 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/11 21:43:10 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 
 extern int	g_status;
 
-char	*get_file_name(char *s, int *i, int size)
+char	*get_file_name(char *s, int *i, int size, char **env)
 {
 	char	*file_name;
 	char	*varvalue;
 	char	del;
 	int		j;
-	int		size;
 
 	size = file_name_size(s, *i, env);
 	file_name = ft_calloc(sizeof(char), (size + 1));
@@ -110,7 +109,7 @@ t_cmd	*redirection(t_cmd *c, t_cmd *last, char *s, char **env)
 		{
 			red_type = s[i];
 			red_pos = i;
-			file_name = get_file_name(s, &i, env);
+			file_name = get_file_name(s, &i, file_name_size(s, i, env), env);
 			replace_with_space(&s, red_pos, &i);
 			last = open_file(last, file_name, red_type);
 			if (red_type == '<')
