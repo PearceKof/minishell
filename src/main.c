@@ -100,11 +100,12 @@ int	main(int ac, char **av, char **envp)
 		d.input = readline("=>");
 		if (is_correct_input(d.input))
 		{
-			c = init_cmd(d.input, d.env);
+			c = init_cmd(d.input, d.env, &d);
 			if (c)
 			{
 				printcmd(c);
 				execute(c, &d);
+				unlink(d.filename);
 			}
 			free_cmd(c);
 		}

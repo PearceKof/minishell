@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:01:29 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/11 21:52:02 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/11 23:11:19 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,12 @@ static t_data	init_vars(t_data d, char **av, char *str, char *tmp)
 	return (d);
 }
 
-t_cmd	*init_cmd(char *input, char **env)
+t_cmd	*init_cmd(char *input, char **env, t_data *d)
 {
 	char	**input_btw_pipe;
 	t_cmd	*c;
 	int		i;
+	char	*file_name;
 
 	c = NULL;
 	i = 0;
@@ -64,6 +65,11 @@ t_cmd	*init_cmd(char *input, char **env)
 		}
 		i++;
 	}
+	if (is_heredoc(input) == 1)
+	{
+		file_name = move_to_filename(input, env);
+		ft_heredoc(c, file_name, d);
+	}
 	ft_freetab(input_btw_pipe);
 	return (c);
 }
@@ -75,6 +81,7 @@ t_data	init_term(char **av, char **envp, t_data d)
 	if (!d.env)
 		malloc_error();
 	d.pid = ft_getpid();
+	d.filename = NULL;
 	d = init_vars(d, av, NULL, NULL);
 	return (d);
 }

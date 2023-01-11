@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:35:06 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/11 21:49:46 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/11 23:08:04 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char	*move_to_filename(char *s, char **env)
 	}
 	return (file_name);
 }
+
 static int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
@@ -47,11 +48,12 @@ static int	ft_strcmp(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
-int	ft_heredoc(t_cmd *c, char *limiter)
+int	ft_heredoc(t_cmd *c, char *limiter, t_data *d)
 {
 	char	*line;
 
 	c->pid = fork();
+	d->filename = limiter;
 	if (c->pid == 0)
 	{
 		c->in = open(limiter, O_RDWR | O_CREAT | O_APPEND, 0777);
@@ -72,9 +74,6 @@ int	ft_heredoc(t_cmd *c, char *limiter)
 			write(c->in, "\n", 1);
 			free(line);
 		}
-		if (c->in != -1 && c->in != 0)
-			close(c->in);
-		exit(0);
 	}
 	waitpid(c->pid, &g_status, 0);
 	return (0);

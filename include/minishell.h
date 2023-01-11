@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/11 21:36:58 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/11 23:07:03 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_data
 {
 	char	**env;
 	char	*input;
+	char	*filename;
 	pid_t	pid;
 }	t_data;
 
@@ -126,7 +127,7 @@ void	*free_env(t_data *d);
 */
 int		is_heredoc(char *input);
 char	*move_to_filename(char *s, char **env);
-int		ft_heredoc(t_cmd *c, char *limiter);;
+int		ft_heredoc(t_cmd *c, char *limiter, t_data *d);
 
 /*
 	init.c
@@ -137,7 +138,7 @@ char	*get_input(void);
 /*
 	init.c
 */
-t_cmd	*init_cmd(char *input, char **env);
+t_cmd	*init_cmd(char *input, char **env, t_data *d);
 t_data	init_term(char **av, char **envp, t_data d);
 /*
 	parse_cmd.c
@@ -155,7 +156,6 @@ char	**parse_pipe(char const *s);
 /*
 	parse_redirection.c
 */
-void	redi_utls(char del, int i, char *s);
 void	replace_with_space(char **s, int red_pos, int *i);
 t_cmd	*redirection(t_cmd *c, t_cmd *last, char *s, char **env);
 char	*get_file_name(char *s, int *i, int size, char **env);
