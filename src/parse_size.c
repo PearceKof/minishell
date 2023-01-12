@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 18:11:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/11 22:58:18 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:05:05 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	var_value_size(char **env, const char *s, int *i)
 		malloc_error();
 	size = ft_strlen(value);
 	free(value);
-	ft_fprintf(2, "size= |%d|\n", size);
+	ft_fprintf(2, "varvalue size= |%d|\n", size);
 	return (size);
 }
 
@@ -85,7 +85,6 @@ int	get_str_size(const char *s, char **env, char del)
 		}
 		if (s[i] == ' ' && del == ' ')
 			break;
-		ft_fprintf(2, "size= %d i= %d\n", size, i);
 	}
 	return (size);
 }
@@ -95,7 +94,6 @@ int	file_name_size(const char *s, int i, char **env)
 	int		size;
 	char	del;
 
-	pass_while_char(s, &i, " ");
 	del = ' ';
 	size = 0;
 	while (s[i] && !ft_strchr("<>|;()?&", s[i]))
@@ -108,6 +106,13 @@ int	file_name_size(const char *s, int i, char **env)
 			size += var_value_size(env, s, &i);
 		else
 			i++;
+		if (del != ' ' && s[i] == del)
+		{
+			del = ' ';
+			i++;
+		}
+		if (s[i] == ' ' && del == ' ')
+			break;
 	}
 	return (size);
 }

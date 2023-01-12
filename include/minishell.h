@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/11 23:07:03 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:00:06 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,13 +110,17 @@ char	**init_env(char **av, t_data *d);
 int		error(int errorid, int error_status, char *infoa, char *infob);
 void	malloc_error(void);
 /*
+	execute_utils.c
+*/
+char	*ft_getpaths(char **env, char *cmd);
+char	*checkpaths(char **env_paths, char *cmd);
+void	wait_all(t_cmd *first, t_cmd *c);
+/*
 	execute.c
 */
 void	execute_cmd(char **env, char **cmd);
 int		execute(t_cmd *c, t_data *d);
 int		execute_exit(t_cmd *c, t_data *d);
-char	*ft_getpaths(char **env, char *cmd);
-char	*checkpaths(char **env_paths, char *cmd);
 /*
 	free.c
 */
@@ -148,6 +152,7 @@ char	**parse_cmd(char const *s, char **env);
 /*
 	parse_fill.c
 */
+int		get_nxt(const char *s);
 char	*fill_tab(char *tab, const char **s, char **env, int size);
 /*
 	parse_pipe.c
@@ -158,7 +163,7 @@ char	**parse_pipe(char const *s);
 */
 void	replace_with_space(char **s, int red_pos, int *i);
 t_cmd	*redirection(t_cmd *c, t_cmd *last, char *s, char **env);
-char	*get_file_name(char *s, int *i, int size, char **env);
+char	*get_file_name(char *s, int i, int size, char **env);
 /*
 	parse_size.c
 */

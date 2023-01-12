@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 13:58:40 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/11 22:58:57 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:10:51 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	get_nxt(const char *s)
 	while (s[nxt])
 	{
 		del = new_delimiter(del, s[nxt]);
-		if (s[nxt] == ' ' && del == ' ')
+		if (ft_strchr(" |&<>;", s[nxt]) && del == ' ')
 			break;
 		nxt++;
 	}
@@ -50,11 +50,7 @@ char	*fill_tab(char *tab, const char **s, char **env, int size)
 		else if ((*s)[j] == '$' && del != '\'' && !ft_strchr(" ", (*s)[j + 1]))
 			tab = join_varvalue(tab, &i, get_var_value(*s, &j, env));
 		else
-		{
-			tab[i] = (*s)[j];
-			i++;
-			j++;
-		}
+			tab = cpy_char(tab, &i, *s, &j);
 	}
 	*s += nxt;
 	return (tab);

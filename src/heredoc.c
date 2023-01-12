@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:35:06 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/11 23:08:04 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:31:02 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*move_to_filename(char *s, char **env)
 		if ((s[i] == '<' && s[i + 1] == '<') && del == ' ')
 		{
 			i += 2;
-			file_name = get_file_name(s, &i, file_name_size(s, i, env), env);
+			file_name = get_file_name(s, i, file_name_size(s, i, env), env);
 		}
 		i++;
 	}

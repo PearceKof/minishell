@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:01:14 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/11 23:02:18 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:02:54 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ char	*join_varvalue(char *tab, int *k, char *varvalue)
 		return (tab);
 	while (varvalue[i])
 		tab = cpy_char(tab, k, varvalue, &i);
+	tab[*k] = '\0';
 	free(varvalue);
 	return (tab);
 }
