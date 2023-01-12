@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/12 17:00:06 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:40:11 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	rl_replace_line(const char *text, int clear_undo);
 /*
 	create_cmdlist.c
 */
-t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env);
+t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env, t_data *d);
 /*
 	dup_cmd.c
 */

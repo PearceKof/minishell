@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:35:06 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/12 16:31:02 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:56:11 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ char	*move_to_filename(char *s, char **env)
 			del = ' ';
 		if ((s[i] == '<' && s[i + 1] == '<') && del == ' ')
 		{
-			i += 2;
+			s[i] = ' ';
+			i += 1;
+			pass_while_char(s, &i, " ");
 			file_name = get_file_name(s, i, file_name_size(s, i, env), env);
 		}
 		i++;
@@ -74,10 +76,13 @@ int	ft_heredoc(t_cmd *c, char *limiter, t_data *d)
 			write(c->in, "\n", 1);
 			free(line);
 		}
+		exit(0);
 	}
 	waitpid(c->pid, &g_status, 0);
 	return (0);
 }
+
+
 
 int	is_heredoc(char *input)
 {
@@ -89,7 +94,16 @@ int	is_heredoc(char *input)
 	while (input[i])
 	{
 		if (input[i] == '<' && input[i + 1] == '<')
+		{
+			i += 2;
+			pass_while_char(input, &i, " ");
+			if (input[i] == '\0')
+			{
+				error(NL, 2, NULL, NULL);
+				return (-1);
+			}
 			hdoc_char = 1;
+		}
 		if (ft_isalpha(input[i]) && hdoc_char)
 			return (1);
 		i++;

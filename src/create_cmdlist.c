@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:33:08 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/11 23:10:20 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:52:46 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,22 @@ static t_cmd	*fill_cmd(char **input, t_cmd *first)
 	return (first);
 }
 
-t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env)
+t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env, t_data *d)
 {
 	char	**parsed_input;
-
+	char	*file_name;
 	if (!c)
 		c = new_cmd();
 	else
 		c = add_cmd(c);
 	if (!c)
 		malloc_error();
+	if (is_heredoc(input_split))
+	{
+		file_name = move_to_filename(input_split, env);
+		ft_fprintf(2, "FILENAME: |%s|\n", file_name);
+		ft_heredoc(c, file_name, d);
+	}
 	c = redirection(c, NULL, input_split, env);
 	if (!c)
 		return (NULL);
