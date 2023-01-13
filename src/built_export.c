@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 23:37:34 by root              #+#    #+#             */
-/*   Updated: 2023/01/13 23:15:47 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/13 23:21:39 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,15 @@ int	ft_export(t_cmd *c, t_data *d)
 	i = 1;
 	while (c->full_cmd[i])
 	{
-		ft_fprintf(2, "DEBUG\n");
 		j = 0;
-		while (c->full_cmd[i][j] && c->full_cmd[i][j] != '=')
+		if (c->full_cmd[i][j] == '=' || !ft_isalnum(c->full_cmd[i][j]))
 		{
-			if (!ft_isalnum(c->full_cmd[i][j]))
-				break;
-			j++;
+			error(INVID, 1, c->full_cmd[i], NULL);
+			i++;
+			continue ;
 		}
+		while (c->full_cmd[i][j] && c->full_cmd[i][j] != '=')
+			j++;
 		if (c->full_cmd[i][j] == '=' && j != 0)
 			export_var(c->full_cmd[i] , j, d);
 		else
