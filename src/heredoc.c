@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:35:06 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/13 21:01:02 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/13 21:38:07 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,14 @@ static char	*parse_heredoc(char *buf, char **env)
 {
 	int		i;
 	int		j;
-	char	del;
 	char	*new_buf;
 
 	i = 0;
 	j = 0;
-	del = ' ';
 	new_buf = malloc(sizeof(char) * (get_line_size(buf, env) + 1));
 	while (buf[i])
 	{
-		if (del != new_delimiter(del, buf[i]))
-		{
-			del = new_delimiter(del, buf[i]);
-			i++;
-		}
-		else if (buf[i] == '$' && del != '\'' && !ft_strchr(" ", buf[i + 1]))
+		if (buf[i] == '$' && !ft_strchr(" ", buf[i + 1]))
 			new_buf = join_varvalue(new_buf, &j, get_var_value(buf, &i, env));
 		else
 			new_buf = cpy_char(new_buf, &j, buf, &i);

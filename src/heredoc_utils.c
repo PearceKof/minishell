@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:55:12 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/13 20:59:14 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/13 21:34:50 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,16 @@ int	get_line_size(const char *s, char **env)
 {
 	int		i;
 	int		size;
-	char	del;
 
 	i = 0;
 	size = 0;
-	del = ' ';
 	while (s[i])
 	{
-		if (del != new_delimiter(del, s[i]))
-			del = new_delimiter(del, s[i]);
-		else if (s[i] != '$' || del == '\'')
-			size++;
-		if (s[i] == '$' && del != '\'')
+		if (s[i] == '$')
 			size += var_value_size(env, s, &i);
 		else
-			i++;
-		if (del != ' ' && s[i] == del)
 		{
-			del = ' ';
+			size++;
 			i++;
 		}
 	}
