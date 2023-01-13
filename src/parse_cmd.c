@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:36:53 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/13 22:16:53 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/13 22:24:14 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,6 @@ static char	*malloc_and_fill_tab(const char **s, char **env, int size)
 	tab = fill_tab(tab, s, env, size);
 	return (tab);
 }
-/*
-	parsing de l'input, alloue la mémoire et return un char** créé à partir
-	de l'argument s si tout s'est bien passé. sinon, il renvoi NULL
-*/
 
 char	**parse_cmd(char const *s, char **env)
 {
@@ -107,8 +103,6 @@ char	**parse_cmd(char const *s, char **env)
 	int		nbrofc;
 	int		i;
 
-	if (!s)
-		return (NULL);
 	nbrofc = ft_count_space((char *)s, env);
 	if (nbrofc == -1)
 		return (NULL);
