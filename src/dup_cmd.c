@@ -12,32 +12,6 @@
 
 #include "minishell.h"
 
-char	*dup_cmd(char *src)
-{
-	char	*mem;
-	size_t	size;
-	size_t	i;
-
-	i = 0;
-	size = 0;
-	while (src[i] != '\0')
-		if (src[i++] != ' ')
-			size++;
-	if (size == 0)
-		return (NULL);
-	mem = malloc((size + 1) * sizeof(char));
-	if (!mem)
-		malloc_error();
-	i = 0;
-	while (src[i] != '\0')
-	{
-		mem[i] = src[i];
-		i++;
-	}
-	mem[i] = '\0';
-	return (mem);
-}
-
 char	**dup_fullcmd(char **tab)
 {
 	char	**tabdup;

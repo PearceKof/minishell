@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 23:37:34 by root              #+#    #+#             */
-/*   Updated: 2023/01/03 16:30:13 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/13 23:15:47 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,48 +42,39 @@ static char	*point_value(int i, char *full)
 	return (full);
 }
 
-static char	*get_value(char *full)
+void	export_var(char *cmd, int j, t_data *d)
 {
-	int		i;
-	int		j;
-	char	*value;
+	char	*varname;
+	char	*ptr;
 
-	i = 0;
-	while (full[i])
-		i++;
-	value = malloc(sizeof(char *) * (i + 1));
-	if (!value)
-		malloc_error();
-	value[i] = '\0';
-	j = 0;
-	while (j < i)
-	{
-		value[j] = full[j];
-		j++;
-	}
-	return (value);
+	ptr = NULL;
+	ptr = point_value(j, cmd);
+	varname = get_name(j, cmd);
+	d->env = set_env_var(varname, ptr, d, ft_strlen(varname));
+	free(varname);
 }
 
 int	ft_export(t_cmd *c, t_data *d)
 {
-	char	*full;
-	char	*varname;
-	char	*value;
 	int		i;
+	int		j;
 
-	full = c->full_cmd[1];
-	if (*full == '=' || (*full >= '0' && *full <= '9'))
-		return (error(INVID, 1, full, NULL));
-	i = 0;
-	while (full[i] && full[i] != '=')
-		i++;
-	if (full[i] != '=')
-		return (0);
-	varname = get_name(i, full);
-	full = point_value(i, full);
-	value = get_value(full);
-	d->env = set_env_var(varname, value, d, ft_strlen(varname));
-	free(varname);
-	free(value);
-	return (0);
+	i = 1;
+	while (c->full_cmd[i])
+	{
+		ft_fprintf(2, "DEBUG\n");
+		j = 0;
+		while (c->full_cmd[i][j] && c->full_cmd[i][j] != '=')
+		{
+			if (!ft_isalnum(c->full_cmd[i][j]))
+				break;
+			j++;
+		}
+		if (c->full_cmd[i][j] == '=' && j != 0)
+			export_var(c->full_cmd[i] , j, d);
+		else
+			error(INVID, 1, c->full_cmd[i], NULL);
+		i++;	
+	}
+	return (1);
 }

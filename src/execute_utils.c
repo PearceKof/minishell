@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 16:10:42 by ctechy            #+#    #+#             */
-/*   Updated: 2023/01/12 17:03:58 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/13 22:44:09 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,11 @@ int	execute_exit(t_cmd *c, t_data *d)
 	else if (ft_strnstr(c->full_cmd[0], "cd", size) && size == 2)
 	{
 		if (c->next == NULL)
-			ft_cd(c, d);
-		return (2);
+			return (ft_cd(c, d));
 	}
 	else if (ft_strnstr(c->full_cmd[0], "export", size)
 		&& size == 6 && c->full_cmd[1])
-	{
-		ft_export(c, d);
-		return (1);
-	}
+		return (ft_export(c, d));
 	else if (ft_strnstr(c->full_cmd[0], "unset", size) && size == 5)
 	{
 		ft_unset(c, d);

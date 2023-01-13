@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/13 22:18:56 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/13 22:40:18 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ typedef struct s_cmd
 	struct s_cmd	*prev;
 	struct s_cmd	*next;
 }	t_cmd;
+
+void	rl_replace_line(const char *text, int clear_undo);
 /*
 	builtins.c + built_*.c
 */
@@ -82,10 +84,6 @@ void	new_pwd(t_data *d);
 int		ft_pwd(void);
 int		ft_unset(t_cmd *c, t_data *d);
 int		exec_builtin(t_cmd *cmd, t_data *d);
-int		ft_env(char **env);
-void	new_pwd(t_data *d);
-// t_data	*ft_mini(t_data *d);
-void	rl_replace_line(const char *text, int clear_undo);
 /*
 	create_cmdlist.c
 */
@@ -94,13 +92,16 @@ t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env);
 /*
 	dup_cmd.c
 */
-char	*dup_cmd(char *src);
 char	**dup_fullcmd(char **tab);
+/*
+	env_utils.c
+*/
+int		env_size(char **env);
+int		varname_size(char *varname);
+char	*ft_getenv(char *varname, char **env, int len);
 /*
 	env.c
 */
-int		varname_size(char *varname);
-char	*ft_getenv(char *varname, char **env, int len);
 char	*new_envvar(char *varname, char *value);
 void	addvar_to_env(t_data *d, char *addvar);
 char	*edit_envvar(char *to_edit, char *value, int size);
@@ -143,7 +144,7 @@ t_cmd	*ft_heredoc(t_cmd *c, char *limiter, char **env);
 /*
 	init.c
 */
-t_cmd	*init_cmd(char *input, char **env, t_data *d);
+t_cmd	*init_cmd(char *input, char **env);
 t_data	init_term(char **av, char **envp, t_data d);
 /*
 	parse_cmd.c

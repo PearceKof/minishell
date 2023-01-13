@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/13 17:24:42 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/13 22:32:08 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	main(int ac, char **av, char **envp)
 		d.input = readline("=>");
 		if (is_correct_input(d.input))
 		{
-			c = init_cmd(d.input, d.env, &d);
+			c = init_cmd(d.input, d.env);
 			if (c)
 			{
 				printcmd(c);

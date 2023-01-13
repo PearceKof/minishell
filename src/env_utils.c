@@ -6,12 +6,21 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 15:26:33 by ctechy            #+#    #+#             */
-/*   Updated: 2023/01/09 17:13:48 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/13 22:27:06 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	env_size(char **env)
+{
+	int	i;
+
+	i = 0;
+	while (env[i])
+		i++;
+	return (i);
+}
 /*
 	prends le nom d'une variable et return sa taille au premier =
 	sinon, return 0
