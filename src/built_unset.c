@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 18:43:54 by ctechy            #+#    #+#             */
-/*   Updated: 2022/12/28 14:56:32 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/13 21:30:16 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,20 @@ static int	env_dup(t_data *d, t_cmd *c, int index)
 	char	**tmp;
 
 	len = ft_tablen(d->env);
-	tmp = malloc(sizeof(char *) * len);
+	tmp = malloc(sizeof(char *) * (len));
 	if (!tmp)
-		return (0);
+		malloc_error();
 	str = ft_strjoin(c->full_cmd[index], "=");
+	if (!str)
+		malloc_error();
 	var_del(d, str, tmp);
 	free(d->env);
+	free(str);
 	d->env = tmp;
 	return (1);
 }
 
-static int	check_env(t_data *d, t_cmd *c, int index)
+static int	is_var_in_env(t_data *d, t_cmd *c, int index)
 {
 	int		ret;
 	int		len;
@@ -60,6 +63,8 @@ static int	check_env(t_data *d, t_cmd *c, int index)
 	i = 0;
 	ret = 0;
 	tmp = ft_strjoin(c->full_cmd[index], "=");
+	if (!tmp)
+		malloc_error();
 	len = ft_strlen(tmp);
 	while (d->env[i])
 	{
@@ -78,7 +83,7 @@ int	ft_unset(t_cmd *c, t_data *d)
 	index = 1;
 	while (c->full_cmd[index])
 	{
-		if (!(check_env(d, c, index)))
+		if (!(is_var_in_env(d, c, index)))
 			return (0);
 		if (!(env_dup(d, c, index)))
 			return (0);
