@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 17:40:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/13 19:01:55 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/13 21:39:39 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,28 +40,6 @@ char	*get_file_name(char *s, int i, int size, char **env)
 	file_name[j] = '\0';
 	return (file_name);
 }
-
-/*
-	prends le pointeur sur s et la redirection red que l'on cherche,
-	return 0 si il y a encore au moins une redirection
-	return 1 si il n'y en a plus.
-*/
-// static int	no_more_red(char *s, char red, int i)
-// {
-// 	char	del;
-
-// 	i++;
-// 	del = ' ';
-// 	while (s && s[i])
-// 	{
-// 		if (del != new_delimiter(del, s[i]))
-// 			del = new_delimiter(del, s[i]);
-// 		else if ((s[i]) == red && del == ' ')
-// 			return (0);
-// 		i++;
-// 	}
-// 	return (1);
-// }
 
 static t_cmd	*open_file(t_cmd *c, char *file_name, char red_type)
 {

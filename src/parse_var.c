@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:01:14 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/12 16:02:54 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/13 21:56:08 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*isolate_varname(const char *s, int start)
 	varname = NULL;
 	start++;
 	end = start;
-	while (!ft_strchr(" \'\"", s[end]) && ft_isalpha(s[end]))
+	while (!ft_strchr(" \'\"", s[end]) && ft_isalnum(s[end]))
 		end++;
 	varname = (char *)ft_calloc(sizeof(char), (end - start) + 1);
 	if (!varname)
@@ -44,10 +44,29 @@ char	*isolate_varname(const char *s, int start)
 	return (varname);
 }
 
-char	*get_var_value(const char *s, int *j, char **env)
+static char	*find_var_value(const char *s, int *j, char **env)
 {
 	char	*ptr;
 	char	*varname;
+	char	*varvalue;
+
+	varvalue = NULL;
+	varname = isolate_varname(s, *j);
+	ptr = ft_getenv(varname, env, ft_strlen(varname));
+	free(varname);
+	if (ptr)
+	{
+		varvalue = ft_strdup(ptr);
+		if (!varvalue)
+			malloc_error();
+		free(ptr);
+	}
+	pass_while_isalnum(s, j);
+	return (varvalue);
+}
+
+char	*get_var_value(const char *s, int *j, char **env)
+{
 	char	*varvalue;
 
 	if (s[(*j) + 1] && s[(*j) + 1] == '?')
@@ -57,7 +76,8 @@ char	*get_var_value(const char *s, int *j, char **env)
 			malloc_error();
 		*j += 2;
 	}
-	else if ((ft_strchr(" ", s[(*j) + 1]) || !ft_isalnum(s[(*j) + 1])) && !ft_strchr("\"\'", s[(*j) + 1]))
+	else if ((ft_strchr(" ", s[(*j) + 1]) || !ft_isalnum(s[(*j) + 1]))
+			&& !ft_strchr("\"\'", s[(*j) + 1]))
 	{
 		varvalue = ft_strdup("$");
 		if (!varvalue)
@@ -65,26 +85,7 @@ char	*get_var_value(const char *s, int *j, char **env)
 		*j += 1;
 	}
 	else
-	{
-		varvalue = NULL;
-		varname = isolate_varname(s, *j);
-		ptr = ft_getenv(varname, env, ft_strlen(varname));
-		free(varname);
-		if (!ptr)
-		{
-			*j += 1;
-			while (s[*j] && ft_isalnum(s[*j]))
-				*j += 1;
-			return (NULL);
-		}
-		varvalue = ft_strdup(ptr);
-		if (!varvalue)
-			malloc_error();
-		free(ptr);
-		*j += 1;
-		while (s[*j] && ft_isalnum(s[*j]))
-			*j += 1;
-	}
+		varvalue = find_var_value(s, j, env);
 	return (varvalue);
 }
 

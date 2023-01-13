@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 18:11:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/13 20:27:45 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/13 21:42:38 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,7 @@ int	var_value_size(char **env, const char *s, int *i)
 		return (1);
 	}
 	varname = isolate_varname(s, *i);
-	*i += 1;
-	while (s[*i] && ft_isalnum(s[*i]))
-		*i += 1;
+	pass_while_isalnum(s, i);
 	ptr = ft_getenv(varname, env, ft_strlen(varname));
 	free(varname);
 	if (!ptr)

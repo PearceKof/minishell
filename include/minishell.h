@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/13 21:08:33 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/13 21:42:08 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ int		file_name_size(const char *s, int i, char **env);
 	parse_utils.c
 */
 char	new_delimiter(char del, const char s);
+void	pass_while_isalnum(const char *s, int *i);
 void	pass_while_char(const char *s, int *i, char *passing_char);
 void	pass_until_char(const char *s, int *i, char *ending_char);
 char	*cpy_char(char *dest, int *i, const char *src, int *j);
