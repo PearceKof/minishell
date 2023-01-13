@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/13 18:11:06 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/13 21:08:33 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,12 @@ typedef struct s_cmd
 void	cd_root(t_cmd *c, t_data *d);
 int		ft_cd(t_cmd *c, t_data *d);
 void	ft_echo(char **full_cmd);
+int		ft_env(char **env);
 int		ft_exit(char **full_cmd, t_cmd *c, t_data *d);
 int		ft_export(t_cmd *c, t_data *d);
 int		ft_unset(t_cmd *c, t_data *d);
 void	new_pwd(t_data *d);
+int		ft_pwd(void);
 int		ft_unset(t_cmd *c, t_data *d);
 int		exec_builtin(t_cmd *cmd, t_data *d);
 int		ft_env(char **env);
@@ -126,6 +128,12 @@ int		execute_exit(t_cmd *c, t_data *d);
 */
 void	*free_cmd(t_cmd *c);
 void	*free_env(t_data *d);
+/*
+	heredoc_utils.c
+*/
+int		get_line_size(const char *s, char **env);
+int		delimiter_size(const char *s, int i);
+char	*get_delimiter(char *s, int i, int size);
 /*
 	heredoc.c
 */

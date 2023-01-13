@@ -6,35 +6,13 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 14:23:57 by root              #+#    #+#             */
-/*   Updated: 2023/01/13 17:12:16 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/13 21:14:14 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern int	g_status;
-
-// char *prompt (void)
-// {
-//    char *invite = NULL;
-
-//     invite = malloc(sizeof(char *) * 2);
-//     strcpy(invite, ">");
-//     return (invite);
-// }
-
-// static int utils (void)
-// {
-//    int end = 0;
-
-//    while (!end)
-//    {
-//       char *s = prompt();
-//       printf ("%s", s);
-//       end++;
-//    }
-//    return (0);
-// }
 
 void	sigint_in_heredoc_handler(int sig)
 {
