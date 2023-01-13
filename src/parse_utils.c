@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 13:57:51 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/11 15:52:06 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/13 00:01:27 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,4 @@ char	*cpy_char(char *dest, int *i, const char *src, int *j)
 	*i += 1;
 	*j += 1;
 	return (dest);
-}
-
-void	*free_tab_and_ret_null(char **tab, int size)
-{
-	if (tab)
-	{
-		while (size >= 0)
-		{
-			if (tab[size])
-				free(tab[size]);
-			size--;
-		}
-		free(tab);
-	}
-	return (NULL);
 }

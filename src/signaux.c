@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 14:23:57 by root              #+#    #+#             */
-/*   Updated: 2023/01/08 18:11:30 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:12:16 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,16 @@ extern int	g_status;
 //    }
 //    return (0);
 // }
+
+void	sigint_in_heredoc_handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		write(1, "\n", 1);
+		g_status = 130;
+		exit (g_status);
+	}
+}
 
 void	sigint_in_fork_handler(int sig)
 {

@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 18:11:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/12 16:05:05 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/13 19:02:15 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	var_value_size(char **env, const char *s, int *i)
 		return (1);
 	}
 	varname = isolate_varname(s, *i);
-	ft_fprintf(2, "varname= |%s|\n", varname);
 	*i += 1;
 	while (s[*i] && ft_isalnum(s[*i]))
 		*i += 1;
@@ -57,7 +56,6 @@ int	var_value_size(char **env, const char *s, int *i)
 		malloc_error();
 	size = ft_strlen(value);
 	free(value);
-	ft_fprintf(2, "varvalue size= |%d|\n", size);
 	return (size);
 }
 

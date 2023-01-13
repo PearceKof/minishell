@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/12 17:40:11 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/13 18:11:06 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ typedef struct s_data
 {
 	char	**env;
 	char	*input;
-	char	*filename;
 	pid_t	pid;
 }	t_data;
 
@@ -88,6 +87,7 @@ void	rl_replace_line(const char *text, int clear_undo);
 /*
 	create_cmdlist.c
 */
+t_cmd	*get_last_cmd(t_cmd *c);
 t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env, t_data *d);
 /*
 	dup_cmd.c
@@ -130,15 +130,8 @@ void	*free_env(t_data *d);
 	heredoc.c
 */
 int		is_heredoc(char *input);
-char	*move_to_filename(char *s, char **env);
-int		ft_heredoc(t_cmd *c, char *limiter, t_data *d);
-
-/*
-	init.c
-*/
-t_cmd	*get_last_cmd(t_cmd *c);
-void	*ft_mallerror(char **tab, size_t i);
-char	*get_input(void);
+t_cmd	*heredoc_attempt(char **env, char *s, int *i, t_cmd *last);
+t_cmd	*ft_heredoc(t_cmd *c, char *limiter, char **env);
 /*
 	init.c
 */
@@ -178,7 +171,6 @@ char	new_delimiter(char del, const char s);
 void	pass_while_char(const char *s, int *i, char *passing_char);
 void	pass_until_char(const char *s, int *i, char *ending_char);
 char	*cpy_char(char *dest, int *i, const char *src, int *j);
-void	*free_tab_and_ret_null(char **tab, int size);
 /*
 	parse_var.c
 */
@@ -188,6 +180,7 @@ char	*join_varvalue(char *tab, int *k, char *varvalue);
 /*
 	signaux.c
 */
+void	sigint_in_heredoc_handler(int sig);
 void	sigint_handler(int sig);
 void	sigint_in_fork_handler(int sig);
 /*

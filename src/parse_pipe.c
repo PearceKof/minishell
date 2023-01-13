@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 16:56:03 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/11 17:14:55 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/13 00:02:41 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,21 @@ static int	size_btw_pipe(const char *s, char del)
 		}
 	}
 	return (size);
+}
+
+static void	*free_tab_and_ret_null(char **tab, int size)
+{
+	if (tab)
+	{
+		while (size >= 0)
+		{
+			if (tab[size])
+				free(tab[size]);
+			size--;
+		}
+		free(tab);
+	}
+	return (NULL);
 }
 
 char	**parse_pipe(const char *s)

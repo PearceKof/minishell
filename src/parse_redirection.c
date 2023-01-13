@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 17:40:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/12 16:21:47 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/13 19:01:55 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static t_cmd	*open_file(t_cmd *c, char *file_name, char red_type)
 
 static t_cmd *open_attempt(char **env, char *s, int *i, t_cmd *last)
 {
-	int 	red_pos;
+	int		red_pos;
 	int		red_type;
 	char	*file_name;
 	int		nxt;
@@ -117,6 +117,16 @@ t_cmd	*redirection(t_cmd *c, t_cmd *last, char *s, char **env)
 		del = new_delimiter(del, s[i]);
 		if ((s[i] == '<' || s[i] == '>') && s[i + 1] != s[i] && del == ' ')
 			last = open_attempt(env, s, &i, last);
+		else if(s[i] == '<' && s[i + 1] == s[i] && del == ' ')
+		{
+			last = heredoc_attempt(env, s, &i, last);
+			if (g_status == 130)
+			{
+				free_cmd(c);
+				return (NULL);
+			}
+			return (c);
+		}
 		i++;
 	}
 	return (c);

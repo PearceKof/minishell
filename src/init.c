@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:01:29 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/12 17:40:21 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:45:49 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_cmd	*init_cmd(char *input, char **env, t_data *d)
 	input_btw_pipe = parse_pipe(input);
 	if (!input_btw_pipe)
 	{
+		ft_fprintf(2, "DEBUG\n");
 		error(NL, 2, NULL, NULL);
 		return (NULL);
 	}
@@ -75,27 +76,6 @@ t_data	init_term(char **av, char **envp, t_data d)
 	if (!d.env)
 		malloc_error();
 	d.pid = ft_getpid();
-	d.filename = NULL;
 	d = init_vars(d, av, NULL, NULL);
 	return (d);
 }
-/*
-t_data	*init_term(char **av, char **envp)
-{
-	t_data	*d;
-
-	d = NULL;
-	d = (t_data *)malloc(sizeof(t_data));
-	if (!d)
-	{
-		ft_putstr_fd("malloc failled\n", 2);
-		exit(1);
-	}
-	d->input = NULL;
-	d->env = ft_tabdup(envp);
-	d->env = init_env(av, d);
-	if (!d->env)
-		exit(EXIT_FAILURE);
-	return (d);
-}
-*/
