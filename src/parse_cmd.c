@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:36:53 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/11 20:39:39 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/13 22:16:53 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,32 @@ char	nxt_del(char const *s, char del, char dfdel, int *i)
 	return (del);
 }
 
+static int	is_env_var(char **s, int *i, char **env)
+{
+	char	*varname;
+	char	*varvalue;
+	int		is_in_env;
+	int		j;
+
+	varname = isolate_varname((*s), *i);
+	varvalue = ft_getenv(varname, env, ft_strlen(varname));
+	if (!varvalue)
+	{
+		j = 0;
+		while (varname[j])
+		{
+			(*s)[(*i) + j] = ' ';
+			j++;
+			(*s)[(*i) + j] = ' ';
+		}
+	}
+	free(varname);
+	is_in_env = 0;
+	if (varvalue)
+		is_in_env = 1;
+	free(varvalue);
+	return (is_in_env);
+}
 /*
 	compte le nombre de string dont on aura besoin en fonction
 	des délimiteurs (espaces ou brackets). Si à la fin del = espace. ça veut
@@ -38,9 +64,6 @@ static int	ft_count_space(char *s, char **env)
 	char	del;
 	int		count;
 	int		i;
-	int		j;
-	char	*tmp;
-	char	*varvalue;
 
 	i = 0;
 	count = 0;
@@ -50,31 +73,14 @@ static int	ft_count_space(char *s, char **env)
 		while (s[i] == ' ')
 			i++;
 		if (s[i] == '$' && ft_isalnum(s[i + 1]) && del != '\'')
-		{
-			tmp = isolate_varname(s, i);
-			varvalue = ft_getenv(tmp, env, ft_strlen(tmp));
-			j = 0;
-			if (!varvalue)
-			{
-				while (tmp[j])
-				{
-					s[i + j] = ' ';
-					j++;
-					s[i + j] = ' ';
-				}
-			}
-			free(tmp);
-			if (varvalue)
-				count++;
-			free(varvalue);
-		}
+			count += is_env_var(&s, &i, env);
 		else if (s[i] != '\0')
 			count++;
 		del = ' ';
 		while (s[i] != del && s[i] != '\0')
 			del = nxt_del((const char *)s, del, ' ', &i);
 	}
-	if (del != ' ')
+	if (is_only_space(s))
 		return (-1);
 	return (count);
 }
