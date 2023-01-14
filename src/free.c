@@ -29,7 +29,7 @@ void	*free_cmd(t_cmd *c)
 
 void	*free_env(t_data *d)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (d->env[i])

@@ -77,7 +77,7 @@ char	*get_var_value(const char *s, int *j, char **env)
 		*j += 2;
 	}
 	else if ((ft_strchr(" ", s[(*j) + 1]) || !ft_isalnum(s[(*j) + 1]))
-			&& !ft_strchr("\"\'", s[(*j) + 1]))
+		&& !ft_strchr("\"\'", s[(*j) + 1]))
 	{
 		varvalue = ft_strdup("$");
 		if (!varvalue)

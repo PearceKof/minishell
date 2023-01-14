@@ -16,7 +16,7 @@ static int	is_flag(char *cmd)
 {
 	int	j;
 
-	if (cmd	&& cmd[0] == '-' && cmd[1] != '\0' && cmd[1] == 'n')
+	if (cmd && cmd[0] == '-' && cmd[1] != '\0' && cmd[1] == 'n')
 	{
 		j = 1;
 		while (cmd[j] == 'n')
@@ -29,6 +29,7 @@ static int	is_flag(char *cmd)
 /*
 reproduit la commande echo
 */
+
 void	ft_echo(char **full_cmd)
 {
 	int	i;

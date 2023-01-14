@@ -172,7 +172,7 @@ char	*get_file_name(char *s, int i, int size, char **env);
 /*
 	append.c
 */
-t_cmd	*open_attempt_append(char *s, int *i, t_cmd *last);
+t_cmd	*open_attempt_append(char *s, int *i, t_cmd *last, char del);
 
 /*
 	parse_size.c

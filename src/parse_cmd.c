@@ -59,6 +59,7 @@ static int	is_env_var(char **s, int *i, char **env)
 	dire qu'un bracket n'est pas fermé et la ft return -1
 	si tout s'est bien passé, return le nbr de string à allouer
 */
+
 static int	ft_count_space(char *s, char **env)
 {
 	char	del;

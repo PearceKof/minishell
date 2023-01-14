@@ -72,10 +72,10 @@ int	ft_export(t_cmd *c, t_data *d)
 		while (c->full_cmd[i][j] && c->full_cmd[i][j] != '=')
 			j++;
 		if (c->full_cmd[i][j] == '=' && j != 0)
-			export_var(c->full_cmd[i] , j, d);
+			export_var(c->full_cmd[i], j, d);
 		else
 			error(INVID, 1, c->full_cmd[i], NULL);
-		i++;	
+		i++;
 	}
 	return (1);
 }

@@ -38,13 +38,13 @@ static void	kill_all(t_cmd *c)
 	}
 }
 
-void	print_error(int	status, pid_t pid, t_cmd *first)
+void	print_error(int status, pid_t pid, t_cmd *first)
 {
 	char	*cmd_pid;
 
 	cmd_pid = find_same_pid(pid, first);
 	if (status == 127)
-			error(NCMD, 127, cmd_pid, NULL);
+		error(NCMD, 127, cmd_pid, NULL);
 	else if (status == 126 && ft_strchr(cmd_pid, '/') && !access(cmd_pid, X_OK))
 		error(ISDIR, 126, find_same_pid(pid, first), NULL);
 	else if (status == 126)
@@ -59,9 +59,9 @@ void	wait_all(t_cmd *first, t_cmd *c)
 	while (c)
 	{
 		state = 0;
-		pid = waitpid(0 , &state, WUNTRACED|WNOHANG);
+		pid = waitpid(0, &state, WUNTRACED | WNOHANG);
 		while (!pid && pid != -1)
-			pid = waitpid(0 , &state, WUNTRACED|WNOHANG);
+			pid = waitpid(0, &state, WUNTRACED | WNOHANG);
 		if (WIFEXITED(state))
 		{
 			g_status = WEXITSTATUS(state);

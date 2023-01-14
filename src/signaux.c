@@ -40,6 +40,7 @@ void	sigint_in_fork_handler(int sig)
 	nettoie la ligne
 	puis réaffiche le prompt
 */
+
 void	sigint_handler(int sig)
 {
 	pid_t	pid;

@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 #include <errno.h>
+
 extern int	g_status;
 
 static void	execute_cmd(char **env, char **cmd)
@@ -71,7 +72,6 @@ static void	dup_pipe_and_exec(t_cmd *c, t_data *d, int *pipe)
 
 static int	execute_fork(t_cmd *c, t_data *d, int *pipe)
 {
-	
 	c->pid = fork();
 	if (c->pid == -1)
 		return (error(FORKERR, 1, NULL, NULL));
@@ -95,11 +95,11 @@ int	execute(t_cmd *c, t_data *d)
 	first = c;
 	while (c && !ret)
 	{
-			if (c->next && (c->out != -1 || c->in != -1))
-				if (pipe(piper))
-					return (error(PERROR, 1, NULL, NULL));
-			if (execute_fork(c, d, piper))
-				return (1);
+		if (c->next && (c->out != -1 || c->in != -1))
+			if (pipe(piper))
+				return (error(PERROR, 1, NULL, NULL));
+		if (execute_fork(c, d, piper))
+			return (1);
 		c = c->next;
 	}
 	c = first;
