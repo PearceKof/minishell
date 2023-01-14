@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/14 19:07:06 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 19:53:07 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ static void	close_fd(t_cmd *c, int *pipe)
 
 static void	dup_pipe_and_exec(t_cmd *c, t_data *d, int *pipe)
 {
-	if (c->in == -1 || c->out == -1)
-		exit(1);
 	if (c->in != STDIN_FILENO)
 	{
 		if (dup2(c->in, STDIN_FILENO) == -1)
@@ -76,7 +74,11 @@ static int	execute_fork(t_cmd *c, t_data *d, int *pipe)
 	if (c->pid == -1)
 		return (error(FORKERR, 1, NULL, NULL));
 	if (c->pid == 0)
+	{
+		if (c->in == -1 || c->out == -1)
+			exit(1);
 		dup_pipe_and_exec(c, d, pipe);
+	}
 	else
 		close_fd(c, pipe);
 	return (0);

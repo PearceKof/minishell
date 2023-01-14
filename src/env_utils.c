@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 15:26:33 by ctechy            #+#    #+#             */
-/*   Updated: 2023/01/13 22:27:06 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 20:31:46 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,32 @@ char	*ft_getenv(char *varname, char **env, int len)
 		i++;
 	}
 	return (NULL);
+}
+
+char	*get_home(char **env)
+{
+	char	*home;
+
+	home = ft_getenv("HOME", env, 4);
+	return (home);
+}
+
+int	is_home_char(const char *s, int i)
+{
+	int is_home_char;
+
+	is_home_char = 0;
+	if (s[i] == '~')
+	{
+		is_home_char = 1;
+		if (0 < i)
+		{
+			if (s[i - 1] != ' ')
+				is_home_char = 0;
+		}
+		if (s[i + 1] != '\0' && s[i + 1] != ' ')
+			is_home_char = 0;
+	}
+	return (is_home_char);
+	
 }

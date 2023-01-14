@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:33:08 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/14 18:04:33 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 19:47:42 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ static t_cmd	*add_cmd(t_cmd *first)
 	return (first);
 }
 
-static t_cmd	*fill_cmd(char **input, t_cmd *first, char **env)
+static t_cmd	*fill_cmd(char **input, t_cmd *first)
 {
 	t_cmd	*ptr;
 
 	ptr = get_last_cmd(first);
-	ptr->full_cmd = dup_fullcmd(input, env);
+	ptr->full_cmd = dup_fullcmd(input);
 	return (first);
 }
 
@@ -80,7 +80,7 @@ t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env)
 		free_cmd(c);
 		return (NULL);
 	}
-	c = fill_cmd(parsed_input, c, env);
+	c = fill_cmd(parsed_input, c);
 	if (!c)
 		malloc_error();
 	ft_freetab(parsed_input);

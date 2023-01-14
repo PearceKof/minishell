@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/14 18:46:14 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 19:45:30 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,15 @@ t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env);
 /*
 	dup_cmd.c
 */
-char	**dup_fullcmd(char **tab, char **env);
+char	**dup_fullcmd(char **tab);
 /*
 	env_utils.c
 */
 int		env_size(char **env);
 int		varname_size(char *varname);
 char	*ft_getenv(char *varname, char **env, int len);
+char	*get_home(char **env);
+int		is_home_char(const char *s, int i);
 /*
 	env.c
 */
@@ -175,6 +177,7 @@ char	*get_file_name(char *s, int i, int size, char **env);
 int		status_size(int *i);
 int		var_value_size(char **env, const char *s, int *i);
 int		get_str_size(const char *s, char **env, char del);
+int		home_size(char **env, int *i);
 int		file_name_size(const char *s, int i, char **env);
 /*
 	parse_utils.c

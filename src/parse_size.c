@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 18:11:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/14 17:55:52 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 19:44:11 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	get_str_size(const char *s, char **env, char del)
 		}
 		else if (s[i] == '$' && del != '\'')
 			size += var_value_size(env, s, &i);
+		else if (del == ' ' && is_home_char(s, i))
+			size += home_size(env, &i);
 		else
 		{
 			size++;
@@ -81,6 +83,21 @@ int	get_str_size(const char *s, char **env, char del)
 		if (s[i] == ' ' && del == ' ')
 			break;
 	}
+	return (size);
+}
+
+int	home_size(char **env, int *i)
+{
+	int		size;
+	char	*home_value;
+
+	*i += 1;
+	home_value = get_home(env);
+	if (!home_value)
+		return (1);
+	size = 0;
+	size = ft_strlen(home_value);
+	free(home_value);
 	return (size);
 }
 
