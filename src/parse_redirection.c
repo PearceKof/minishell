@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 extern int	g_status;
 
@@ -53,7 +53,7 @@ char	*get_file_name(char *s, int i, int size, char **env)
 
 static t_cmd	*open_file(t_cmd *c, char *file_name, char red_type)
 {
-	if (red_type == '<'&& c->in != -1)
+	if (red_type == '<' && c->in != -1)
 	{
 		if (c->in != 0)
 			close(c->in);
@@ -72,7 +72,7 @@ static t_cmd	*open_file(t_cmd *c, char *file_name, char red_type)
 	return (c);
 }
 
-static t_cmd *open_attempt(char **env, char *s, int *i, t_cmd *last)
+static t_cmd	*open_attempt(char **env, char *s, int *i, t_cmd *last)
 {
 	int		red_pos;
 	int		red_type;
@@ -105,7 +105,7 @@ t_cmd	*redirection(t_cmd *c, t_cmd *last, char *s, char **env)
 		del = new_delimiter(del, s[i]);
 		if ((s[i] == '<' || s[i] == '>') && s[i + 1] != s[i] && del == ' ')
 			last = open_attempt(env, s, &i, last);
-		else if(s[i] == '<' && s[i + 1] == s[i] && del == ' ')
+		else if (s[i] == '<' && s[i + 1] == s[i] && del == ' ')
 		{
 			last = heredoc_attempt(env, s, &i, last);
 			if (g_status == 130)
@@ -115,6 +115,7 @@ t_cmd	*redirection(t_cmd *c, t_cmd *last, char *s, char **env)
 			}
 			return (c);
 		}
+		last = open_attempt_append(s, &i, last, del);
 		i++;
 	}
 	return (c);

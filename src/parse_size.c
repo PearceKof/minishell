@@ -81,7 +81,7 @@ int	get_str_size(const char *s, char **env, char del)
 			i++;
 		}
 		if (s[i] == ' ' && del == ' ')
-			break;
+			break ;
 	}
 	return (size);
 }
@@ -124,7 +124,7 @@ int	file_name_size(const char *s, int i, char **env)
 			i++;
 		}
 		if (s[i] == ' ' && del == ' ')
-			break;
+			break ;
 	}
 	return (size);
 }

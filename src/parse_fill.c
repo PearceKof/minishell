@@ -23,7 +23,7 @@ int	get_nxt(const char *s)
 	{
 		del = new_delimiter(del, s[nxt]);
 		if (ft_strchr(" |&<>;", s[nxt]) && del == ' ')
-			break;
+			break ;
 		nxt++;
 	}
 	return (nxt);

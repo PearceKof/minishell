@@ -34,7 +34,7 @@ void	cd_root(t_cmd *c, t_data *d)
 	new_pwd(d);
 }
 
-int cd_error(t_cmd *c)
+int	cd_error(t_cmd *c)
 {
 	if (!c->full_cmd[1] || c->full_cmd[1][0] == '~')
 		return (0);

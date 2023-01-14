@@ -12,9 +12,9 @@
 
 #include "minishell.h"
 
-extern int g_status;
+extern int	g_status;
 
-t_cmd *heredoc_attempt(char **env, char *s, int *i, t_cmd *last)
+t_cmd	*heredoc_attempt(char **env, char *s, int *i, t_cmd *last)
 {
 	int		red_pos;
 	char	*delimiter;
@@ -110,7 +110,7 @@ t_cmd	*ft_heredoc(t_cmd *c, char *delimiter, char **env)
 	if (pid == -1)
 	{
 		error(FORKERR, 1, NULL, NULL);
-		return(c);
+		return (c);
 	}
 	if (pid == 0)
 		heredoc_childprocess(env, delimiter, fd);

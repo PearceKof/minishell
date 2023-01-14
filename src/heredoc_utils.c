@@ -52,7 +52,7 @@ int	delimiter_size(const char *s, int i)
 			i++;
 		}
 		if (s[i] == ' ' && del == ' ')
-			break;
+			break ;
 	}
 	return (size);
 }

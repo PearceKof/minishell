@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-extern int g_status;
+extern int	g_status;
 
 static int	print_syntax_error(char c, char *s)
 {
@@ -34,7 +34,8 @@ static int	check_nxt_syntax(char *s, int i)
 	pass_while_char(s, &i, " ");
 	if (ft_strchr("<>|#=[]!;{}()?~&", s[i]))
 	{
-		ft_fprintf(2, "minishell: syntax error near unexpected token `%c'\n", s[i]);
+		ft_fprintf(2, "minishell: syntax error near unexpected token `%c'\n",
+			s[i]);
 		g_status = 2;
 		return (1);
 	}
@@ -44,7 +45,8 @@ static int	check_nxt_syntax(char *s, int i)
 		if (ft_strchr("<>", c))
 			return (error(NL, 2, NULL, NULL));
 		else
-			ft_fprintf(2, "minishell: syntax error near unexpected token `%c'\n", c);
+			ft_fprintf(2, "minishell: syntax error near unexpected token `%c'\n",
+				c);
 		return (1);
 	}
 	return (0);

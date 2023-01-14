@@ -62,7 +62,7 @@ int	exe_parent_builtin(t_cmd *c, t_data *d)
 		return (1);
 	}
 	else if (ft_strnstr(c->full_cmd[0], "cd", size) && size == 2)
-			return (ft_cd(c, d));
+		return (ft_cd(c, d));
 	else if (ft_strnstr(c->full_cmd[0], "export", size)
 		&& size == 6 && c->full_cmd[1])
 		return (ft_export(c, d));
@@ -78,6 +78,7 @@ check le premier mot de la commande, si il correspond à un builin,
 il va l'éxecuter et return 1
 sinon, return 0
 */
+
 int	exe_child_builtin(t_cmd *c, t_data *d)
 {
 	int	size;

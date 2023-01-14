@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 17:03:37 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/14 19:32:40 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 20:34:52 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	kill_all(t_cmd *c)
 	}
 }
 
-void	print_error(int	status, pid_t pid, t_cmd *first)
+void	print_error(int status, pid_t pid, t_cmd *first)
 {
 	char	*cmd_pid;
 
@@ -59,9 +59,9 @@ void	wait_all(t_cmd *first, t_cmd *c)
 	while (c)
 	{
 		state = 0;
-		pid = waitpid(0 , &state, WUNTRACED|WNOHANG);
+		pid = waitpid(0, &state, WUNTRACED | WNOHANG);
 		while (!pid && pid != -1)
-			pid = waitpid(0 , &state, WUNTRACED|WNOHANG);
+			pid = waitpid(0, &state, WUNTRACED | WNOHANG);
 		if (WIFEXITED(state))
 		{
 			g_status = WEXITSTATUS(state);

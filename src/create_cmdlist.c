@@ -86,4 +86,3 @@ t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env)
 	ft_freetab(parsed_input);
 	return (c);
 }
-

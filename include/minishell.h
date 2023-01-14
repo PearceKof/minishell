@@ -113,7 +113,6 @@ char	*new_envvar(char *varname, char *value);
 void	addvar_to_env(t_data *d, char *addvar);
 char	*edit_envvar(char *to_edit, char *value, int size);
 char	**set_env_var(char *varname, char *value, t_data *d, int size);
-char	**init_env(char **av, t_data *d);
 /*
 	error.c
 */
@@ -171,6 +170,11 @@ char	**parse_pipe(char const *s);
 void	replace_with_space(char **s, int red_pos, int *i);
 t_cmd	*redirection(t_cmd *c, t_cmd *last, char *s, char **env);
 char	*get_file_name(char *s, int i, int size, char **env);
+/*
+	append.c
+*/
+t_cmd	*open_attempt_append(char *s, int *i, t_cmd *last, char del);
+
 /*
 	parse_size.c
 */

@@ -11,7 +11,9 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+
 #include <stdio.h>
+
 char	**ft_tabdup(char **tab)
 {
 	char	**tabdup;

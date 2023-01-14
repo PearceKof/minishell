@@ -25,6 +25,7 @@ int	env_size(char **env)
 	prends le nom d'une variable et return sa taille au premier =
 	sinon, return 0
 */
+
 int	varname_size(char *varname)
 {
 	int	i;
