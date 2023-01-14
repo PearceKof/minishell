@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/13 22:32:08 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 17:07:14 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,37 +54,37 @@ static	int	is_correct_input(char *input)
 	return (1);
 }
 
-/*
-affiche les infos de la commande c en argumant
-Juste pour debugger
-*/
-void	printcmd(t_cmd *c)
-{
-	int	i;
-	int	j;
+// /*
+// affiche les infos de la commande c en argumant
+// Juste pour debugger
+// */
+// void	printcmd(t_cmd *c)
+// {
+// 	int	i;
+// 	int	j;
 
-	while (c)
-	{
-		ft_fprintf(2, "prev: %p\n", c->prev);
-		ft_fprintf(2, "----->%p\n", c);
-		ft_fprintf(2, "next: %p\n", c->next);
-		ft_fprintf(2, "in : %d out : %d\n", c->in, c->out);
-		i = 0;
-		while (c->full_cmd[i])
-		{
-			j = 0;
-			ft_fprintf(2, "|");
-			while (c->full_cmd[i][j])
-			{
-				ft_fprintf(2, "%c", c->full_cmd[i][j]);
-				j++;
-			}
-			ft_fprintf(2, "|\n-------\n");
-			i++;
-		}
-		c = c->next;
-	}
-}
+// 	while (c)
+// 	{
+// 		ft_fprintf(2, "prev: %p\n", c->prev);
+// 		ft_fprintf(2, "----->%p\n", c);
+// 		ft_fprintf(2, "next: %p\n", c->next);
+// 		ft_fprintf(2, "in : %d out : %d\n", c->in, c->out);
+// 		i = 0;
+// 		while (c->full_cmd[i])
+// 		{
+// 			j = 0;
+// 			ft_fprintf(2, "|");
+// 			while (c->full_cmd[i][j])
+// 			{
+// 				ft_fprintf(2, "%c", c->full_cmd[i][j]);
+// 				j++;
+// 			}
+// 			ft_fprintf(2, "|\n-------\n");
+// 			i++;
+// 		}
+// 		c = c->next;
+// 	}
+// }
 
 int	main(int ac, char **av, char **envp)
 {
@@ -103,7 +103,7 @@ int	main(int ac, char **av, char **envp)
 			c = init_cmd(d.input, d.env);
 			if (c)
 			{
-				printcmd(c);
+				// printcmd(c);
 				execute(c, &d);
 			}
 			free_cmd(c);

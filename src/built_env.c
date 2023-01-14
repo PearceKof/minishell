@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 21:03:41 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/13 21:06:39 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 17:18:04 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_env(char **env)
 	i = 0;
 	while (env && env[i])
 	{
-		ft_printf("%s\n", env[i]);
+		printf("%s\n", env[i]);
 		i++;
 	}
 	return (1);

@@ -6,7 +6,7 @@
 #    By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/17 12:26:09 by blaurent          #+#    #+#              #
-#    Updated: 2022/11/08 17:51:38 by blaurent         ###   ########.fr        #
+#    Updated: 2023/01/14 17:17:13 by blaurent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,12 +25,9 @@ LIBDIR = ./libft/
 LIBFT = ./libft/libft.a
 LIBINC = ./libft/includes/
 
-# Optimization and Compiler flags and commands
+# Compiler flags
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g
-
-# Debugging flags
-DEBUG = -g
+CFLAGS = -Wall -Wextra -Werror
 
 # Main rule
 all: $(BUILDDIR) $(LIBFT) $(NAME)
@@ -64,5 +61,4 @@ fclean: clean
 # Do both of the above
 re: fclean all
 
-# Just in case those files exist in the root dir
 .PHONY: all fclean clean re
