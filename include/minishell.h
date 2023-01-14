@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/14 16:19:09 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 16:44:32 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	rl_replace_line(const char *text, int clear_undo);
 	builtins.c + built_*.c
 */
 void	cd_root(t_cmd *c, t_data *d);
+int		cd_error(t_cmd *c);
 int		ft_cd(t_cmd *c, t_data *d);
 void	ft_echo(char **full_cmd);
 int		ft_env(char **env);
@@ -123,9 +124,7 @@ void	wait_all(t_cmd *first, t_cmd *c);
 /*
 	execute.c
 */
-void	execute_cmd(char **env, char **cmd);
 int		execute(t_cmd *c, t_data *d);
-int		execute_exit(t_cmd *c, t_data *d);
 /*
 	free.c
 */

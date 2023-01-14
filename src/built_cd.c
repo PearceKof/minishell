@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:38:37 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/14 15:56:07 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 16:46:07 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,26 @@ void	cd_root(t_cmd *c, t_data *d)
 	new_pwd(d);
 }
 
+int cd_error(t_cmd *c)
+{
+	if (c->full_cmd[2])
+		return (error(TOOARGS, 1, "cd", NULL));
+	if (chdir(c->full_cmd[1]))
+		return (error(PERROR, 1, "cd: ", c->full_cmd[1]));
+	return (0);
+}
+
 int	ft_cd(t_cmd *c, t_data *d)
 {
-	g_status = 0;
 	if (!c->full_cmd[1] || c->full_cmd[1][0] == '~')
 	{
 		cd_root(c, d);
 		return (1);
 	}
 	else if (c->full_cmd[2])
-		return (error(TOOARGS, 1, "cd", NULL));
+		return (0);
 	if (chdir(c->full_cmd[1]))
-		return (error(PERROR, 1, "cd: ", c->full_cmd[1]));
+		return (0);
 	new_pwd(d);
 	return (1);
 }

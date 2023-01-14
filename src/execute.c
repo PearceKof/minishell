@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/14 16:20:11 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 16:39:19 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int	g_status;
 
-void	execute_cmd(char **env, char **cmd)
+static void	execute_cmd(char **env, char **cmd)
 {
 	char	*cmdpath;
 
@@ -39,7 +39,7 @@ static void	close_fd(t_cmd *c, int *pipe)
 		close(c->out);
 }
 
-static void	child(t_cmd *c, t_data *d, int *pipe)
+static void	dup_pipe_and_exec(t_cmd *c, t_data *d, int *pipe)
 {
 	if (c->in == -1 || c->out == -1)
 		exit(1);
@@ -74,12 +74,9 @@ static int	execute_fork(t_cmd *c, t_data *d, int *pipe)
 	
 	c->pid = fork();
 	if (c->pid == -1)
-	{
-		ft_fprintf(2, "Fork failed\n");
-		return (1);
-	}
+		return (error(FORKERR, 1, NULL, NULL));
 	if (c->pid == 0)
-		child(c, d, pipe);
+		dup_pipe_and_exec(c, d, pipe);
 	else
 		close_fd(c, pipe);
 	return (0);
@@ -106,6 +103,7 @@ int	execute(t_cmd *c, t_data *d)
 		c = c->next;
 	}
 	c = first;
-	wait_all(c, first);
+	if (!ret)
+		wait_all(c, first);
 	return (0);
 }
