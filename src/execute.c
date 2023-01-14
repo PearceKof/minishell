@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/14 16:01:06 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 16:20:11 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void	child(t_cmd *c, t_data *d, int *pipe)
 	}
 	if (is_builtin(c))
 	{
-		exec_builtin(c, d);
+		exe_child_builtin(c, d);
 		exit(0);
 	}
 	execute_cmd(d->env, c->full_cmd);
@@ -94,7 +94,7 @@ int	execute(t_cmd *c, t_data *d)
 
 	if (c->full_cmd[0] && !ft_strnstr(c->full_cmd[0], "./minishell", 11))
 		signal(SIGINT, sigint_in_fork_handler);
-	ret = execute_exit(c, d);
+	ret = exe_parent_builtin(c, d);
 	first = c;
 	while (c && !ret)
 	{

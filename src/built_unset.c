@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 18:43:54 by ctechy            #+#    #+#             */
-/*   Updated: 2023/01/14 16:14:55 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 16:16:58 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	var_del(t_data *d, char *str, char **tmp)
 	tmp[j] = NULL;
 }
 
-static int	env_dup(t_data *d, t_cmd *c, int index)
+static void	env_dup(t_data *d, t_cmd *c, int index)
 {
 	int		len;
 	char	*str;
@@ -50,7 +50,6 @@ static int	env_dup(t_data *d, t_cmd *c, int index)
 	free(d->env);
 	free(str);
 	d->env = tmp;
-	return (1);
 }
 
 static int	is_var_in_env(t_data *d, t_cmd *c, int index)

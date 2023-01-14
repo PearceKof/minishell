@@ -6,38 +6,13 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 16:10:42 by ctechy            #+#    #+#             */
-/*   Updated: 2023/01/14 16:10:15 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 16:17:51 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern int	g_status;
-
-int	execute_exit(t_cmd *c, t_data *d)
-{
-	int		size;
-
-	if (c->full_cmd[0] == NULL || c->next != NULL)
-		return (0);
-	size = ft_strlen(c->full_cmd[0]);
-	if (ft_strnstr(c->full_cmd[0], "exit", size) && size == 4)
-	{
-		ft_exit(c->full_cmd, c, d);
-		return (1);
-	}
-	else if (ft_strnstr(c->full_cmd[0], "cd", size) && size == 2)
-			return (ft_cd(c, d));
-	else if (ft_strnstr(c->full_cmd[0], "export", size)
-		&& size == 6 && c->full_cmd[1])
-		return (ft_export(c, d));
-	else if (ft_strnstr(c->full_cmd[0], "unset", size) && size == 5)
-	{
-		ft_unset(c, d);
-		return (1);
-	}
-	return (0);
-}
 
 char	*checkpaths(char **env_paths, char *cmd)
 {
