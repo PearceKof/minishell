@@ -6,12 +6,12 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/14 16:39:19 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 19:07:06 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+#include <errno.h>
 extern int	g_status;
 
 static void	execute_cmd(char **env, char **cmd)

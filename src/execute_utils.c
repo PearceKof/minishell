@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 16:10:42 by ctechy            #+#    #+#             */
-/*   Updated: 2023/01/14 16:17:51 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 19:05:52 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*checkpaths(char **env_paths, char *cmd)
 	i = 0;
 	while (env_paths[i])
 	{
-		tmp = ft_strjoin(env_paths[i++], "/");
+		tmp = ft_strjoin(env_paths[i], "/");
 		cmdpath = ft_strjoin(tmp, cmd);
 		free(tmp);
 		if (!access(cmdpath, X_OK))
@@ -32,6 +32,7 @@ char	*checkpaths(char **env_paths, char *cmd)
 			return (cmdpath);
 		}
 		free(cmdpath);
+		i++;
 	}
 	ft_freetab(env_paths);
 	return (NULL);

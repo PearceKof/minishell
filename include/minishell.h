@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/14 16:44:32 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 18:46:14 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,15 @@ enum	e_error
 	INVID,
 	HNOSET,
 	TOOARGS,
-	NUMARGS
+	NUMARGS,
+	ISDIR
 };
 
 typedef struct s_data
 {
 	char	**env;
 	char	*input;
+	char	*prompt;
 	pid_t	pid;
 }	t_data;
 
@@ -95,7 +97,7 @@ t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env);
 /*
 	dup_cmd.c
 */
-char	**dup_fullcmd(char **tab);
+char	**dup_fullcmd(char **tab, char **env);
 /*
 	env_utils.c
 */
