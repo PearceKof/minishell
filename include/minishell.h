@@ -211,4 +211,5 @@ int		is_only_space(char *s);
 	utils.c
 */
 pid_t	ft_getpid(void);
+int	ft_atol(const char *str, int ret);
 #endif

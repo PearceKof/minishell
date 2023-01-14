@@ -27,7 +27,9 @@ static int	check_sign(char *sign)
 static int	exit_check_num(char **full_cmd)
 {
 	int	i;
+	int ret;
 
+	ret = 0;
 	i = check_sign(full_cmd[1]);
 	while (full_cmd[1][i])
 	{
@@ -35,6 +37,9 @@ static int	exit_check_num(char **full_cmd)
 			return (0);
 		i++;
 	}
+	ret = ft_atol(full_cmd[1], ret);
+	if (ret == 1)
+		return (0);
 	return (1);
 }
 
