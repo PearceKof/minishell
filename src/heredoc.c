@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:35:06 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/14 15:47:39 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 21:03:34 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,18 @@ t_cmd	*heredoc_attempt(char **env, char *s, int *i, t_cmd *last)
 	char	*delimiter;
 	int		nxt;
 
-	red_pos = *i;
-	*i += 1;
-	pass_while_char(s, i, " ");
-	nxt = get_nxt(&s[*i]);
-	delimiter = get_delimiter(s, *i, delimiter_size(s, *i));
-	last = ft_heredoc(last, delimiter, env);
-	*i += nxt;
-	replace_with_space(&s, red_pos, i);
-	free(delimiter);
+	if (s[*i] == '<' && s[*i + 1] == s[*i])
+	{
+		red_pos = *i;
+		*i += 1;
+		pass_while_char(s, i, " ");
+		nxt = get_nxt(&s[*i]);
+		delimiter = get_delimiter(s, *i, delimiter_size(s, *i));
+		last = ft_heredoc(last, delimiter, env);
+		*i += nxt;
+		replace_with_space(&s, red_pos, i);
+		free(delimiter);
+	}
 	return (last);
 }
 

@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 17:03:37 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/14 20:34:52 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 21:06:39 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	wait_all(t_cmd *first, t_cmd *c)
 		if (WIFEXITED(state))
 		{
 			g_status = WEXITSTATUS(state);
-			ft_fprintf(2, "g_status= %d\n", g_status);
 			print_error(g_status, pid, first);
 		}
 		else if (WIFSIGNALED(state))

@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/14 19:45:30 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 21:14:03 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,10 @@ typedef struct s_cmd
 }	t_cmd;
 
 void	rl_replace_line(const char *text, int clear_undo);
+/*
+	append.c
+*/
+t_cmd	*open_attempt_append(char *s, int *i, t_cmd *last);
 /*
 	builtins.c + built_*.c
 */
@@ -170,11 +174,6 @@ char	**parse_pipe(char const *s);
 void	replace_with_space(char **s, int red_pos, int *i);
 t_cmd	*redirection(t_cmd *c, t_cmd *last, char *s, char **env);
 char	*get_file_name(char *s, int i, int size, char **env);
-/*
-	append.c
-*/
-t_cmd	*open_attempt_append(char *s, int *i, t_cmd *last, char del);
-
 /*
 	parse_size.c
 */
