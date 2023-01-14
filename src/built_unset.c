@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 18:43:54 by ctechy            #+#    #+#             */
-/*   Updated: 2023/01/13 23:25:37 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 16:14:55 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,8 @@ int	ft_unset(t_cmd *c, t_data *d)
 	index = 1;
 	while (c->full_cmd[index])
 	{
-		if (!(is_var_in_env(d, c, index)))
-			return (0);
-		if (!(env_dup(d, c, index)))
-			return (0);
+		if (is_var_in_env(d, c, index))
+			env_dup(d, c, index);
 		index++;
 	}
 	return (1);

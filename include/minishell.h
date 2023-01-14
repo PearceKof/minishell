@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/13 22:40:18 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 15:57:50 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int		ft_unset(t_cmd *c, t_data *d);
 void	new_pwd(t_data *d);
 int		ft_pwd(void);
 int		ft_unset(t_cmd *c, t_data *d);
+int		is_builtin(t_cmd *cmd);
 int		exec_builtin(t_cmd *cmd, t_data *d);
 /*
 	create_cmdlist.c

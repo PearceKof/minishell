@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:35:06 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/13 21:38:07 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 15:47:39 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,11 @@ t_cmd	*ft_heredoc(t_cmd *c, char *delimiter, char **env)
 	pid_t	pid;
 	int		fd[2];
 
-	pipe(fd);
+	if (pipe(fd) == -1)
+	{
+		error(PIPERR, 1, NULL, NULL);
+		return (c);
+	}
 	pid = fork();
 	if (pid == -1)
 	{

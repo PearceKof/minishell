@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 16:10:42 by ctechy            #+#    #+#             */
-/*   Updated: 2023/01/13 22:44:09 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 16:10:15 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	execute_exit(t_cmd *c, t_data *d)
 {
 	int		size;
 
-	if (c->full_cmd[0] == NULL)
+	if (c->full_cmd[0] == NULL || c->next != NULL)
 		return (0);
 	size = ft_strlen(c->full_cmd[0]);
 	if (ft_strnstr(c->full_cmd[0], "exit", size) && size == 4)
@@ -27,10 +27,7 @@ int	execute_exit(t_cmd *c, t_data *d)
 		return (1);
 	}
 	else if (ft_strnstr(c->full_cmd[0], "cd", size) && size == 2)
-	{
-		if (c->next == NULL)
 			return (ft_cd(c, d));
-	}
 	else if (ft_strnstr(c->full_cmd[0], "export", size)
 		&& size == 6 && c->full_cmd[1])
 		return (ft_export(c, d));
