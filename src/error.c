@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:59:32 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/10 15:12:13 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 18:45:14 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static char	*error_type(int errorid)
 	ft_strlcpy(error[HNOSET], ": HOME not set\n", 50);
 	ft_strlcpy(error[TOOARGS], ": too many arguments\n", 50);
 	ft_strlcpy(error[NUMARGS], ": numeric argument required\n", 50);
+	ft_strlcpy(error[ISDIR], ": Is a directory\n", 50);
 	return (error[errorid]);
 }
 

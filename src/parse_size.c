@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 18:11:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/13 21:42:38 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 17:55:52 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,15 @@ int	get_str_size(const char *s, char **env, char del)
 	while (s[i])
 	{
 		if (del != new_delimiter(del, s[i]))
+		{
 			del = new_delimiter(del, s[i]);
-		else if (s[i] != '$' || del == '\'')
-			size++;
-		if (s[i] == '$' && del != '\'')
+			i++;
+		}
+		else if (s[i] == '$' && del != '\'')
 			size += var_value_size(env, s, &i);
 		else
-			i++;
-		if (del != ' ' && s[i] == del)
 		{
-			del = ' ';
+			size++;
 			i++;
 		}
 		if (s[i] == ' ' && del == ' ')
