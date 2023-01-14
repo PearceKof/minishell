@@ -168,6 +168,11 @@ void	replace_with_space(char **s, int red_pos, int *i);
 t_cmd	*redirection(t_cmd *c, t_cmd *last, char *s, char **env);
 char	*get_file_name(char *s, int i, int size, char **env);
 /*
+	append.c
+*/
+t_cmd	*open_attempt_append(char *s, int *i, t_cmd *last);
+
+/*
 	parse_size.c
 */
 int		status_size(int *i);
