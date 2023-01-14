@@ -115,20 +115,3 @@ char	**set_env_var(char *varname, char *value, t_data *d, int size)
 	free(str);
 	return (d->env);
 }
-
-char	**init_env(char **av, t_data *d)
-{
-	char	*tmp;
-
-	if (!d)
-		return (NULL);
-	tmp = getcwd(NULL, 0);
-	d->env = set_env_var("PWD", tmp, d, 3);
-	free(tmp);
-	if (!ft_getenv("PATH", d->env, 4))
-		d->env = set_env_var("PATH",
-				"/usr/local/sbin:/usr/local/bin:/usr/bin:/bin", d, 4);
-	if (!ft_getenv("_", d->env, 1))
-		d->env = set_env_var("_", av[0], d, 1);
-	return (d->env);
-}

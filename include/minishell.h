@@ -111,7 +111,6 @@ char	*new_envvar(char *varname, char *value);
 void	addvar_to_env(t_data *d, char *addvar);
 char	*edit_envvar(char *to_edit, char *value, int size);
 char	**set_env_var(char *varname, char *value, t_data *d, int size);
-char	**init_env(char **av, t_data *d);
 /*
 	error.c
 */
