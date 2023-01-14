@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:38:37 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/14 16:46:07 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 16:54:20 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	cd_root(t_cmd *c, t_data *d)
 
 int cd_error(t_cmd *c)
 {
+	if (!c->full_cmd[1] || c->full_cmd[1][0] == '~')
+		return (0);
 	if (c->full_cmd[2])
 		return (error(TOOARGS, 1, "cd", NULL));
 	if (chdir(c->full_cmd[1]))

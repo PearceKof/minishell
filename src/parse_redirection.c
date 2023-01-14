@@ -6,13 +6,23 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 17:40:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/13 21:39:39 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 16:50:28 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minishell.h"
 
 extern int	g_status;
+
+void	replace_with_space(char **s, int red_pos, int *i)
+{
+	*i -= 1;
+	while (*i >= red_pos)
+	{
+		(*s)[*i] = ' ';
+		*i -= 1;
+	}
+}
 
 char	*get_file_name(char *s, int i, int size, char **env)
 {
