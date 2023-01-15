@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 16:56:42 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 18:37:32 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,6 @@
 #include <errno.h>
 
 extern int	g_status;
-
-static void	execute_cmd(char **env, t_cmd *c)
-{
-	if (!c->path)
-		exit(127);
-	if (execve(c->path, c->full_cmd, env) == -1)
-		exit(126);
-}
 
 static void	close_fd(t_cmd *c, int *pipe)
 {
@@ -59,7 +51,10 @@ static void	dup_pipe_and_exec(t_cmd *c, t_data *d, int *pipe)
 	}
 	if (is_builtin(c))
 		exe_child_builtin(c, d);
-	execute_cmd(d->env, c);
+	if (!c->path)
+		exit(127);
+	if (execve(c->path, c->full_cmd, env) == -1)
+		exit(126);
 }
 
 static int	execute_fork(t_cmd *c, t_data *d, int *pipe)
@@ -78,6 +73,27 @@ static int	execute_fork(t_cmd *c, t_data *d, int *pipe)
 	return (0);
 }
 
+static int	is_minishell(char *c, char *mini)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 10;
+	i = ft_strlen(c);
+	if (i < j)
+		return (0);
+	while (j)
+	{
+		ft_fprintf(2, "DEBUG %c %c\n", c[i], mini[j]);
+		if (c[i] != mini[j])
+			return (0);
+		i--;
+		j--;
+	}
+	return (1);
+}
+
 /*On check l'exit avant de fork sinon la fonction exit ne fonctionne pas*/
 int	execute(t_cmd *c, t_data *d)
 {
@@ -85,7 +101,7 @@ int	execute(t_cmd *c, t_data *d)
 	int		ret;
 	t_cmd	*first;
 
-	if (c->full_cmd[0] && !ft_strnstr(c->full_cmd[0], "./minishell", 11))
+	if (!is_minishell(c->full_cmd[0], "/minishell"))
 		signal(SIGINT, sigint_in_fork_handler);
 	ret = exe_parent_builtin(c, d);
 	first = c;
