@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 17:03:37 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/14 21:31:06 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 13:24:38 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	print_error(int status, pid_t pid, t_cmd *first)
 
 	cmd_pid = find_same_pid(pid, first);
 	if (status == 127)
-			error(NCMD, 127, cmd_pid, NULL);
-	else if (status == 126 && cmd_pid[0] == '/' && !access(cmd_pid, F_OK))
+		error(NCMD, 127, cmd_pid, NULL);
+	else if (status == 126 && ft_strchr(cmd_pid, '/') && !access(cmd_pid, F_OK))
 		error(ISDIR, 126, find_same_pid(pid, first), NULL);
 	else if (status == 126)
 		error(NCMD, 126, find_same_pid(pid, first), NULL);

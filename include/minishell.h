@@ -93,6 +93,12 @@ int		ft_unset(t_cmd *c, t_data *d);
 int		is_builtin(t_cmd *cmd);
 int		exe_parent_builtin(t_cmd *c, t_data *d);
 int		exe_child_builtin(t_cmd *cmd, t_data *d);
+void	export_var(char *cmd, int j, t_data *d);
+/*
+	builtins_export_utils.c
+*/
+int		ft_checker(t_cmd *c);
+int		ft_extra_export(t_cmd *c, t_data *d, int *i, int *j);
 /*
 	create_cmdlist.c
 */
@@ -211,4 +217,5 @@ int		is_only_space(char *s);
 	utils.c
 */
 pid_t	ft_getpid(void);
+int		ft_atol(const char *str, int ret);
 #endif
