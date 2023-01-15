@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 17:03:37 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 18:40:50 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 23:54:14 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static void	kill_all(t_cmd *c)
 void	print_error(int status, pid_t pid, t_cmd *first)
 {
 	int		fd;
-	int		fd2;
 	char	*cmd_pid;
 
 	cmd_pid = find_same_pid(pid, first);
@@ -50,13 +49,12 @@ void	print_error(int status, pid_t pid, t_cmd *first)
 	else if (status == 126 && ft_strchr(cmd_pid, '/'))
 	{
 		fd = open(first->path , __O_DIRECTORY);
-		fd2 = access(first->path, F_OK);
 		if (fd != -1)
 		{
 			close(fd);
 			error(ISDIR, 126, cmd_pid, NULL);
 		}
-		else if (fd2 == -1)
+		else if (access(first->path, F_OK))
 			error(NDIR, 127, cmd_pid, NULL);
 		else
 			error(NPERM, 126, cmd_pid, NULL);
