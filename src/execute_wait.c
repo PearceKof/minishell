@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 17:03:37 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 23:54:14 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 23:55:39 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	print_error(int status, pid_t pid, t_cmd *first)
 			close(fd);
 			error(ISDIR, 126, cmd_pid, NULL);
 		}
-		else if (access(first->path, F_OK))
+		else if (access(first->path, F_OK) == -1)
 			error(NDIR, 127, cmd_pid, NULL);
 		else
 			error(NPERM, 126, cmd_pid, NULL);
