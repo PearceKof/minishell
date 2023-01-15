@@ -63,7 +63,7 @@ int	ft_export(t_cmd *c, t_data *d)
 	i = 1;
 	while (c->full_cmd[i])
 	{
-		if (c->full_cmd[i][0] && (c->full_cmd[i][0] == '=' || ft_isdigit(c->full_cmd[i][0])))
+		if (c->full_cmd[i][0] && ft_strchr("0123456789=", c->full_cmd[i][0]))
 			error(INVID, 1, c->full_cmd[i], NULL);
 		else
 		{
