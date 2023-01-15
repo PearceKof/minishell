@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 16:10:42 by ctechy            #+#    #+#             */
-/*   Updated: 2023/01/15 17:06:00 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 22:41:48 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 extern int	g_status;
 
-char *relative_path(char **env, char *cmd)
+char *relative_path(char *cmd)
 {
 	char	*tmp;
 	char	*path;
 	char	*pwd;
 
-	pwd = ft_getenv("PWD", env, 3);
+	pwd = getcwd(NULL, 0);
 	tmp = ft_strjoin(pwd, "/");
 	free(pwd);
 	path = ft_strjoin(tmp, cmd);
@@ -35,6 +35,8 @@ char	*checkpaths(char **env_paths, char *cmd)
 	size_t	i;
 
 	i = 0;
+	if (!env_paths)
+		return (NULL);
 	while (env_paths[i])
 	{
 		tmp = ft_strjoin(env_paths[i], "/");
@@ -65,7 +67,7 @@ char	*ft_getpaths(char **env, char *cmd)
 		return (ptr);
 	}
 	else if (ft_strnstr(cmd, "/", ft_strlen(cmd)))
-		return (relative_path(env, cmd));
+		return (relative_path(cmd));
 	ptr = ft_getenv("PATH", env, 4);
 	env_paths = ft_split(ptr, ':');
 	free(ptr);
