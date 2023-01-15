@@ -93,6 +93,14 @@ int		ft_unset(t_cmd *c, t_data *d);
 int		is_builtin(t_cmd *cmd);
 int		exe_parent_builtin(t_cmd *c, t_data *d);
 int		exe_child_builtin(t_cmd *cmd, t_data *d);
+void	export_var(char *cmd, int j, t_data *d);
+/*
+	builtins_export_utils.c
+*/
+int		ft_check_cmd(t_cmd *c);
+int		ft_check_nb(t_cmd *c);
+int		ft_checker(t_cmd *c);
+int		ft_extra_export(t_cmd *c, t_data *d, int *i, int *j);
 /*
 	create_cmdlist.c
 */
