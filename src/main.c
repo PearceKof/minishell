@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 17:38:56 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 17:56:08 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	main(int ac, char **av, char **envp)
 		prompt(&d);
 		if (is_correct_input(d.input))
 		{
-			c = init_cmd(d.input, d.env);
+			c = init_cmd(d.input, &d);
 			if (c)
 			{
 				printcmd(c);

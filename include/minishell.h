@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 16:51:11 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 17:55:11 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct s_data
 {
 	char	**env;
 	char	*input;
-	char	*prompt;
+	char	*path;
 	pid_t	pid;
 }	t_data;
 
@@ -99,7 +99,7 @@ void	export_var(char *cmd, int j, t_data *d);
 	create_cmdlist.c
 */
 t_cmd	*get_last_cmd(t_cmd *c);
-t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env);
+t_cmd	*create_cmdlist(char *input_split, t_cmd *c, t_data *d);
 /*
 	dup_cmd.c
 */
@@ -154,7 +154,7 @@ t_cmd	*ft_heredoc(t_cmd *c, char *limiter, char **env);
 /*
 	init.c
 */
-t_cmd	*init_cmd(char *input, char **env);
+t_cmd	*init_cmd(char *input, t_data *d);
 t_data	init_term(char **av, char **envp, t_data d);
 /*
 	parse_cmd.c

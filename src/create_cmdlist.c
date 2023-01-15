@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:33:08 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 17:19:15 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 17:50:20 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,26 @@ static t_cmd	*add_cmd(t_cmd *first)
 	return (first);
 }
 
-static t_cmd	*fill_cmd(char **input, t_cmd *first, char **env)
+static t_cmd	*fill_cmd(char **input, t_cmd *first, t_data *d)
 {
+	int		size;
 	t_cmd	*ptr;
 
 	ptr = get_last_cmd(first);
 	ptr->full_cmd = dup_fullcmd(input);
-	ptr->path = ft_getpaths(env, ptr->full_cmd[0]);
+	ptr->path = ft_getpaths(d->env, ptr->full_cmd[0]);
+	if (ptr->path)
+		d->env = set_env_var("_", ptr->path, d, 1);
+	else
+	{
+		size = ft_strlen(ptr->full_cmd[0]);
+		d->env = set_env_var(ptr->full_cmd[0], ptr->path, d, size);
+	}
 	ft_fprintf(2, "PATH= |%s|\n", ptr->path);
 	return (first);
 }
 
-t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env)
+t_cmd	*create_cmdlist(char *input_split, t_cmd *c, t_data *d)
 {
 	char	**parsed_input;
 
@@ -73,16 +81,16 @@ t_cmd	*create_cmdlist(char *input_split, t_cmd *c, char **env)
 		c = add_cmd(c);
 	if (!c)
 		malloc_error();
-	c = redirection(c, NULL, input_split, env);
+	c = redirection(c, NULL, input_split, d->env);
 	if (!c)
 		return (NULL);
-	parsed_input = parse_cmd(input_split, env);
+	parsed_input = parse_cmd(input_split, d->env);
 	if (!parsed_input)
 	{
 		free_cmd(c);
 		return (NULL);
 	}
-	c = fill_cmd(parsed_input, c, env);
+	c = fill_cmd(parsed_input, c, d);
 	if (!c)
 		malloc_error();
 	ft_freetab(parsed_input);

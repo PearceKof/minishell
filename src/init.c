@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:01:29 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/13 22:34:18 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 17:54:58 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static t_data	init_vars(t_data d, char **av, char *str, char *tmp)
 	return (d);
 }
 
-t_cmd	*init_cmd(char *input, char **env)
+t_cmd	*init_cmd(char *input, t_data *d)
 {
 	char	**input_btw_pipe;
 	t_cmd	*c;
@@ -56,7 +56,7 @@ t_cmd	*init_cmd(char *input, char **env)
 	}
 	while (input_btw_pipe[i])
 	{
-		c = create_cmdlist(input_btw_pipe[i], c, env);
+		c = create_cmdlist(input_btw_pipe[i], c, d);
 		if (!c)
 		{
 			ft_freetab(input_btw_pipe);
