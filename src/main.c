@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 18:03:08 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 18:57:33 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,33 @@ int	is_only_space(char *s)
 	return (1);
 }
 
+static int	have_unclosed_pipe(char *input)
+{
+	int	i;
+
+	i = ft_strlen(input);
+	while (i >= 0)
+	{
+		if (input[i] == '|')
+			return (1);
+		else if (input[i] != ' ')
+			return (0);
+		i--;
+	}
+	return (1);
+}
+
+void	read_until_pipe(char **input)
+{
+	char *new_line;
+
+	while (have_unclosed_pipe(*input))
+	{
+		new_line = readline("> ");
+		*input = ft_strjoin(*input, new_line);
+		free(new_line);
+	}
+}
 /*
 vérifie que l'input à bien été lu et qu'il contient bien une commande
 enregistre dans l'historique si la commande est correct
@@ -46,6 +73,8 @@ static	int	is_correct_input(char *input)
 		ft_putstr_fd("exit\n", 2);
 		exit(0);
 	}
+	if (have_unclosed_pipe(input))
+		read_until_pipe(&input);
 	if (is_only_space(input) || input[0] == '\0')
 		return (0);
 	add_history(input);
@@ -128,6 +157,7 @@ int	main(int ac, char **av, char **envp)
 			}
 			free_cmd(c);
 		}
-		free(d.input);
+		if (d.input)
+			free(d.input);
 	}
 }
