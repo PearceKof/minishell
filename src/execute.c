@@ -6,12 +6,11 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 18:39:37 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 18:41:15 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <errno.h>
 
 extern int	g_status;
 
@@ -85,7 +84,6 @@ static int	is_minishell(char *c, char *mini)
 		return (0);
 	while (j)
 	{
-		ft_fprintf(2, "DEBUG %c %c\n", c[i], mini[j]);
 		if (c[i] != mini[j])
 			return (0);
 		i--;
