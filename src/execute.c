@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/14 19:53:07 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 21:26:53 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void	execute_cmd(char **env, char **cmd)
 	char	*cmdpath;
 
 	cmdpath = ft_getpaths(env, cmd[0]);
+	ft_fprintf(2, "%s\n", cmdpath);
 	if (!cmdpath)
 		exit(127);
 	if (execve(cmdpath, cmd, env) == -1)

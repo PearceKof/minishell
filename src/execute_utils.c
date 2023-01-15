@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 16:10:42 by ctechy            #+#    #+#             */
-/*   Updated: 2023/01/14 19:05:52 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/14 21:34:45 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ char	*ft_getpaths(char **env, char *cmd)
 		return (NULL);
 	if (ft_strnstr(cmd, "/", ft_strlen(cmd)))
 	{
+		ft_fprintf(2, "TEST\n");
 		if (access(cmd, X_OK))
 			return (NULL);
 		ptr = ft_strdup(cmd);
