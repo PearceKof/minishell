@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 17:59:08 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 18:03:08 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void prompt(t_data *d)
 	char *prompt;
 	char *pwd;
 
-	pwd = ft_getenv("PWD", d->env, 3);
+	pwd = getcwd(NULL, 0);
 	if (pwd)
 	{
 		prompt = ft_strjoin(pwd, "=> ");
@@ -103,7 +103,7 @@ void prompt(t_data *d)
 		free(pwd);
 	}
 	else
-		d->input = readline(prompt);
+		d->input = readline("=> ");
 }
 
 int	main(int ac, char **av, char **envp)
