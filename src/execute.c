@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 14:33:48 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 16:56:42 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,11 @@
 
 extern int	g_status;
 
-static void	execute_cmd(char **env, char **cmd)
+static void	execute_cmd(char **env, t_cmd *c)
 {
-	char	*cmdpath;
-
-	cmdpath = ft_getpaths(env, cmd[0]);
-	ft_fprintf(2, "%s\n", cmdpath);
-	if (!cmdpath)
+	if (!c->path)
 		exit(127);
-	if (execve(cmdpath, cmd, env) == -1)
+	if (execve(c->path, c->full_cmd, env) == -1)
 		exit(126);
 }
 
@@ -63,7 +59,7 @@ static void	dup_pipe_and_exec(t_cmd *c, t_data *d, int *pipe)
 	}
 	if (is_builtin(c))
 		exe_child_builtin(c, d);
-	execute_cmd(d->env, c->full_cmd);
+	execute_cmd(d->env, c);
 }
 
 static int	execute_fork(t_cmd *c, t_data *d, int *pipe)

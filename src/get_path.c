@@ -1,18 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_utils.c                                    :+:      :+:    :+:   */
+/*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 16:10:42 by ctechy            #+#    #+#             */
-/*   Updated: 2023/01/14 21:34:45 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 17:06:00 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern int	g_status;
+
+char *relative_path(char **env, char *cmd)
+{
+	char	*tmp;
+	char	*path;
+	char	*pwd;
+
+	pwd = ft_getenv("PWD", env, 3);
+	tmp = ft_strjoin(pwd, "/");
+	free(pwd);
+	path = ft_strjoin(tmp, cmd);
+	free(tmp);
+	return (path);
+}
 
 char	*checkpaths(char **env_paths, char *cmd)
 {
@@ -45,14 +59,13 @@ char	*ft_getpaths(char **env, char *cmd)
 
 	if (*cmd == '\0')
 		return (NULL);
-	if (ft_strnstr(cmd, "/", ft_strlen(cmd)))
+	if (ft_strnstr(cmd, "/", ft_strlen(cmd)) && cmd[0] == '/')
 	{
-		ft_fprintf(2, "TEST\n");
-		if (access(cmd, X_OK))
-			return (NULL);
 		ptr = ft_strdup(cmd);
 		return (ptr);
 	}
+	else if (ft_strnstr(cmd, "/", ft_strlen(cmd)))
+		return (relative_path(env, cmd));
 	ptr = ft_getenv("PATH", env, 4);
 	env_paths = ft_split(ptr, ':');
 	free(ptr);

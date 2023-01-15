@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 17:40:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/14 21:03:18 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 15:55:02 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,13 +107,13 @@ t_cmd	*redirection(t_cmd *c, t_cmd *last, char *s, char **env)
 		{
 			if ((s[i] == '<' || s[i] == '>') && s[i + 1] != s[i])
 				last = open_attempt(env, s, &i, last);
-			last = heredoc_attempt(env, s, &i, last);
-			last = open_attempt_append(s, &i, last);
-			if (g_status == 130)
+			else if (s[i] == '<' && s[i + 1] == s[i])
 			{
-				free_cmd(c);
-				return (NULL);
+				last = heredoc_attempt(env, s, &i, last);
+				if (g_status == 130)
+					return (free_cmd(c));
 			}
+			last = open_attempt_append(s, &i, last);
 		}
 		i++;
 	}

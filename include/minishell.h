@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 15:14:45 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 16:51:11 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <signal.h>
 # include <sys/wait.h>
 # include <stdlib.h>
-
+# include <dirent.h>
 # define SPE_CHAR " $\\|#=[]!><,;{}()*?~&+-/\"'°:¨"
 
 enum	e_error
@@ -67,6 +67,7 @@ typedef struct s_cmd
 	int				out;
 	pid_t			pid;
 	char			**full_cmd;
+	char			*path;
 	struct s_cmd	*prev;
 	struct s_cmd	*next;
 }	t_cmd;

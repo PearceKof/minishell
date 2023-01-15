@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/14 20:53:14 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 15:51:28 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static	int	is_correct_input(char *input)
 affiche les infos de la commande c en argumant
 Juste pour debugger
 */
-/*
+
 void	printcmd(t_cmd *c)
 {
 	int	i;
@@ -86,7 +86,7 @@ void	printcmd(t_cmd *c)
 		c = c->next;
 	}
 }
-*/
+
 int	main(int ac, char **av, char **envp)
 {
 	t_data	d;
@@ -104,7 +104,7 @@ int	main(int ac, char **av, char **envp)
 			c = init_cmd(d.input, d.env);
 			if (c)
 			{
-				//printcmd(c);
+				printcmd(c);
 				execute(c, &d);
 			}
 			free_cmd(c);

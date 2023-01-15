@@ -21,6 +21,8 @@ void	*free_cmd(t_cmd *c)
 	{
 		next = c->next;
 		ft_freetab(c->full_cmd);
+		if (c->path)
+			free(c->path);
 		free(c);
 		free_cmd(next);
 	}
