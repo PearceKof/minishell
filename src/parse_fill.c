@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 13:58:40 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/14 20:32:33 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 17:42:20 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ char	*join_home(char *tab, int *i, int *j, char **env)
 	k = 0;
 	while (home_value[k])
 		tab = cpy_char(tab, i, home_value, &k);
+	free(home_value);
 	return (tab);
 }
 

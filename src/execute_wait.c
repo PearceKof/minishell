@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 17:03:37 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 17:08:14 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 17:15:08 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	print_error(int status, pid_t pid, t_cmd *first)
 	else if (status == 126 && ft_strchr(cmd_pid, '/'))
 	{
 		fd = open(first->path , __O_DIRECTORY);
-		ft_fprintf(2, "fd %d\n", fd);
 		if (fd != -1)
 		{
 			close(fd);

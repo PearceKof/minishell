@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 15:51:28 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 17:38:56 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,23 @@ void	printcmd(t_cmd *c)
 	}
 }
 
+void prompt(t_data *d)
+{
+	char *prompt;
+	char *pwd;
+
+	pwd = ft_getenv("PWD", d->env, 3);
+	if (pwd)
+	{
+		prompt = ft_strjoin(pwd, "=> ");
+		if (!prompt)
+			malloc_error();
+		d->input = readline(prompt);
+		free(prompt);
+		free(pwd);
+	}
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	t_data	d;
@@ -98,7 +115,7 @@ int	main(int ac, char **av, char **envp)
 	{
 		signal(SIGINT, sigint_handler);
 		signal(SIGQUIT, SIG_IGN);
-		d.input = readline("=>");
+		prompt(&d);
 		if (is_correct_input(d.input))
 		{
 			c = init_cmd(d.input, d.env);
