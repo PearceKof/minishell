@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:36:15 by root              #+#    #+#             */
-/*   Updated: 2023/01/14 16:09:57 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 15:14:21 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,10 @@ static int	check_sign(char *sign)
 	return (i);
 }
 
-static int	exit_check_num(char **full_cmd)
+static int	exit_check_is_all_num(char **full_cmd)
 {
 	int	i;
-	int	ret;
 
-	ret = 0;
 	i = check_sign(full_cmd[1]);
 	while (full_cmd[1][i])
 	{
@@ -37,9 +35,6 @@ static int	exit_check_num(char **full_cmd)
 			return (0);
 		i++;
 	}
-	ret = ft_atol(full_cmd[1], ret);
-	if (ret == 1)
-		return (0);
 	return (1);
 }
 
@@ -53,7 +48,7 @@ int	ft_exit(char **full_cmd, t_cmd *c, t_data *d)
 		free_env(d);
 		exit(g_status);
 	}
-	if (!exit_check_num(full_cmd))
+	if (!exit_check_is_all_num(full_cmd))
 	{
 		error(NUMARGS, 1, "exit", NULL);
 		exit(2);
@@ -61,10 +56,7 @@ int	ft_exit(char **full_cmd, t_cmd *c, t_data *d)
 	if (full_cmd[2])
 		return (error(TOOARGS, 1, "exit", NULL));
 	nbr = (unsigned char)ft_atoi(full_cmd[1]);
-	if (exit_check_num(full_cmd))
-	{
-		g_status = nbr;
-		exit(g_status);
-	}
+	g_status = nbr;
+	exit(g_status);
 	return (1);
 }
