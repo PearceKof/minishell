@@ -12,7 +12,21 @@
 
 #include "minishell.h"
 
-int	ft_check_cmd(t_cmd *c)
+static int	ft_check_alnum(t_cmd *c)
+{
+	int		i;
+	char	*str;
+
+	i = 0;
+	str = c->full_cmd[1];
+	while (str[i] != '=' && ft_isalnum(str[i]))
+		i++;
+	if (str[i] == '=' || str[i] == '\0')
+		return (1);
+	return (0);
+}
+
+static int	ft_check_cmd(t_cmd *c)
 {
 	int	i;
 	int	j;
@@ -32,7 +46,7 @@ int	ft_check_cmd(t_cmd *c)
 	return (0);
 }
 
-int	ft_check_nb(t_cmd *c)
+static int	ft_check_nb(t_cmd *c)
 {
 	int	check;
 	int	i;
@@ -65,7 +79,7 @@ int	ft_checker(t_cmd *c)
 	int	i;
 
 	i = 1;
-	if (!ft_check_nb(c))
+	if (!ft_check_nb(c) || !ft_check_alnum(c))
 	{
 		error(INVID, 1, c->full_cmd[i], NULL);
 		return (1);
