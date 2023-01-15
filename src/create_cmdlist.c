@@ -69,7 +69,7 @@ static t_cmd	*fill_cmd(char **input, t_cmd *first, t_data *d)
 			i++;
 		d->env = set_env_var("_", ptr->full_cmd[i], d, 1);
 	}
-	ft_fprintf(2, "PATH= |%s|\n", ptr->path);
+	//ft_fprintf(2, "PATH= |%s|\n", ptr->path);
 	return (first);
 }
 

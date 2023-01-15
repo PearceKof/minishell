@@ -41,6 +41,7 @@ static void	kill_all(t_cmd *c)
 void	print_error(int status, pid_t pid, t_cmd *first)
 {
 	int		fd;
+	int		fd2;
 	char	*cmd_pid;
 
 	cmd_pid = find_same_pid(pid, first);
@@ -49,13 +50,16 @@ void	print_error(int status, pid_t pid, t_cmd *first)
 	else if (status == 126 && ft_strchr(cmd_pid, '/'))
 	{
 		fd = open(first->path , __O_DIRECTORY);
+		fd2 = access(first->path, F_OK);
 		if (fd != -1)
 		{
 			close(fd);
 			error(ISDIR, 126, cmd_pid, NULL);
 		}
-		else
+		else if (fd2 == -1)
 			error(NDIR, 127, cmd_pid, NULL);
+		else
+			error(NPERM, 126, cmd_pid, NULL);
 	}
 }
 

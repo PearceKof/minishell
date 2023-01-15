@@ -90,7 +90,7 @@ static	int	is_correct_input(char *input)
 {
 	if (!input)
 	{
-		ft_putstr_fd("exit\n", 2);
+		//ft_putstr_fd("exit\n", 2);
 		exit(0);
 	}
 	if (is_only_space(input) || input[0] == '\0')
@@ -172,7 +172,7 @@ int	main(int ac, char **av, char **envp)
 			c = init_cmd(d.input, &d);
 			if (c)
 			{
-				printcmd(c);
+				//printcmd(c);
 				execute(c, &d);
 			}
 			free_cmd(c);

@@ -86,5 +86,6 @@ int	ft_unset(t_cmd *c, t_data *d)
 			env_dup(d, c, index);
 		index++;
 	}
+	printf("%s", d->env[0]);
 	return (1);
 }
