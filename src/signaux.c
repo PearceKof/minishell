@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 14:23:57 by root              #+#    #+#             */
-/*   Updated: 2023/01/15 20:36:47 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 21:19:16 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,10 @@ void	sigint_handler(int sig)
 			rl_redisplay();
 		}
 		g_status = 130;
+	}
+	if (sig == SIGTERM)
+	{
+		ft_fprintf(2, "DEBUG\n");
+		exit(0);
 	}
 }

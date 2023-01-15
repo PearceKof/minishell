@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:38:37 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 14:38:35 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 22:28:25 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,28 @@ void	cd_root(t_cmd *c, t_data *d)
 	new_pwd(d);
 }
 
-void	cd_error(t_cmd *c)
+static int	cd_minus(t_data *d, int child_proc)
+{
+	char	*ptr;
+	int		ret;
+
+	ret = 0;
+	ptr = ft_getenv("OLDPWD", d->env, 6);
+	if (ptr)
+	{
+		if (!child_proc && !chdir(ptr))
+		{
+			ret = 1;
+			new_pwd(d);
+		}
+		else
+			printf("%s\n", ptr);
+		free(ptr);
+	}
+	return (ret);
+}
+
+void	cd_error(t_cmd *c, t_data *d)
 {
 	if (!c->full_cmd[1])
 		exit(0);
@@ -42,6 +63,11 @@ void	cd_error(t_cmd *c)
 	{
 		error(TOOARGS, 1, "cd", NULL);
 		exit (1);
+	}
+	if (c->full_cmd[1][0] == '-')
+	{
+		if (cd_minus(d, 1))
+			exit (0);
 	}
 	if (chdir(c->full_cmd[1]))
 	{
@@ -53,13 +79,18 @@ void	cd_error(t_cmd *c)
 
 int	ft_cd(t_cmd *c, t_data *d)
 {
-	if (!c->full_cmd[1] || c->full_cmd[1][0] == '~')
+	if (!c->full_cmd[1])
 	{
 		cd_root(c, d);
 		return (1);
 	}
 	else if (c->full_cmd[2])
 		return (0);
+	if (c->full_cmd[1][0] == '-')
+	{
+		if (cd_minus(d, 0))
+			return (1);
+	}
 	if (chdir(c->full_cmd[1]))
 		return (0);
 	new_pwd(d);

@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 20:11:19 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 22:21:15 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_cmd	*open_attempt_append(char *s, int *i, t_cmd *last);
 	builtins.c + built_*.c
 */
 void	cd_root(t_cmd *c, t_data *d);
-void	cd_error(t_cmd *c);
+void	cd_error(t_cmd *c, t_data *d);
 int		ft_cd(t_cmd *c, t_data *d);
 void	ft_echo(char **full_cmd);
 void	ft_env(char **env);
@@ -142,7 +142,7 @@ void	*free_env(t_data *d);
 /*
 	ft_read.c
 */
-char	*ft_read(void);
+// char	*ft_read(void);
 /*
 	heredoc_utils.c
 */

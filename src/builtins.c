@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 14:56:06 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 14:37:42 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 22:08:58 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	exe_child_builtin(t_cmd *c, t_data *d)
 	if (ft_strnstr("echo", c->full_cmd[0], size) && size == 4)
 		ft_echo(c->full_cmd);
 	else if (ft_strnstr(c->full_cmd[0], "cd", size) && size == 2)
-		cd_error(c);
+		cd_error(c, d);
 	else if (ft_strnstr(c->full_cmd[0], "export", size)
 		&& size == 6 && !c->full_cmd[1])
 		export_err(d->env);

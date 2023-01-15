@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:33:08 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 17:50:20 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 22:33:53 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static t_cmd	*add_cmd(t_cmd *first)
 
 static t_cmd	*fill_cmd(char **input, t_cmd *first, t_data *d)
 {
-	int		size;
+	int		i;
 	t_cmd	*ptr;
 
 	ptr = get_last_cmd(first);
@@ -64,8 +64,10 @@ static t_cmd	*fill_cmd(char **input, t_cmd *first, t_data *d)
 		d->env = set_env_var("_", ptr->path, d, 1);
 	else
 	{
-		size = ft_strlen(ptr->full_cmd[0]);
-		d->env = set_env_var(ptr->full_cmd[0], ptr->path, d, size);
+		i = 0;
+		while (ptr->full_cmd[i] && ptr->full_cmd[i + 1])
+			i++;
+		d->env = set_env_var("_", ptr->full_cmd[i], d, 1);
 	}
 	ft_fprintf(2, "PATH= |%s|\n", ptr->path);
 	return (first);
