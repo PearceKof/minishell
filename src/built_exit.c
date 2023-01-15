@@ -27,7 +27,7 @@ static int	check_sign(char *sign)
 static int	exit_check_num(char **full_cmd)
 {
 	int	i;
-	int ret;
+	int	ret;
 
 	ret = 0;
 	i = check_sign(full_cmd[1]);

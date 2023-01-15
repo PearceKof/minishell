@@ -15,29 +15,28 @@
 int	ft_check_cmd(t_cmd *c)
 {
 	int	i;
-	int j;
+	int	j;
 
 	i = 0;
 	while (c->full_cmd[i])
 	{
 		j = 0;
 		while (c->full_cmd[i][j])
-		{ 
+		{
 			if (c->full_cmd[i][j] == '=' || !ft_isalnum(c->full_cmd[i][j]))
 				return (1);
 			j++;
 		}
 		i++;
 	}
-	//printf("%c", c->full_cmd[i][j]);
 	return (0);
 }
 
 int	ft_check_nb(t_cmd *c)
 {
-	int check;
+	int	check;
 	int	i;
-	int j;
+	int	j;
 
 	i = 0;
 	if (ft_isdigit(c->full_cmd[0][0]))
@@ -47,7 +46,7 @@ int	ft_check_nb(t_cmd *c)
 	{
 		j = 0;
 		while (c->full_cmd[i][j] && c->full_cmd[i][j] != '=')
-		{ 
+		{
 			if (ft_isdigit(c->full_cmd[i][j]))
 				check = 1;
 			else
@@ -63,7 +62,7 @@ int	ft_check_nb(t_cmd *c)
 
 int	ft_checker(t_cmd *c)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (!ft_check_nb(c))

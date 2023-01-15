@@ -82,7 +82,7 @@ char	*get_home(char **env)
 
 int	is_home_char(const char *s, int i)
 {
-	int is_home_char;
+	int	is_home_char;
 
 	is_home_char = 0;
 	if (s[i] == '~')
@@ -97,5 +97,4 @@ int	is_home_char(const char *s, int i)
 			is_home_char = 0;
 	}
 	return (is_home_char);
-	
 }

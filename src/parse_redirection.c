@@ -108,7 +108,7 @@ t_cmd	*redirection(t_cmd *c, t_cmd *last, char *s, char **env)
 			if ((s[i] == '<' || s[i] == '>') && s[i + 1] != s[i])
 				last = open_attempt(env, s, &i, last);
 			last = heredoc_attempt(env, s, &i, last);
-			last = open_attempt_append(s, &i, last);	
+			last = open_attempt_append(s, &i, last);
 			if (g_status == 130)
 			{
 				free_cmd(c);

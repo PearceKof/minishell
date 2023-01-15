@@ -38,7 +38,7 @@ t_cmd	*open_attempt_append(char *s, int *i, t_cmd *last)
 		last = open_file_append(last, delimiter);
 		*i += nxt;
 		replace_with_space(&s, red_pos, i);
-		free(delimiter);	
+		free(delimiter);
 	}
 	return (last);
 }

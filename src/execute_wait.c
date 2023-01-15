@@ -44,7 +44,7 @@ void	print_error(int status, pid_t pid, t_cmd *first)
 
 	cmd_pid = find_same_pid(pid, first);
 	if (status == 127)
-			error(NCMD, 127, cmd_pid, NULL);
+		error(NCMD, 127, cmd_pid, NULL);
 	else if (status == 126 && ft_strchr(cmd_pid, '/') && !access(cmd_pid, F_OK))
 		error(ISDIR, 126, find_same_pid(pid, first), NULL);
 	else if (status == 126)
