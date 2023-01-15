@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 14:56:06 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/14 16:43:46 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 14:37:42 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int	g_status;
 
-static int	export_err(char **env)
+static void	export_err(char **env)
 {
 	int	i;
 
@@ -24,7 +24,7 @@ static int	export_err(char **env)
 		ft_printf("declare -x %s\n", env[i]);
 		i++;
 	}
-	return (1);
+	exit(0);
 }
 
 int	is_builtin(t_cmd *cmd)
@@ -79,24 +79,21 @@ il va l'éxecuter et return 1
 sinon, return 0
 */
 
-int	exe_child_builtin(t_cmd *c, t_data *d)
+void	exe_child_builtin(t_cmd *c, t_data *d)
 {
 	int	size;
 
 	size = ft_strlen(c->full_cmd[0]);
 	if (ft_strnstr("echo", c->full_cmd[0], size) && size == 4)
-	{
 		ft_echo(c->full_cmd);
-		return (1);
-	}
 	else if (ft_strnstr(c->full_cmd[0], "cd", size) && size == 2)
-		return (cd_error(c));
+		cd_error(c);
 	else if (ft_strnstr(c->full_cmd[0], "export", size)
 		&& size == 6 && !c->full_cmd[1])
-		return (export_err(d->env));
+		export_err(d->env);
 	else if (ft_strnstr(c->full_cmd[0], "pwd", size) && size == 3)
-		return (ft_pwd());
+		ft_pwd();
 	else if (ft_strnstr(c->full_cmd[0], "env", size) && size == 3)
-		return (ft_env(d->env));
-	return (0);
+		ft_env(d->env);
+	exit(0);
 }

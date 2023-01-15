@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:37:16 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/14 17:41:43 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 14:34:37 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,5 @@ void	ft_echo(char **full_cmd)
 	}
 	if (!flag)
 		write(1, "\n", 1);
+	exit (0);
 }

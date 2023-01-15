@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/14 21:26:53 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 14:33:48 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,7 @@ static void	dup_pipe_and_exec(t_cmd *c, t_data *d, int *pipe)
 			exit(1);
 	}
 	if (is_builtin(c))
-	{
 		exe_child_builtin(c, d);
-		exit(0);
-	}
 	execute_cmd(d->env, c->full_cmd);
 }
 

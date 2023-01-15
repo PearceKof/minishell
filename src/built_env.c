@@ -6,13 +6,13 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 21:03:41 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/14 17:18:04 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 14:37:16 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_env(char **env)
+void	ft_env(char **env)
 {
 	int	i;
 
@@ -22,5 +22,5 @@ int	ft_env(char **env)
 		printf("%s\n", env[i]);
 		i++;
 	}
-	return (1);
+	exit(0);
 }

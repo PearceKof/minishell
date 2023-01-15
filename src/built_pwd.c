@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 21:05:41 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/14 17:18:15 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 14:36:39 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ void	new_pwd(t_data *d)
 	free(new_pwd);
 }
 
-int	ft_pwd(void)
+void	ft_pwd(void)
 {
 	char	str[PATH_MAX];
 
 	if ((getcwd(str, sizeof(str)) != NULL))
 		printf("%s\n", str);
-	return (1);
+	exit(0);
 }

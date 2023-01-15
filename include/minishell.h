@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 13:42:14 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 14:39:52 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,19 +80,19 @@ t_cmd	*open_attempt_append(char *s, int *i, t_cmd *last);
 	builtins.c + built_*.c
 */
 void	cd_root(t_cmd *c, t_data *d);
-int		cd_error(t_cmd *c);
+void	cd_error(t_cmd *c);
 int		ft_cd(t_cmd *c, t_data *d);
 void	ft_echo(char **full_cmd);
-int		ft_env(char **env);
+void	ft_env(char **env);
 int		ft_exit(char **full_cmd, t_cmd *c, t_data *d);
 int		ft_export(t_cmd *c, t_data *d);
 int		ft_unset(t_cmd *c, t_data *d);
 void	new_pwd(t_data *d);
-int		ft_pwd(void);
+void	ft_pwd(void);
 int		ft_unset(t_cmd *c, t_data *d);
 int		is_builtin(t_cmd *cmd);
 int		exe_parent_builtin(t_cmd *c, t_data *d);
-int		exe_child_builtin(t_cmd *cmd, t_data *d);
+void	exe_child_builtin(t_cmd *cmd, t_data *d);
 void	export_var(char *cmd, int j, t_data *d);
 /*
 	create_cmdlist.c
