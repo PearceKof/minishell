@@ -59,25 +59,26 @@ int	ft_export(t_cmd *c, t_data *d)
 {
 	int		i;
 	int		j;
-	int		ret;
 
 	i = 1;
-	ret = ft_checker(c);
-	if (ret != 2)
-		return (ret);
 	while (c->full_cmd[i])
 	{
-		j = 0;
-		if (c->full_cmd[i][j] == '=' || !ft_isalnum(c->full_cmd[i][j]))
-		{
+		if (c->full_cmd[i][0] && (c->full_cmd[i][0] == '=' || ft_isdigit(c->full_cmd[i][0])))
 			error(INVID, 1, c->full_cmd[i], NULL);
-			i++;
-			continue ;
+		else
+		{
+			j = 0;
+			while (c->full_cmd[i][j] && c->full_cmd[i][j] != '=')
+			{
+				if (!ft_isalnum(c->full_cmd[i][j]))
+					break;
+				j++;
+			}
+			if ((c->full_cmd[i][j] == '=' && j != 0))
+				export_var(c->full_cmd[i] , j, d);
+			else if (c->full_cmd[i][j] != ' ' && c->full_cmd[i][j] != '\0')
+				error(INVID, 1, c->full_cmd[i], NULL);
 		}
-		while (c->full_cmd[i][j] && c->full_cmd[i][j] != '=')
-			j++;
-		if (ft_extra_export(c, d, &i, &j))
-			return (1);
 		i++;
 	}
 	return (1);

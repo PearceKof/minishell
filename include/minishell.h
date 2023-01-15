@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/14 21:14:03 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 13:42:14 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,6 @@ int		is_builtin(t_cmd *cmd);
 int		exe_parent_builtin(t_cmd *c, t_data *d);
 int		exe_child_builtin(t_cmd *cmd, t_data *d);
 void	export_var(char *cmd, int j, t_data *d);
-/*
-	builtins_export_utils.c
-*/
-int		ft_checker(t_cmd *c);
-int		ft_extra_export(t_cmd *c, t_data *d, int *i, int *j);
 /*
 	create_cmdlist.c
 */
