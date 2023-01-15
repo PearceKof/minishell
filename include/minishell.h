@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 17:55:11 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 20:11:19 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,10 @@ int		execute(t_cmd *c, t_data *d);
 void	*free_cmd(t_cmd *c);
 void	*free_env(t_data *d);
 /*
+	ft_read.c
+*/
+char	*ft_read(void);
+/*
 	heredoc_utils.c
 */
 int		get_line_size(const char *s, char **env);
@@ -202,6 +206,7 @@ char	*join_varvalue(char *tab, int *k, char *varvalue);
 	signaux.c
 */
 void	sigint_in_heredoc_handler(int sig);
+void	sigint_unclosed_pipe_handler(int sig);
 void	sigint_handler(int sig);
 void	sigint_in_fork_handler(int sig);
 /*
