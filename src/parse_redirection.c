@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 17:40:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 23:35:36 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 23:52:30 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	replace_with_space(char **s, int red_pos, int *i)
 	{
 		(*s)[*i] = ' ';
 		*i -= 1;
-		// (*s)[*i] = ' ';
 	}
 }
 
@@ -108,7 +107,6 @@ t_cmd	*redirection(t_cmd *c, t_cmd *last, char *s, char **env)
 		del = new_delimiter(del, s[i]);
 		if (del == ' ')
 		{
-			ft_fprintf(2, "|%s|\n", &s[i]);
 			if (s[i] && (s[i] == '<' || s[i] == '>') && s[i + 1] != s[i])
 				last = open_attempt(env, s, &i, last);
 			else if (s[i] && !is_only_space(s) && s[i] == '<' && s[i + 1] == s[i])
@@ -116,7 +114,6 @@ t_cmd	*redirection(t_cmd *c, t_cmd *last, char *s, char **env)
 				last = heredoc_attempt(env, s, &i, last);
 				if (g_status == 130)
 					return (free_cmd(c));
-				ft_fprintf(2, "|%s|\n", s);
 			}
 			last = open_attempt_append(s, &i, last);
 		}
