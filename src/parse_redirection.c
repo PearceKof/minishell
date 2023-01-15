@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 17:40:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 18:46:26 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 23:35:36 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	replace_with_space(char **s, int red_pos, int *i)
 	{
 		(*s)[*i] = ' ';
 		*i -= 1;
+		// (*s)[*i] = ' ';
 	}
 }
 
@@ -48,6 +49,7 @@ char	*get_file_name(char *s, int i, int size, char **env)
 			file_name = cpy_char(file_name, &j, s, &i);
 	}
 	file_name[j] = '\0';
+	ft_fprintf(2, "size = %d |%s|\n", size, file_name);
 	return (file_name);
 }
 
@@ -55,7 +57,7 @@ static t_cmd	*open_file(t_cmd *c, char *file_name, char red_type)
 {
 	if (red_type == '<' && c->in != -1)
 	{
-		if (c->in != 0)
+		if (c->in != 0 && c->in != -1)
 			close(c->in);
 		c->in = open(file_name, O_RDONLY);
 		if (c->in == -1)
@@ -63,7 +65,7 @@ static t_cmd	*open_file(t_cmd *c, char *file_name, char red_type)
 	}
 	else if (red_type == '>' && c->out != -1)
 	{
-		if (c->out != 1)
+		if (c->out != 1 && c->out != -1)
 			close(c->out);
 		c->out = open(file_name, O_WRONLY | O_TRUNC | O_CREAT, 00777);
 		if (c->out == -1)
@@ -86,7 +88,8 @@ static t_cmd	*open_attempt(char **env, char *s, int *i, t_cmd *last)
 	file_name = get_file_name(s, *i, file_name_size(s, *i, env), env);
 	*i += nxt;
 	replace_with_space(&s, red_pos, i);
-	last = open_file(last, file_name, red_type);
+	if (file_name[0] != '\0')
+		last = open_file(last, file_name, red_type);
 	if (file_name)
 		free(file_name);
 	return (last);
@@ -100,18 +103,20 @@ t_cmd	*redirection(t_cmd *c, t_cmd *last, char *s, char **env)
 	i = 0;
 	del = ' ';
 	last = get_last_cmd(c);
-	while (s && s[i])
+	while (s && s[i] && !is_only_space(s))
 	{
 		del = new_delimiter(del, s[i]);
 		if (del == ' ')
 		{
-			if ((s[i] == '<' || s[i] == '>') && s[i + 1] != s[i])
+			ft_fprintf(2, "|%s|\n", &s[i]);
+			if (s[i] && (s[i] == '<' || s[i] == '>') && s[i + 1] != s[i])
 				last = open_attempt(env, s, &i, last);
-			else if (s[i] == '<' && s[i + 1] == s[i])
+			else if (s[i] && !is_only_space(s) && s[i] == '<' && s[i + 1] == s[i])
 			{
 				last = heredoc_attempt(env, s, &i, last);
 				if (g_status == 130)
 					return (free_cmd(c));
+				ft_fprintf(2, "|%s|\n", s);
 			}
 			last = open_attempt_append(s, &i, last);
 		}

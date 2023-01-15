@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 21:26:28 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 18:48:06 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/15 23:02:22 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	check_nxt_syntax(char *s, int i)
 	if (ft_strchr("<>", s[i]) && s[i + 1] == s[i] && s[i + 2] == s[i])
 		return (0);
 	pass_while_char(s, &i, " ");
-	if (ft_strchr("<>|#=[]!;{}()?~&", s[i]))
+	if (ft_strchr("|#=[]!;{}()?~&", s[i]))
 	{
 		ft_fprintf(2, "minishell: syntax error near unexpected token `%c'\n",
 			s[i]);
