@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 19:04:49 by ctechy            #+#    #+#             */
-/*   Updated: 2023/01/16 18:04:46 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/16 18:33:05 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ t_cmd	*open_attempt_append(char *s, int *i, t_cmd *last)
 	char	*delimiter;
 	int		nxt;
 
-	if (!is_only_space(s) && s[*i] == '>' && s[*i + 1] == s[*i])
+	if (!is_only_space(s) && s[*i] == '>' && s[*i + 1] == s[*i]
+		&& last->in != -1 && last->out != -1)
 	{
 		red_pos = *i;
 		*i += 1;

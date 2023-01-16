@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 17:40:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/16 18:13:24 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/16 19:53:28 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ extern int	g_status;
 void	replace_with_space(char **s, int red_pos, int *i)
 {
 	*i -= 1;
-	while (*i >= red_pos)
+	while (*i >= red_pos && *i > 0)
 	{
 		(*s)[*i] = ' ';
 		*i -= 1;
@@ -76,10 +76,13 @@ static t_cmd	*open_file(t_cmd *c, char *file_name, char red_type)
 static t_cmd	*open_attempt(char **env, char *s, int *i, t_cmd *last)
 {
 	int		red_pos;
-	int		red_type;
+	char	red_type;
 	char	*file_name;
 	int		nxt;
 
+	if (*i > 0)
+		if (s[*i - 1] == s[*i])
+			return (last);
 	red_type = s[*i];
 	red_pos = *i;
 	pass_while_char(s, i, " ");
@@ -107,10 +110,10 @@ t_cmd	*redirection(t_cmd *c, t_cmd *last, char *s, char **env)
 		del = new_delimiter(del, s[i]);
 		if (del == ' ')
 		{
-			if (s[i] && (s[i] == '<' || s[i] == '>')
-				&& s[i + 1] != s[i] && i && s[i - 1] != s[i])
+			if (s[i] && (s[i] == '<' || s[i] == '>') && s[i + 1] != s[i])
 				last = open_attempt(env, s, &i, last);
-			else if (s[i] && !is_only_space(s) && s[i] == '<' && s[i + 1] == s[i])
+			else if (s[i] && !is_only_space(s) && s[i] == '<' && s[i + 1] == s[i]
+				&& last->in != -1 && last->out != -1)
 			{
 				last = heredoc_attempt(env, s, &i, last);
 				if (g_status == 130)

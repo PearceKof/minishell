@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:59:32 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/16 17:37:48 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/16 18:36:19 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	*error_type(int errorid)
 	ft_strlcpy(error[NL], "syntax error near unexpected token `newline'\n", 50);
 	ft_strlcpy(error[PIPUNCLOS], "Input end with unclosed pipe\n", 50);
 	ft_strlcpy(error[NDIR], ": No such file or directory\n", 50);
-	ft_strlcpy(error[NPERM], ": permission denied\n", 50);
+	ft_strlcpy(error[NPERM], ": Permission denied\n", 50);
 	ft_strlcpy(error[PIPERR], "error creating pipe\n", 50);
 	ft_strlcpy(error[FORKERR], "fork failed\n", 50);
 	ft_strlcpy(error[NCMD], ": command not found\n", 50);
