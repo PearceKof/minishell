@@ -32,7 +32,7 @@ static	int	is_correct_input(char *input)
 {
 	if (!input)
 	{
-		ft_putstr_fd("exit\n", 1);
+		//ft_putstr_fd("exit\n", 1);
 		exit(g_status);
 	}
 	if (is_only_space(input) || input[0] == '\0')
@@ -71,10 +71,10 @@ void	printcmd(t_cmd *c)
 	}
 }
 
-void prompt(t_data *d)
+void	prompt(t_data *d)
 {
-	char *prompt;
-	char *pwd;
+	char	*prompt;
+	char	*pwd;
 
 	pwd = getcwd(NULL, 0);
 	if (pwd)
@@ -107,7 +107,7 @@ int	main(int ac, char **av, char **envp)
 			c = init_cmd(d.input, &d);
 			if (c)
 			{
-				printcmd(c);
+				//printcmd(c);
 				execute(c, &d);
 			}
 			free_cmd(c);

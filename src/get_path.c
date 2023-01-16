@@ -14,7 +14,7 @@
 
 extern int	g_status;
 
-char *relative_path(char *cmd)
+char	*relative_path(char *cmd)
 {
 	char	*tmp;
 	char	*path;
