@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 14:23:57 by root              #+#    #+#             */
-/*   Updated: 2023/01/15 21:19:16 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/16 16:48:59 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,6 @@ void	sigint_in_fork_handler(int sig)
 		g_status = 130;
 	}
 }
-/*
-	check si le signal est le bon et passe à la ligne
-	affiche le prompt à la ligne suivante
-	nettoie la ligne
-	puis réaffiche le prompt
-*/
 
 void	sigint_handler(int sig)
 {
@@ -57,10 +51,5 @@ void	sigint_handler(int sig)
 			rl_redisplay();
 		}
 		g_status = 130;
-	}
-	if (sig == SIGTERM)
-	{
-		ft_fprintf(2, "DEBUG\n");
-		exit(0);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 18:41:15 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/16 16:38:01 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ static int	is_minishell(char *c, char *mini)
 	return (1);
 }
 
-/*On check l'exit avant de fork sinon la fonction exit ne fonctionne pas*/
 int	execute(t_cmd *c, t_data *d)
 {
 	int		piper[2];

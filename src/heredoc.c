@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:35:06 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/14 21:03:34 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/16 16:32:42 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ static char	*parse_heredoc(char *buf, char **env)
 	i = 0;
 	j = 0;
 	new_buf = malloc(sizeof(char) * (get_line_size(buf, env) + 1));
+	if (!new_buf)
+		malloc_error();
 	while (buf[i])
 	{
 		if (buf[i] == '$' && !ft_strchr(" ", buf[i + 1]))

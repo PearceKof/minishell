@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 21:46:07 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/16 17:03:05 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,64 +33,11 @@ int	is_only_space(char *s)
 	return (1);
 }
 
-// static int	have_unclosed_pipe(char *input)
-// {
-// 	char	del;
-// 	int		i;
-
-// 	i = 0;
-// 	while (input[i])
-// 		i++;
-// 	del = ' ';
-// 	while (i > 0)
-// 	{
-// 		i--;
-// 		del = new_delimiter(del, input[i]);
-// 		if (input[i] == '|')
-// 			return (1);
-// 		else if (input[i] != ' ' && del == ' ')
-// 			return (0);
-// 	}
-// 	return (1);
-// }
-
-// char	*read_until_pipe(char *input)
-// {
-// 	int		state;
-// 	char	*tmp;
-// 	char	*new_line;
-
-// 	while (have_unclosed_pipe(input))
-// 	{
-// 		write(1, "> ", 2);
-// 		new_line = ft_read();
-// 		state = g_status;
-// 		if (state == 130 || !new_line)
-// 		{
-// 			if (!new_line)
-// 				exit(0);
-// 			free(input);
-// 			return (NULL);
-// 		}
-// 		tmp = ft_strjoin(input, new_line);
-// 		free(input);
-// 		free(new_line);
-// 		input = ft_strdup(tmp);
-// 		free(tmp);
-// 	}
-// 	return (input);
-// }
-/*
-vérifie que l'input à bien été lu et qu'il contient bien une commande
-enregistre dans l'historique si la commande est correct
-return 1 si l'input est correct
-return 0 si incorrect
-*/
 static	int	is_correct_input(char *input)
 {
 	if (!input)
 	{
-		//ft_putstr_fd("exit\n", 2);
+		ft_putstr_fd("exit\n", 2);
 		exit(0);
 	}
 	if (is_only_space(input) || input[0] == '\0')
@@ -165,8 +112,6 @@ int	main(int ac, char **av, char **envp)
 		signal(SIGINT, sigint_handler);
 		signal(SIGQUIT, SIG_IGN);
 		prompt(&d);
-		// if (d.input && have_unclosed_pipe(d.input))
-		// 	d.input = read_until_pipe(d.input);
 		if (is_correct_input(d.input))
 		{
 			c = init_cmd(d.input, &d);

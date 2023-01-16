@@ -45,7 +45,10 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		j++;
 	str = (char *)malloc((i + j + 1) * sizeof(char));
 	if (!str)
-		return (NULL);
+	{
+		ft_putstr_fd("minishell: malloc failed\nexit\n", 2);
+		exit(EXIT_FAILURE);
+	}
 	str = str_cpy(str, s1, s2);
 	return (str);
 }

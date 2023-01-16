@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 17:40:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 23:52:30 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/16 16:09:41 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ char	*get_file_name(char *s, int i, int size, char **env)
 			file_name = cpy_char(file_name, &j, s, &i);
 	}
 	file_name[j] = '\0';
-	ft_fprintf(2, "size = %d |%s|\n", size, file_name);
 	return (file_name);
 }
 
