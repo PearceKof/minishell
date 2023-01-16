@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:59:32 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/16 20:02:39 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/16 23:21:19 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,15 @@ static char	*error_type(int errorid)
 {
 	static char	error[20][50];
 
-	ft_strlcpy(error[QUOTE], ": Closing quote not found\n", 50);
-	ft_strlcpy(error[ANDEND], "syntax error near unexpected token `&'\n", 50);
-	ft_strlcpy(error[PIPEND], "syntax error near unexpected token `|'\n", 50);
-	ft_strlcpy(error[OUTERR], "syntax error near unexpected token `>'\n", 50);
-	ft_strlcpy(error[INERR], "syntax error near unexpected token `<'\n", 50);
-	ft_strlcpy(error[DSUPERR], "syntax error near unexpected token `>>'\n", 50);
-	ft_strlcpy(error[DINFERR], "syntax error near unexpected token `<<'\n", 50);
+	ft_strlcpy(error[QUOTEUNCLOSED], ": Closing quote not found\n", 50);
 	ft_strlcpy(error[NL], "syntax error near unexpected token `newline'\n", 50);
-	ft_strlcpy(error[PIPUNCLOS], "Input end with unclosed pipe\n", 50);
+	ft_strlcpy(error[PIPEUNCLOSED], "Input end with unclosed pipe\n", 50);
 	ft_strlcpy(error[NDIR], ": No such file or directory\n", 50);
 	ft_strlcpy(error[NPERM], ": Permission denied\n", 50);
 	ft_strlcpy(error[PIPERR], "error creating pipe\n", 50);
 	ft_strlcpy(error[FORKERR], "fork failed\n", 50);
 	ft_strlcpy(error[NCMD], ": command not found\n", 50);
 	ft_strlcpy(error[DUPERR], "dup2 failed\n", 50);
-	// ft_strlcpy(error[OPT], ": invalid option\n", 50);
 	ft_strlcpy(error[INVID], ": not a valid identifier\n", 50);
 	ft_strlcpy(error[HNOSET], ": HOME not set\n", 50);
 	ft_strlcpy(error[TOOARGS], ": too many arguments\n", 50);

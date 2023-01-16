@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 14:56:06 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/16 21:33:28 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/16 23:35:51 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	export_err(char **env)
 	{
 		str = isolate_varname(env[i], -1);
 		ptr = ft_getenv(str, env, ft_strlen(str));
-		ft_printf("declare -x %s=\"%s\"\n", str, ptr);
+		ft_fprintf(1, "declare -x %s=\"%s\"\n", str, ptr);
 		free(str);
 		free(ptr);
 		i++;

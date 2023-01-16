@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 16:56:03 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/13 00:02:41 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:38:54 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ static int	count_pipe(const char *s)
 		while (s[i] != del && s[i] != '\0')
 			del = nxt_del(s, del, '|', &i);
 	}
-	if (del != '|')
-		return (-1);
 	return (count);
 }
 
@@ -81,21 +79,6 @@ static int	size_btw_pipe(const char *s, char del)
 	return (size);
 }
 
-static void	*free_tab_and_ret_null(char **tab, int size)
-{
-	if (tab)
-	{
-		while (size >= 0)
-		{
-			if (tab[size])
-				free(tab[size]);
-			size--;
-		}
-		free(tab);
-	}
-	return (NULL);
-}
-
 char	**parse_pipe(const char *s)
 {
 	char	**tab;
@@ -103,8 +86,6 @@ char	**parse_pipe(const char *s)
 	int		nb_of_pipe;
 
 	nb_of_pipe = count_pipe(s);
-	if (nb_of_pipe == -1)
-		return (NULL);
 	tab = (char **)malloc(sizeof(char *) * (nb_of_pipe + 1));
 	if (!tab)
 		malloc_error();
@@ -112,8 +93,6 @@ char	**parse_pipe(const char *s)
 	while (i < nb_of_pipe)
 	{
 		tab[i] = fill_btw_pipe(&s, size_btw_pipe(s, '|'));
-		if (!tab[i])
-			return (free_tab_and_ret_null(tab, i));
 		i++;
 	}
 	tab[i] = NULL;

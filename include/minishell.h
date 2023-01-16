@@ -6,20 +6,18 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/16 21:42:34 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/16 23:20:16 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "../libft/includes/libft.h"
+# include "../libft/includes/ft_fprintf.h"
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <sys/wait.h>
-# include "../libft/includes/libft.h"
-# include "../libft/includes/gnl.h"
-# include "../libft/includes/ft_printf.h"
-# include "../libft/includes/ft_fprintf.h"
 # include <stdio.h>
 # include <fcntl.h>
 # include <signal.h>
@@ -28,16 +26,9 @@
 enum	e_error
 {
 	PERROR,
-	QUOTE,
-	ANDEND,
-	PIPEND,
-	OUTERR,
-	INERR,
-	DSUPERR,
-	DINFERR,
 	NL,
-	PIPUNCLOS,
-	QOTUNCLOS,
+	QUOTEUNCLOSED,
+	PIPEUNCLOSED,
 	NDIR,
 	NPERM,
 	PIPERR,
@@ -202,7 +193,6 @@ char	*join_varvalue(char *tab, int *k, char *varvalue);
 	signaux.c
 */
 void	sigint_in_heredoc_handler(int sig);
-void	sigint_unclosed_pipe_handler(int sig);
 void	sigint_handler(int sig);
 void	sigint_in_fork_handler(int sig);
 /*
@@ -213,6 +203,6 @@ int		is_only_space(char *s);
 /*
 	utils.c
 */
-pid_t	ft_getpid(void);
-int		ft_atol(const char *str, int ret);
+// pid_t	ft_getpid(void);
+// int		ft_atol(const char *str, int ret);
 #endif

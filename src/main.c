@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/16 17:03:05 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/16 23:22:13 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static	int	is_correct_input(char *input)
 {
 	if (!input)
 	{
-		//ft_putstr_fd("exit\n", 2);
+		ft_putstr_fd("exit\n", 1);
 		exit(0);
 	}
 	if (is_only_space(input) || input[0] == '\0')

@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 18:11:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/16 16:35:09 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/16 22:39:49 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	file_name_size(const char *s, int i, char **env)
 
 	del = ' ';
 	size = 0;
-	while (s[i] && !ft_strchr("<>|;()?&", s[i]))
+	while (s[i] && !ft_strchr("<>|;()?", s[i]))
 	{
 		if (del != new_delimiter(del, s[i]))
 			del = new_delimiter(del, s[i]);

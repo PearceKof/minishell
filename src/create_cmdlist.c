@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:33:08 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 22:33:53 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:37:17 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ static t_cmd	*fill_cmd(char **input, t_cmd *first, t_data *d)
 			i++;
 		d->env = set_env_var("_", ptr->full_cmd[i], d, 1);
 	}
-	//ft_fprintf(2, "PATH= |%s|\n", ptr->path);
 	return (first);
 }
 

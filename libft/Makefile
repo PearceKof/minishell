@@ -19,13 +19,6 @@ INCLUDE 	= ./includes
 FILES 		= ft_atoi.c \
 						ft_bzero.c \
 						ft_calloc.c \
-						ft_fprint_c.c \
-						ft_fprint_di.c \
-						ft_fprint_p.c \
-						ft_fprint_s.c \
-						ft_fprint_u.c \
-						ft_fprint_x.c \
-						ft_fprintf.c \
 						ft_freetab.c \
 						ft_isalnum.c \
 						ft_isalpha.c \
@@ -38,13 +31,6 @@ FILES 		= ft_atoi.c \
 						ft_memcpy.c \
 						ft_memmove.c \
 						ft_memset.c \
-						ft_print_c.c \
-						ft_print_di.c \
-						ft_print_p.c \
-						ft_print_s.c \
-						ft_print_u.c \
-						ft_print_x.c \
-						ft_printf.c \
 						ft_putaddr.c \
 						ft_putchar_fd.c \
 						ft_putchar.c \
@@ -73,8 +59,13 @@ FILES 		= ft_atoi.c \
 						ft_tolower.c \
 						ft_toupper.c \
 						ft_strchr_nb.c \
-						gnl.c \
-						gnl_utils.c \
+						ft_fprint_c.c \
+						ft_fprint_di.c \
+						ft_fprint_p.c \
+						ft_fprint_s.c \
+						ft_fprint_u.c \
+						ft_fprint_x.c \
+						ft_fprintf.c \
 					
 OBJ 		= $(FILES:%.c=%.o)
 
