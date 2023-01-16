@@ -17,22 +17,17 @@ extern int	g_status;
 static void	export_err(char **env)
 {
 	int	i;
-	int	j;
+	char *str;
+	char *ptr;
 
 	i = 0;
 	while (env && env[i])
 	{
-		ft_printf("declare -x ");
-		j = 0;
-		while (env[i][j])
-		{
-			write(1, &env[i][j], 1);
-			if (env[i][j] == '=')
-				write(1, "\"", 1);
-			j++;
-		}
-		write(1, "\"", 1);
-		write(1, "\n", 1);
+		str = isolate_varname(env[i], -1);
+		ptr = ft_getenv(str, env, ft_strlen(str));
+		ft_printf("declare -x %s=\"%s\"\n", str, ptr);
+		free(str);
+		free(ptr);
 		i++;
 	}
 	exit(0);
