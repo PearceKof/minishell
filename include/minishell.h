@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/16 17:25:12 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:06:11 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ enum	e_error
 	FORKERR,
 	NCMD,
 	DUPERR,
-	OPT,
 	INVID,
 	HNOSET,
 	TOOARGS,
@@ -57,8 +56,6 @@ typedef struct s_data
 {
 	char	**env;
 	char	*input;
-	char	*path;
-	pid_t	pid;
 }	t_data;
 
 typedef struct s_cmd

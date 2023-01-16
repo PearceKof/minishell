@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 14:56:06 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/16 18:17:40 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:33:28 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,17 @@ int	is_builtin(t_cmd *cmd)
 	size = ft_strlen(cmd->full_cmd[0]);
 	if (ft_strnstr("echo", cmd->full_cmd[0], size) && size == 4)
 		return (1);
-	else if (ft_strnstr(cmd->full_cmd[0], "cd", size) && size == 2)
+	else if (ft_strnstr("cd", cmd->full_cmd[0], size) && size == 2)
 		return (1);
-	else if (ft_strnstr(cmd->full_cmd[0], "pwd", size) && size == 3)
+	else if (ft_strnstr("pwd", cmd->full_cmd[0], size) && size == 3)
 		return (1);
-	else if (ft_strnstr(cmd->full_cmd[0], "export", size) && size == 6)
+	else if (ft_strnstr("export", cmd->full_cmd[0], size) && size == 6)
 		return (1);
-	else if (ft_strnstr(cmd->full_cmd[0], "unset", size) && size == 5)
+	else if (ft_strnstr("unset", cmd->full_cmd[0], size) && size == 5)
 		return (1);
-	else if (ft_strnstr(cmd->full_cmd[0], "env", size) && size == 3)
+	else if (ft_strnstr("env", cmd->full_cmd[0], size) && size == 3)
 		return (1);
-	else if (ft_strnstr(cmd->full_cmd[0], "exit", size) && size == 4)
+	else if (ft_strnstr("exit", cmd->full_cmd[0], size) && size == 4)
 		return (1);
 	return (0);
 }
@@ -62,12 +62,12 @@ int	exe_parent_builtin(t_cmd *c, t_data *d)
 	if (c->full_cmd[0] == NULL || c->next != NULL)
 		return (0);
 	size = ft_strlen(c->full_cmd[0]);
-	if (ft_strnstr(c->full_cmd[0], "exit", size) && size == 4)
+	if (ft_strnstr("exit", c->full_cmd[0], size) && size == 4)
 	{
 		ft_exit(c->full_cmd, c, d);
 		return (1);
 	}
-	else if (ft_strnstr(c->full_cmd[0], "cd", size) && size == 2)
+	else if (ft_strnstr("cd", c->full_cmd[0], size) && size == 2)
 		return (ft_cd(c, d));
 	else if (ft_strnstr(c->full_cmd[0], "export", size)
 		&& size == 6 && c->full_cmd[1])

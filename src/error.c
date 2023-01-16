@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:59:32 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/16 18:36:19 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/16 20:02:39 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static char	*error_type(int errorid)
 	ft_strlcpy(error[FORKERR], "fork failed\n", 50);
 	ft_strlcpy(error[NCMD], ": command not found\n", 50);
 	ft_strlcpy(error[DUPERR], "dup2 failed\n", 50);
-	ft_strlcpy(error[OPT], ": invalid option\n", 50);
+	// ft_strlcpy(error[OPT], ": invalid option\n", 50);
 	ft_strlcpy(error[INVID], ": not a valid identifier\n", 50);
 	ft_strlcpy(error[HNOSET], ": HOME not set\n", 50);
 	ft_strlcpy(error[TOOARGS], ": too many arguments\n", 50);

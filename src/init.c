@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:01:29 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 17:54:58 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:04:41 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_data	init_term(char **av, char **envp, t_data d)
 	d.env = ft_tabdup(envp);
 	if (!d.env)
 		malloc_error();
-	d.pid = ft_getpid();
+	// d.pid = ft_getpid();
 	d = init_vars(d, av, NULL, NULL);
 	return (d);
 }

@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:38:37 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 22:28:25 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:35:04 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	cd_minus(t_data *d, int child_proc)
 			ret = 1;
 			new_pwd(d);
 		}
-		else
+		if (child_proc)
 			printf("%s\n", ptr);
 		free(ptr);
 	}
@@ -64,10 +64,10 @@ void	cd_error(t_cmd *c, t_data *d)
 		error(TOOARGS, 1, "cd", NULL);
 		exit (1);
 	}
-	if (c->full_cmd[1][0] == '-')
+	if (c->full_cmd[1][0] == '-' && c->full_cmd[1][1] == '\0')
 	{
-		if (cd_minus(d, 1))
-			exit (0);
+		cd_minus(d, 1);
+		exit (0);
 	}
 	if (chdir(c->full_cmd[1]))
 	{
@@ -86,10 +86,10 @@ int	ft_cd(t_cmd *c, t_data *d)
 	}
 	else if (c->full_cmd[2])
 		return (0);
-	if (c->full_cmd[1][0] == '-')
+	if (c->full_cmd[1][0] == '-' && c->full_cmd[1][1] == '\0')
 	{
 		if (cd_minus(d, 0))
-			return (1);
+			return (0);
 	}
 	if (chdir(c->full_cmd[1]))
 		return (0);
