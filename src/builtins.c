@@ -16,9 +16,9 @@ extern int	g_status;
 
 static void	export_err(char **env)
 {
-	int	i;
-	char *str;
-	char *ptr;
+	int		i;
+	char	*str;
+	char	*ptr;
 
 	i = 0;
 	while (env && env[i])

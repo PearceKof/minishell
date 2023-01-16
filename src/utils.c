@@ -24,4 +24,3 @@ pid_t	ft_getpid(void)
 	waitpid(pid, NULL, 0);
 	return (pid - 1);
 }
-

@@ -1,4 +1,3 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -71,11 +70,11 @@ int	ft_export(t_cmd *c, t_data *d)
 			while (c->full_cmd[i][j] && c->full_cmd[i][j] != '=')
 			{
 				if (!ft_isalnum(c->full_cmd[i][j]))
-					break;
+					break ;
 				j++;
 			}
 			if ((c->full_cmd[i][j] == '=' && j != 0))
-				export_var(c->full_cmd[i] , j, d);
+				export_var(c->full_cmd[i], j, d);
 			else if (c->full_cmd[i][j] != '\0')
 				error(INVID, 1, c->full_cmd[i], NULL);
 		}
