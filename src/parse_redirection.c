@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 17:40:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/16 16:09:41 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/16 17:42:53 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,21 @@ char	*get_file_name(char *s, int i, int size, char **env)
 
 static t_cmd	*open_file(t_cmd *c, char *file_name, char red_type)
 {
-	if (red_type == '<' && c->in != -1)
+	if (red_type == '<' && c->out != -1 && c->in != -1)
 	{
 		if (c->in != 0 && c->in != -1)
 			close(c->in);
 		c->in = open(file_name, O_RDONLY);
 		if (c->in == -1)
-			error(NDIR, 1, file_name, NULL);
+			error(PERROR, 1, NULL, file_name);
 	}
-	else if (red_type == '>' && c->out != -1)
+	else if (red_type == '>' && c->out != -1 && c->in != -1)
 	{
 		if (c->out != 1 && c->out != -1)
 			close(c->out);
 		c->out = open(file_name, O_WRONLY | O_TRUNC | O_CREAT, 00777);
 		if (c->out == -1)
-			error(NPERM, 1, file_name, NULL);
+			error(PERROR, 1, NULL, file_name);
 	}
 	return (c);
 }
