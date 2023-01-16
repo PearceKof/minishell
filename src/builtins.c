@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 14:56:06 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 22:08:58 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/16 18:17:40 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,22 @@ extern int	g_status;
 static void	export_err(char **env)
 {
 	int	i;
+	int	j;
 
 	i = 0;
 	while (env && env[i])
 	{
-		ft_printf("declare -x %s\n", env[i]);
+		ft_printf("declare -x ");
+		j = 0;
+		while (env[i][j])
+		{
+			write(1, &env[i][j], 1);
+			if (env[i][j] == '=')
+				write(1, "\"", 1);
+			j++;
+		}
+		write(1, "\"", 1);
+		write(1, "\n", 1);
 		i++;
 	}
 	exit(0);
