@@ -56,8 +56,8 @@ void	print_error(int status, pid_t pid, t_cmd *first)
 		}
 		else if (access(first->path, F_OK) == -1)
 			error(NDIR, 127, cmd_pid, NULL);
-		else
-			g_status = 0;
+		else if (access(first->path, X_OK) == -1)
+			error(NPERM, 126, cmd_pid, NULL);
 	}
 }
 
