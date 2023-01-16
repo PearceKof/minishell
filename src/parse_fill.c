@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 13:58:40 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/15 19:03:29 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:51:25 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,22 @@ char	*fill_tab(char *tab, const char **s, char **env, int size)
 	int		i;
 	int		j;
 	int		nxt;
-	char	del;
+	char	d;
 
 	i = 0;
 	j = 0;
-	del = ' ';
+	d = ' ';
 	nxt = get_nxt(*s);
 	while (i < size && (*s)[j])
 	{
-		if (del != new_delimiter(del, (*s)[j]))
+		if (d != new_delimiter(d, (*s)[j]))
 		{
-			del = new_delimiter(del, (*s)[j]);
+			d = new_delimiter(d, (*s)[j]);
 			j++;
 		}
-		else if (del == ' ' && is_home_char((*s), j))
+		else if (d == ' ' && is_home_char((*s), j))
 			tab = join_home(tab, &i, &j, env);
-		else if ((*s)[j] == '$' && del != '\'' && !ft_strchr(" \"\'", (*s)[j + 1]))
+		else if ((*s)[j] == '$' && d != '\'' && !ft_strchr(" \"\'", (*s)[j + 1]))
 			tab = join_varvalue(tab, &i, get_var_value(*s, &j, env));
 		else
 			tab = cpy_char(tab, &i, *s, &j);

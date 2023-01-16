@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/16 21:06:11 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:42:34 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@
 # include <signal.h>
 # include <stdlib.h>
 
-# define SPE_CHAR " $\\|#=[]!><,;{}()*?~&+-/\"'°:¨"
-
 enum	e_error
 {
 	PERROR,
@@ -39,6 +37,7 @@ enum	e_error
 	DINFERR,
 	NL,
 	PIPUNCLOS,
+	QOTUNCLOS,
 	NDIR,
 	NPERM,
 	PIPERR,

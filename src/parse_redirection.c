@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 17:40:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/16 19:53:28 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:54:25 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,8 @@ t_cmd	*redirection(t_cmd *c, t_cmd *last, char *s, char **env)
 		{
 			if (s[i] && (s[i] == '<' || s[i] == '>') && s[i + 1] != s[i])
 				last = open_attempt(env, s, &i, last);
-			else if (s[i] && !is_only_space(s) && s[i] == '<' && s[i + 1] == s[i]
-				&& last->in != -1 && last->out != -1)
+			else if (s[i] && !is_only_space(s) && s[i] == '<'
+			&& s[i + 1] == s[i] && last->in != -1 && last->out != -1)
 			{
 				last = heredoc_attempt(env, s, &i, last);
 				if (g_status == 130)
