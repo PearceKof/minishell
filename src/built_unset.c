@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 18:43:54 by ctechy            #+#    #+#             */
-/*   Updated: 2023/01/14 16:16:58 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/16 23:42:01 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,5 @@ int	ft_unset(t_cmd *c, t_data *d)
 			env_dup(d, c, index);
 		index++;
 	}
-	printf("%s", d->env[0]);
 	return (1);
 }
