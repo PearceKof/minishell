@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:36:53 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/17 13:05:19 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/17 14:03:04 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,6 @@ static int	is_env_var(char **s, int *i, char **env)
 	free(varvalue);
 	return (is_in_env);
 }
-/*
-	compte le nombre de string dont on aura besoin en fonction
-	des délimiteurs (espaces ou brackets). Si à la fin del = espace. ça veut
-	dire qu'un bracket n'est pas fermé et la ft return -1
-	si tout s'est bien passé, return le nbr de string à allouer
-*/
 
 static int	ft_count_space(char *s, char **env)
 {
@@ -116,8 +110,6 @@ char	**parse_cmd(char const *s, char **env)
 		while (s && *s == ' ')
 			s++;
 		tab[i] = malloc_and_fill_tab(&s, env, get_str_size(s, env, ' '));
-		if (!tab[i])
-			malloc_error();
 		i++;
 	}
 	tab[i] = NULL;
