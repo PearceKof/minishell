@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 14:23:57 by root              #+#    #+#             */
-/*   Updated: 2023/01/17 12:10:01 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/17 14:41:30 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,8 @@ void	sigint_in_fork_handler(int sig)
 void	sigint_handler(int sig)
 {
 	pid_t	pid;
-	int		states;
 
-	pid = waitpid(0, &states, WNOHANG);
+	pid = waitpid(0, NULL, WNOHANG);
 	if (sig == SIGINT)
 	{
 		if (pid == -1)
