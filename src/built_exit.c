@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:36:15 by root              #+#    #+#             */
-/*   Updated: 2023/01/17 12:31:28 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/17 14:32:09 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	ft_exit(char **full_cmd, t_cmd *c, t_data *d)
 {
 	unsigned char	nbr;
 
+	ft_putstr_fd("exit\n", 1);
 	if (!full_cmd[1])
 	{
 		free_cmd(c);
