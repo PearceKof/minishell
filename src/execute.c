@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 18:09:09 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/17 12:03:00 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/17 13:53:41 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,20 @@ static void	dup_pipe_and_exec(t_cmd *c, t_data *d, int *pipe)
 	if (c->in != STDIN_FILENO)
 	{
 		if (dup2(c->in, STDIN_FILENO) == -1)
-			exit(1);
+			exit(error(PERROR, 1, NULL, "dup2"));
 		close(c->in);
 	}
 	if (c->out != STDOUT_FILENO)
 	{
 		if (dup2(c->out, STDOUT_FILENO) == -1)
-			exit(1);
+			exit(error(PERROR, 1, NULL, "dup2"));
 		close(c->out);
 	}
 	else if (c->next)
 	{
 		close(pipe[0]);
 		if (dup2(pipe[1], STDOUT_FILENO) == -1)
-			exit(1);
+			exit(error(PERROR, 1, NULL, "dup2"));
 	}
 	if (is_builtin(c))
 		exe_child_builtin(c, d);
