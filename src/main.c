@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/17 11:43:26 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/17 11:51:42 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	main(int ac, char **av, char **envp)
 	t_data	d;
 	t_cmd	*c;
 
-	d = init_term(av, envp, d);
+	d = init_term(av, envp);
 	g_status = 0;
 	while (ac && av)
 	{

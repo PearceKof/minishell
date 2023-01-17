@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:01:29 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/16 21:37:58 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/17 11:51:19 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,10 @@ t_cmd	*init_cmd(char *input, t_data *d)
 	return (c);
 }
 
-t_data	init_term(char **av, char **envp, t_data d)
+t_data	init_term(char **av, char **envp)
 {
+	t_data	d;
+
 	d.input = NULL;
 	d.env = ft_tabdup(envp);
 	if (!d.env)

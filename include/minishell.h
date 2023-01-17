@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/16 23:20:16 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/17 11:51:31 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ t_cmd	*ft_heredoc(t_cmd *c, char *limiter, char **env);
 	init.c
 */
 t_cmd	*init_cmd(char *input, t_data *d);
-t_data	init_term(char **av, char **envp, t_data d);
+t_data	init_term(char **av, char **envp);
 /*
 	parse_cmd.c
 */
@@ -200,9 +200,5 @@ void	sigint_in_fork_handler(int sig);
 */
 int		is_invalid_syntax(char *s);
 int		is_only_space(char *s);
-/*
-	utils.c
-*/
-// pid_t	ft_getpid(void);
-// int		ft_atol(const char *str, int ret);
+
 #endif
