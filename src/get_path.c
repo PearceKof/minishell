@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 16:10:42 by ctechy            #+#    #+#             */
-/*   Updated: 2023/01/16 18:43:12 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/17 13:00:35 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ char	*ft_getpaths(char **env, char *cmd)
 	if (ft_strnstr(cmd, "/", ft_strlen(cmd)) && cmd[0] == '/')
 	{
 		ptr = ft_strdup(cmd);
-		if (!ptr)
-			malloc_error();
 		return (ptr);
 	}
 	else if (ft_strnstr(cmd, "/", ft_strlen(cmd)))

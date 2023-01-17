@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 16:38:37 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/16 21:35:04 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/17 12:30:46 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,6 @@ void	cd_error(t_cmd *c, t_data *d)
 {
 	if (!c->full_cmd[1])
 		exit(0);
-	if (c->full_cmd[2])
-	{
-		error(TOOARGS, 1, "cd", NULL);
-		exit (1);
-	}
 	if (c->full_cmd[1][0] == '-' && c->full_cmd[1][1] == '\0')
 	{
 		cd_minus(d, 1);
@@ -84,8 +79,6 @@ int	ft_cd(t_cmd *c, t_data *d)
 		cd_root(c, d);
 		return (1);
 	}
-	else if (c->full_cmd[2])
-		return (0);
 	if (c->full_cmd[1][0] == '-' && c->full_cmd[1][1] == '\0')
 	{
 		if (cd_minus(d, 0))

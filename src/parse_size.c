@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 18:11:48 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/16 22:39:49 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/17 13:06:50 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ int	var_value_size(char **env, const char *s, int *i)
 	if (!ptr)
 		return (0);
 	value = ft_strdup(ptr);
-	if (!value)
-		malloc_error();
 	free(ptr);
 	size = ft_strlen(value);
 	free(value);

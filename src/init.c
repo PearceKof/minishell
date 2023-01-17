@@ -6,22 +6,33 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:01:29 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/17 11:51:19 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/17 13:22:31 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static t_data	init_pwd(t_data d)
+{
+	char	*tmp;
+
+	tmp = getcwd(NULL, 0);
+	d.env = set_env_var("PWD", tmp, &d, 3);
+	free(tmp);
+	return (d);
+}
+
 static t_data	init_vars(t_data d, char **av, char *str, char *tmp)
 {
-	str = getcwd(NULL, 0);
-	d.env = set_env_var("PWD", str, &d, 3);
-	free(str);
 	str = ft_getenv("SHLVL", d.env, 5);
 	if (!str || ft_atoi(str) <= 0)
 		tmp = ft_strdup("1");
 	else
+	{
 		tmp = ft_itoa(ft_atoi(str) + 1);
+		if (!tmp)
+			malloc_error();
+	}
 	if (str)
 		free(str);
 	d.env = set_env_var("SHLVL", tmp, &d, 5);
@@ -51,7 +62,6 @@ t_cmd	*init_cmd(char *input, t_data *d)
 	input_btw_pipe = parse_pipe(input);
 	if (!input_btw_pipe)
 	{
-		ft_fprintf(2, "DEBUG\n");
 		error(NL, 2, NULL, NULL);
 		return (NULL);
 	}
@@ -78,5 +88,6 @@ t_data	init_term(char **av, char **envp)
 	if (!d.env)
 		malloc_error();
 	d = init_vars(d, av, NULL, NULL);
+	d = init_pwd(d);
 	return (d);
 }

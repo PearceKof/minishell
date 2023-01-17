@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:36:15 by root              #+#    #+#             */
-/*   Updated: 2023/01/15 15:14:21 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/17 12:31:28 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	ft_exit(char **full_cmd, t_cmd *c, t_data *d)
 	if (!exit_check_is_all_num(full_cmd))
 	{
 		error(NUMARGS, 1, "exit", NULL);
-		exit(2);
+		exit(255);
 	}
 	if (full_cmd[2])
 		return (error(TOOARGS, 1, "exit", NULL));

@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:47:18 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/17 11:51:42 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/17 13:13:17 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 
 int	g_status;
 
-/*
-	check si l'argument s contient autre chose que des caractéres "vides"
-	" \t\n\v\f\r\'\""
-	return 
-*/
 int	is_only_space(char *s)
 {
 	int	i;
@@ -38,7 +33,7 @@ static	int	is_correct_input(char *input)
 	if (!input)
 	{
 		ft_putstr_fd("exit\n", 1);
-		exit(0);
+		exit(g_status);
 	}
 	if (is_only_space(input) || input[0] == '\0')
 		return (0);
@@ -57,8 +52,6 @@ void	prompt(t_data *d)
 	if (pwd)
 	{
 		prompt = ft_strjoin(pwd, "=> ");
-		if (!prompt)
-			malloc_error();
 		d->input = readline(prompt);
 		free(prompt);
 		free(pwd);
@@ -83,9 +76,7 @@ int	main(int ac, char **av, char **envp)
 		{
 			c = init_cmd(d.input, &d);
 			if (c)
-			{
 				execute(c, &d);
-			}
 			free_cmd(c);
 		}
 		if (d.input)

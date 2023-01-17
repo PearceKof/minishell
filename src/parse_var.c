@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:01:14 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/13 21:56:08 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/17 13:23:36 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ static char	*find_var_value(const char *s, int *j, char **env)
 	if (ptr)
 	{
 		varvalue = ft_strdup(ptr);
-		if (!varvalue)
-			malloc_error();
 		free(ptr);
 	}
 	pass_while_isalnum(s, j);
@@ -80,8 +78,6 @@ char	*get_var_value(const char *s, int *j, char **env)
 		&& !ft_strchr("\"\'", s[(*j) + 1]))
 	{
 		varvalue = ft_strdup("$");
-		if (!varvalue)
-			malloc_error();
 		*j += 1;
 	}
 	else

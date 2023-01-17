@@ -22,7 +22,10 @@ char	*ft_strdup(const char *src)
 		i++;
 	mem = malloc((i + 1) * sizeof(char));
 	if (mem == NULL)
-		return (NULL);
+	{
+		ft_putstr_fd("minishell: malloc failed\nexit\n", 2);
+		exit(EXIT_FAILURE);
+	}
 	i = 0;
 	while (src[i] != '\0')
 	{

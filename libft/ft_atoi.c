@@ -55,7 +55,7 @@ int	ft_atoi(const char *str)
 				> LLONG_MAX && neg == -1))
 		{
 			ft_fprintf(2, "minishell: exit: numeric argument required\n");
-			return (2);
+			return (255);
 		}
 	}
 	return (value * neg);
