@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 21:26:28 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/17 11:42:41 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/17 13:39:21 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,9 @@ int	is_invalid_syntax(char *s)
 	while (s[i])
 	{
 		del = new_delimiter(del, s[i]);
-		if (ft_strchr("&", s[i]) && del == ' ')
-			return (print_syntax_error(s[i]));
-		if (ft_strchr("|<>", s[i]) && del == ' ')
+		// if (ft_strchr("&", s[i]) && del == ' ')
+		// 	return (print_syntax_error(s[i]));
+		if (ft_strchr("|<>&", s[i]) && del == ' ')
 			if (check_nxt_syntax(s, i))
 				return (1);
 		i++;

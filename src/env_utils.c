@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 15:26:33 by ctechy            #+#    #+#             */
-/*   Updated: 2023/01/14 20:31:46 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/17 13:31:39 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,6 @@ int	env_size(char **env)
 		i++;
 	return (i);
 }
-/*
-	prends le nom d'une variable et return sa taille au premier =
-	sinon, return 0
-*/
 
 int	varname_size(char *varname)
 {
@@ -39,12 +35,6 @@ int	varname_size(char *varname)
 	}
 	return (0);
 }
-/*
-	prends le nom d'une variable, l'env dans lequelle on veut la chercher
-	et la longueur de varname
-	return un ptr juste aprés le = (sur la valeur de la variable)
-	return NULL si varname ne correspond pas à un variable de l'env
-*/
 
 char	*ft_getenv(char *varname, char **env, int len)
 {

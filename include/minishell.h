@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/17 11:51:31 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/17 13:35:27 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,10 +126,6 @@ int		execute(t_cmd *c, t_data *d);
 */
 void	*free_cmd(t_cmd *c);
 void	*free_env(t_data *d);
-/*
-	ft_read.c
-*/
-// char	*ft_read(void);
 /*
 	heredoc_utils.c
 */

@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:01:14 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/17 13:23:36 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/17 13:34:53 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,6 @@
 
 extern int	g_status;
 
-/*
-	isole le nom de la variable de la string s à partir de start
-	détermine le nom en cherchant un espace/dbl quotes et alloue
-	la mémoire puis renvoie le nom
-	ex: echo $PATH --return--> PATH
-*/
 char	*isolate_varname(const char *s, int start)
 {
 	char	*varname;
