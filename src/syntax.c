@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 21:26:28 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/17 13:46:59 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/17 14:24:05 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	check_nxt_syntax(char *s, int i)
 		return (0);
 	}
 	pass_while_char(s, &i, " ");
-	if (ft_strchr("|#=[]!;{}()?~&", s[i]))
+	if (ft_strchr("|#=[]!;{}()", s[i]))
 		return (print_syntax_error(s[i]));
 	return (0);
 }
@@ -91,7 +91,7 @@ int	is_invalid_syntax(char *s)
 		return (error(PIPEUNCLOSED, 1, NULL, NULL));
 	if (have_unclosed_quote(s))
 		return (error(QUOTEUNCLOSED, 1, NULL, NULL));
-	if (ft_strchr("|", s[i]))
+	if (ft_strchr("|;", s[i]))
 		return (print_syntax_error(s[i]));
 	del = ' ';
 	while (s[i])
@@ -99,7 +99,7 @@ int	is_invalid_syntax(char *s)
 		del = new_delimiter(del, s[i]);
 		if (ft_strchr("&", s[i]) && del == ' ')
 			return (print_syntax_error(s[i]));
-		if (ft_strchr("|<>&", s[i]) && del == ' ')
+		if (ft_strchr("|<>&;", s[i]) && del == ' ')
 			if (check_nxt_syntax(s, i))
 				return (1);
 		i++;
