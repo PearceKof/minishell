@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:59:32 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/17 12:24:28 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/17 14:50:11 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static char	*error_type(int errorid)
 	ft_strlcpy(error[PIPERR], "error creating pipe\n", 50);
 	ft_strlcpy(error[FORKERR], "fork failed\n", 50);
 	ft_strlcpy(error[NCMD], ": command not found\n", 50);
-	ft_strlcpy(error[DUPERR], "dup2 failed\n", 50);
 	ft_strlcpy(error[INVID], ": not a valid identifier\n", 50);
 	ft_strlcpy(error[HNOSET], ": HOME not set\n", 50);
 	ft_strlcpy(error[TOOARGS], ": too many arguments\n", 50);

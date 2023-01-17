@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:29:47 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/17 13:35:27 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/17 14:50:17 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ enum	e_error
 	PIPERR,
 	FORKERR,
 	NCMD,
-	DUPERR,
 	INVID,
 	HNOSET,
 	TOOARGS,
