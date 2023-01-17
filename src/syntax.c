@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 21:26:28 by blaurent          #+#    #+#             */
-/*   Updated: 2023/01/16 23:34:31 by blaurent         ###   ########.fr       */
+/*   Updated: 2023/01/17 11:42:41 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static int	check_nxt_syntax(char *s, int i)
 	{
 		if (s[i + 1] == s[i])
 			return (0);
-		if ((s[i] == '<' && s[i + 1] == '>') || (s[i] == '>' && s[i + 1] == '<'))
+		if ((s[i] == '<' && s[i + 1] == '>')
+			|| (s[i] == '>' && s[i + 1] == '<'))
 			return (print_syntax_error(s[i]));
 		pass_while_char(s, &i, " ");
 		if (ft_strchr("<>|#=[]!;{}()?~&", s[i]))
