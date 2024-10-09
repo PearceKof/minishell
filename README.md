@@ -35,7 +35,7 @@ The Minishell project aims to enhance our understanding of process management, i
 - Language: C, following the Norm.
 - Memory Management: All allocated memory must be properly freed, and no memory leaks are tolerated.
 - Makefile: The project must include a Makefile with at least the following rules: all, clean, fclean, re, and $(NAME).
-- Compilation: Use `cc` with the flags `-Wall`, `-Wextra`, and `-Werror`.
+- Compilation: Use `gcc` with the flags `-Wall`, `-Wextra`, and `-Werror`.
 - Libft: The use of your own libft is authorized if it is included in the project directory.
 
 ## Installation
