@@ -6,12 +6,12 @@ Minishell is a shell program implemented in C as part of a project at 19 (42 Net
 ## Table of Contents
 
 - [Project Overview](#project-overview)
-- Features
-- Requirements
-- Installation
-- Usage
-- Built-in Commands
-- Dependencies
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Built-in Commands](#built-in-commands)
+- [Dependencies](#dependencies)
 
 ## Project Overview
 
