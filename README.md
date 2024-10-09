@@ -31,22 +31,22 @@ The Minishell project aims to enhance our understanding of process management, i
 
 ## Requirements
 
-- All the requirements for this project are outlined in the project description.
-- Language: C, following the Norm.
+- All the requirements for this project are outlined in the subject en.subject.pdf.
+- Language: C
 - Memory Management: All allocated memory must be properly freed, and no memory leaks are tolerated.
 - Makefile: The project must include a Makefile with at least the following rules: all, clean, fclean, re, and $(NAME).
 - Compilation: Use `gcc` with the flags `-Wall`, `-Wextra`, and `-Werror`.
-- Libft: The use of your own libft is authorized if it is included in the project directory.
 
 ## Installation
 
 To build and run Minishell, you need a C compiler and `make`. This program is compatible with Unix-like systems.
 
 1. Clone the repository:
-
 ```
 git clone https://github.com/PearceKof/minishell.git
 ```
+
+2. Go into the cloned directory
 ```
 cd minishell
 ```
