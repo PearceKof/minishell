@@ -25,7 +25,7 @@ The Minishell project aims to enhance our understanding of process management, i
 - Redirection support (input and output)
 - Pipe support for chaining commands
 - Environment variable expansion
-- Support for special characters like `$` and `?`
+- Support for special characters like `$`, `'` and `"`
 - Built-in commands for shell functionality
 - Proper handling of control signals (Ctrl-C, Ctrl-D, Ctrl-\)
 
