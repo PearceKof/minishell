@@ -45,7 +45,7 @@ To build and run Minishell, you need a C compiler and `make`. This program is co
 1. Clone the repository:
 
 ```
-git clone https://github.com/yourusername/minishell.git
+git clone https://github.com/PearceKof/minishell.git
 ```
 ```
 cd minishell
